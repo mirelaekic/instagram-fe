@@ -10,8 +10,8 @@ function App() {
   return (
     <BrowserRouter>
       <Route path="/" exact component={Home}/>
-      <Router path="/dm" component={DM} />
-      <Router path="/explore" component={Explore} />
+      <Route path="/dm" component={DM} />
+      <Route path="/explore" component={Explore} />
       <Route path="/profile/:id" render={(props) => (<Profile {...props} />)} />
     </BrowserRouter>
   );
