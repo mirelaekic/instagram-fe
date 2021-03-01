@@ -1,0 +1,30 @@
+.commentInput{
+    margin-top: 10px;
+    margin-left: 10px;
+width: 100%;
+  box-sizing: border-box;
+  border: 0px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+.commentSection{
+    display: flex;
+}
+.commentSection svg{
+    margin-top: 10px;
+}
+.commentSection button {
+    border: none;
+    background-color: inherit;
+    color: #0095F6;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.commentSection button:hover {
+    cursor: pointer;
+}
+.commentSection button:focus {
+    outline: none !important;
+    font-weight: bolder;
+}
