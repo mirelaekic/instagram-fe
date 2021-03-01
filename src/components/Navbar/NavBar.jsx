@@ -1,15 +1,27 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+import React from "react";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
+import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
+import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
+import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import InputBase from "@material-ui/core/InputBase";
+import Avatar from "@material-ui/core/Avatar";
+import { fade, makeStyles } from "@material-ui/core/styles";
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import SearchIcon from "@material-ui/icons/Search";
+import { Container, IconButton } from "@material-ui/core";
+import "./NavBar.css";
+import instagramLogo from "../../logo/instagramLogo.jpg";
+import { Link } from "react-router-dom";
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
+import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
+import SwapHorizRoundedIcon from '@material-ui/icons/SwapHorizRounded';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root1: {
     flexGrow: 1,
   },
   menuButton: {
@@ -17,47 +29,46 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
     },
   },
   search: {
-    position: 'relative',
+    position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+    backgroundColor: "rgb(171 165 165 / 15%)",
+    "&:hover": {
+      backgroundColor: "rgb(171 165 165 / 16%)",
     },
     marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
-      width: 'auto',
+      width: "auto",
     },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputRoot: {
-    color: 'inherit',
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "16ch",
+      "&:focus": {
+        width: "20ch",
       },
     },
   },
@@ -65,36 +76,81 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchAppBar() {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+    <div className={classes.root1} position="fixed">
+      <AppBar position="fixed">
+        <Container>
+          <Toolbar className="navbarContent">
+            <img className="instLogo" src={instagramLogo} />
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root1: classes.input,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-        </Toolbar>
+            <div className="iconsNavbar">
+              <Link to="/">
+                <HomeOutlinedIcon />
+              </Link>
+              <Link to="/dm">
+                <SendOutlinedIcon />
+              </Link>
+              <Link to="/explore">
+                <ExploreOutlinedIcon />
+              </Link>
+              <div>
+                <FavoriteBorderOutlinedIcon />
+              </div>
+              <IconButton onClick={handleMenu} aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true">
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            </IconButton>
+            <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <Link to="/profile/:id">
+                <MenuItem onClick={handleClose}> <AccountCircleRoundedIcon /> Profile</MenuItem>
+                </Link>
+                <MenuItem onClick={handleClose}> <BookmarkBorderSharpIcon /> Saved</MenuItem>
+                <MenuItem onClick={handleClose}> <SettingsRoundedIcon /> Settings</MenuItem>
+                <MenuItem onClick={handleClose}> <SwapHorizRoundedIcon /> Switch Accounts</MenuItem>
+                <hr/>
+                <MenuItem onClick={handleClose}>Log Out</MenuItem>
+              </Menu>
+            </div>
+          </Toolbar>
+        </Container>
       </AppBar>
     </div>
   );

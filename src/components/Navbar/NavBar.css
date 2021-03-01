@@ -1,0 +1,63 @@
+.MuiAppBar-colorPrimary {
+    color: black !important;
+    background-color: #FFFFFF !important;
+}
+.navbarContent{
+   justify-content: space-between !important;
+}
+.instLogo{
+    width: auto;
+    height: 35px;
+}
+.iconsNavbar{
+    display:inline-flex;
+}
+.iconsNavbar a{
+    color: rgb(24, 24, 24) !important;
+    text-decoration: none !important;
+    margin-left: 10px;
+}
+.iconsNavbar svg{
+    margin-left: 10px !important;
+    fill: rgb(24, 24, 24) !important;
+}
+.iconsNavbar a .MuiSvgIcon-root{
+    fill: rgb(24, 24, 24) !important;
+    font-size: 1.8rem!important;
+}
+.iconsNavbar div .MuiSvgIcon-root{
+    fill: rgb(24, 24, 24) !important;
+    font-size: 1.8rem !important;
+    margin-left: 16px  !important;
+}
+.iconsNavbar button span .MuiAvatar-root{
+    width: 30px !important;
+    height: 30px !important;
+    margin-left: 8px  !important;
+    font-size: 1rem !important;
+}
+.iconsNavbar button{
+    padding: 0px !important;
+    margin-left: 8px  !important;
+}
+.MuiPaper-root{top:70px !important}
+.MuiTouchRipple-root{left: 5px !important;}
+.MuiList-root .MuiButtonBase-root{
+    font-size: 14px !important;
+}
+.MuiList-root .MuiButtonBase-root svg{
+    margin-right: 10px;
+}
+.MuiList-root a{
+    text-decoration: none;
+    color: black;
+}
+.MuiList-root{
+    width: 200px !important;
+} 
+.MuiAppBar-positionFixed {
+    left: auto;
+    right: 0;
+    position: fixed;
+    top: 0rem !important;
+}
