@@ -4,21 +4,27 @@ import Home from "./pages/Home/Home";
 import DM from "./pages/DM/DM";
 import Explore from "./pages/Explore/Explore";
 import Profile from "./pages/Profile/Profile"
-import { BrowserRouter, Route ,Switch } from "react-router-dom";
+import { withRouter, Route ,Switch } from "react-router-dom";
 import NavBar from "./components/Navbar/NavBar"
+import Register from "./pages/Register/Register"
 
-function App() {
+const exclusionArray = ["/login", "/register"];
+
+function App(props) {
   return (
-    <BrowserRouter>
-      <NavBar />
+    <>
+     {exclusionArray.indexOf(props.location.pathname) < 0 && (
+          <NavBar />
+        )}
     <Switch>
       <Route path="/" exact component={Home}/>
       <Route path="/dm" component={DM} />
       <Route path="/explore" component={Explore} />
       <Route path="/profile/:id" render={(props) => (<Profile {...props} />)} />
+      <Route path="/register" exact component={Register} />
     </Switch>
-    </BrowserRouter>
+    </>
   );
 }
 
-export default App;
+export default withRouter(App);

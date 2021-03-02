@@ -1,0 +1,13 @@
+body{
+    background-color: #FAFAFA;
+}
+.login-img img{
+    height: 40rem;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+@media only screen and (max-width: 1000px) {
+    .regImg{
+      display: none;
+    }
+  }

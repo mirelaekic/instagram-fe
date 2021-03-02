@@ -1,0 +1,30 @@
+.reg-form input{
+    margin-bottom: 5px;
+    width: 17rem;
+    background-color: #FAFAFA;
+    border: 1px rgb(211, 211, 211) solid;
+    padding: 7px;
+    font-size: 13px;
+}
+.reg-form input:focus{
+    outline: rgb(167, 167, 167) !important;
+}
+.reg-form{
+    margin-bottom: 10px;
+}
+.terms{
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 12px !important;
+   color: rgba(var(--f52,142,142,142),1) !important;
+}
+.reg-button{
+    background-color: rgba(var(--d69,0,149,246),1);
+color: white;
+border: 0px;
+padding: 5px;
+width: 17rem;
+margin-top: 7px;
+font-size: 14px;
+font-weight: bold;
+}

@@ -1,0 +1,48 @@
+.register-form{
+    margin-top:50px;
+}
+.reg-form-header img{
+    width: 11rem;
+}
+.reg-form-header{
+    text-align: -webkit-center;
+}
+.reg-form-header .sign-text{
+    color: rgba(var(--f52,142,142,142),1);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 0 16px 10px;
+    margin-top: 10px;
+}
+.hrs .hr{
+    border: 1px solid black;
+}
+.fb-login-button{
+background-color: rgba(var(--d69,0,149,246),1);
+color: white;
+border: 0px;
+padding: 5px;
+width: 17rem;
+margin-top: 7px;
+font-size: 14px;
+font-weight: bold;
+}
+.dowload-app{
+    border: none;
+    background-color: inherit;
+    text-align: center;
+}
+.login{
+    margin-top: 1rem;
+    padding: 6px;
+    text-align: center;
+    font-size: 14px;
+}
+.down{
+    width: 9rem;
+}
+.getApp{
+    position: absolute;
+    left: 7rem;
+}

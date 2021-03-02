@@ -19,6 +19,7 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import SwapHorizRoundedIcon from '@material-ui/icons/SwapHorizRounded';
+import PostImage from "../PostImage/PostImage"
 
 const useStyles = makeStyles((theme) => ({
   root1: {
@@ -107,6 +108,7 @@ export default function SearchAppBar() {
               />
             </div>
             <div className="iconsNavbar">
+            <PostImage />
               <Link to="/">
                 <HomeOutlinedIcon />
               </Link>
