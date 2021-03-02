@@ -2,7 +2,7 @@ import { Container, Grid } from '@material-ui/core'
 import React from 'react'
 import Card from "../../components/Card/Card"
 import "./Home.css"
-
+import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions"
 export default function Home() {
     return (
         <Container className="home-container">
@@ -17,8 +17,7 @@ export default function Home() {
             </Grid>
             <Grid className="homeSug-grid" item xs={4} style={{position:"-webkit-sticky !important"}}>
                 <div className="home-suggestions">
-                <h1>PROFILE</h1>
-                <h1>SUGGESTIONS</h1>
+                <HomeSuggestions />
                 </div>
             </Grid>
             </Grid>

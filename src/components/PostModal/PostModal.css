@@ -1,0 +1,11 @@
+.ViewComments{
+    background-color: inherit;
+    border: none;
+    color: gray;
+}
+.ViewComments:focus{
+    outline: none;
+}
+.ViewComments:hover{
+    cursor: pointer;
+}

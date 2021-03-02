@@ -5,6 +5,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Card from "../Card/Card"
 import Comments from "../Comments/Comments"
+import PostModal from "./PostModal.css"
+import { Col, Row } from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -14,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: '0px solid #000',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: "0px",
   },
 }));
 
@@ -34,7 +36,7 @@ export default function TransitionsModal() {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      <button className="ViewComments" type="button" onClick={handleOpen}>
         View all number comments
       </button>
       <Modal
@@ -51,7 +53,16 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Card /> 
+              <Row>
+                  <Col>
+                  <img src="https://th.bing.com/th/id/OIP.A79oMqjZkGecXPE1tUmnxQHaEK?pid=ImgDet&rs=1" />
+                  </Col>
+                  <Col>
+                  <Comments /> 
+                  </Col>
+              </Row>
+
+            
           </div>
         </Fade>
       </Modal>

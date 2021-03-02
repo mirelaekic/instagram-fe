@@ -25,7 +25,7 @@ export default function RecipeReviewCard() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className="commentContainer">
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteBorderOutlined />
@@ -46,7 +46,6 @@ export default function RecipeReviewCard() {
         <PostModal />
         <Typography paragraph>Comment1</Typography>
         <Typography paragraph>Posted at</Typography>
-        <hr/>
         <div className="commentSection">
             <EmojiEmotionsOutlinedIcon/>
         <input className="commentInput" type="text" placeholder="Add a comment..." /><button>Post</button>

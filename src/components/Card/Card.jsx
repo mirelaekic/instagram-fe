@@ -8,10 +8,11 @@ import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Comments from "../Comments/Comments"
-
+import "./Card.css"
+ 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "550px",
+    maxWidth: "auto",
   },
   media: {
     height: 0,

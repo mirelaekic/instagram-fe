@@ -1,0 +1,51 @@
+.homeSuggestionsList .list-group-item{
+    background-color: inherit !important;
+    border: none !important;
+    display: inline-flex;
+    justify-content: space-between;
+    padding:7px !important;
+    width: 19rem;
+    margin-bottom: 6px;
+}
+.profile-name{
+    display: -webkit-box;
+    font-size: 15px;
+}
+.profile-name strong{
+    margin-left: 8px;
+    margin-top: 10px;
+}
+.list-group-item a{
+    color: #0095F6 !important;
+    font-size: 12px;
+    font-weight: bold;
+}
+.list-group-item a:hover{
+    cursor: pointer;
+}
+.profile-suggestions{
+    font-size: 12px;
+}
+.profile-name .profileAvatar{
+    margin-top: -6px !important;
+}
+.suggestion-header{
+    font-size: 14px;
+    color: rgba(var(--f52,142,142,142),1);
+    margin-left: 10px;
+}
+.myProfile-list{
+    margin-bottom: 10px;
+}
+.myProfile-list .profile-name strong{
+    margin-bottom: 10px;
+    margin-top: 10px !important;
+}
+.suggInfo p{
+    margin-bottom: 0px !important;
+    margin-left: 7px;
+    font-size: 12px;
+}
+.suggInfo{
+    margin-top: -8px;
+}
