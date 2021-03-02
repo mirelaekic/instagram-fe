@@ -6,13 +6,14 @@ import Profile from "./pages/Profile/Profile";
 import { Switch, Route } from "react-router";
 import NavBar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
+import CreateStory from "./components/Stories/CreateStory";
 
 function App() {
   return (
     <>
       <NavBar />
+      <CreateStory />
       <Switch>
-        <Footer />
         <Route path="/" exact component={Home} />
         <Route path="/dm" component={DM} />
         <Route path="/explore" component={Explore} />
