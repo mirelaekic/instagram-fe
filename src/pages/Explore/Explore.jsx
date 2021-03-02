@@ -1,9 +1,11 @@
 import React from 'react'
+import ExploreGrid from "../../components/ExploreGrid/ExploreGrid"
+import { Container } from 'react-bootstrap';
 
 export default function Explore() {
     return (
-        <div>
-            <h1>Explore</h1>
-        </div>
+        <Container className="mt-5">
+            <ExploreGrid />
+        </Container>
     )
 }

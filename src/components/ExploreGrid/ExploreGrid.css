@@ -1,0 +1,8 @@
+.img-grid{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#colGrid{
+    padding: 30px !important;
+}
