@@ -33,8 +33,8 @@ function RegisterCard() {
       <Card.Body>
           <p className="getApp">Get the app.</p>
           <Row>
-            <Col xs={5}lg={6}><a><img className="down" src={google} /></a></Col>
-            <Col  xs={5}lg={6}><a><img className="down" src={appStore} /></a></Col>
+            <Col xs={5}lg={6}><a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3D81829672-2F5D-459D-A27E-97C95B692480%26utm_content%3Dlo%26utm_medium%3Dbadge"  target="_blank"><img className="down" src={google} /></a></Col>
+            <Col  xs={5}lg={6}><a href="https://apps.apple.com/app/instagram/id389801252?vt=lo"  target="_blank"><img className="down" src={appStore} /></a></Col>
           </Row>
       </Card.Body>
     </Card>

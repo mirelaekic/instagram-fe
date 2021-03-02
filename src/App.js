@@ -7,6 +7,7 @@ import Profile from "./pages/Profile/Profile"
 import { withRouter, Route ,Switch } from "react-router-dom";
 import NavBar from "./components/Navbar/NavBar"
 import Register from "./pages/Register/Register"
+import Login from "./pages/Login/Login"
 
 const exclusionArray = ["/login", "/register"];
 
@@ -22,6 +23,7 @@ function App(props) {
       <Route path="/explore" component={Explore} />
       <Route path="/profile/:id" render={(props) => (<Profile {...props} />)} />
       <Route path="/register" exact component={Register} />
+      <Route path="/login" exact component={Login} />
     </Switch>
     </>
   );
