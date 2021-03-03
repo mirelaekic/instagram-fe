@@ -24,28 +24,27 @@ export default function CreateStory() {
   const classes = useStyles();
   return (
     <div>
-      {["bottom"].map((anchor) => (
-        <React.Fragment key={anchor}>
+      s
+      <React.Fragment>
+        <div>
           <div>
-            <div>
-              <Badge
-                overlap="circle"
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                badgeContent={<SmallIcon />}
-              >
-                <Avatar
-                  alt="Travis Howard"
-                  src="http://placecorgi.com/260/180"
-                  className={classes.Avatar}
-                />
-              </Badge>
-            </div>
+            <Badge
+              overlap="circle"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              badgeContent={<SmallIcon />}
+            >
+              <Avatar
+                alt="Travis Howard"
+                src="http://placecorgi.com/260/180"
+                className={classes.Avatar}
+              />
+            </Badge>
           </div>
-        </React.Fragment>
-      ))}
+        </div>
+      </React.Fragment>
     </div>
   );
 }

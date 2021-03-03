@@ -9,12 +9,13 @@ import Footer from "./components/Footer/Footer";
 import CreateStory from "./components/Stories/CreateStory";
 import Carousel from "./components/Stories/Carousel";
 import StoryPlayer from "./components/Stories/StoryPlayer";
+import ProfileDescription from "./components/Profile/ProfileDescription";
 
 function App() {
   return (
     <>
       <NavBar />
-      <StoryPlayer />
+      <ProfileDescription />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/dm" component={DM} />
