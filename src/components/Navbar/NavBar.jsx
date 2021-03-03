@@ -14,7 +14,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { Container, IconButton } from "@material-ui/core";
 import "./NavBar.css";
 import instagramLogo from "../../logo/instagramLogo.jpg";
-import { Link } from "react-router-dom";
+import { withRouter,Link,Redirect } from "react-router-dom";
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchAppBar() {
+ function NavBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -87,6 +87,13 @@ export default function SearchAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  	
+  function logOut() {
+   localStorage.removeItem("user")
+      return (
+        <Redirect to="/login" /> 
+      )
+  }
 
   return (
     <div className={classes.root1} position="fixed">
@@ -148,7 +155,9 @@ export default function SearchAppBar() {
                 <MenuItem onClick={handleClose}> <SettingsRoundedIcon /> Settings</MenuItem>
                 <MenuItem onClick={handleClose}> <SwapHorizRoundedIcon /> Switch Accounts</MenuItem>
                 <hr/>
-                <MenuItem onClick={handleClose}>Log Out</MenuItem>
+                <Link to="/login" >
+                <MenuItem onClick={logOut}>Log Out</MenuItem>
+                </Link>
               </Menu>
             </div>
           </Toolbar>
@@ -157,3 +166,4 @@ export default function SearchAppBar() {
     </div>
   );
 }
+export default withRouter(NavBar) 

@@ -25,7 +25,7 @@ function LoginCard() {
     <Card style={{ width: "21rem" }} className="login" >
       <Card.Body>
           <div>
-            Don't have an account? <Link to="/regıster">Sign up</Link>
+            Don't have an account? <Link to="/register">Sign up</Link>
           </div>
       </Card.Body>
     </Card>

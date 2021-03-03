@@ -4,7 +4,7 @@ import Home from "./pages/Home/Home";
 import DM from "./pages/DM/DM";
 import Explore from "./pages/Explore/Explore";
 import Profile from "./pages/Profile/Profile"
-import { withRouter, Route ,Switch } from "react-router-dom";
+import { Redirect ,withRouter, Route ,Switch } from "react-router-dom";
 import NavBar from "./components/Navbar/NavBar"
 import Register from "./pages/Register/Register"
 import Login from "./pages/Login/Login"

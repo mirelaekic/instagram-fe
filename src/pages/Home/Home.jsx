@@ -1,6 +1,6 @@
 import { Container, Grid } from '@material-ui/core'
 import React from 'react'
-import Card from "../../components/Card/Card"
+import PostCard from "../../components/Card/PostCard"
 import "./Home.css"
 import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions"
 export default function Home() {
@@ -9,10 +9,7 @@ export default function Home() {
         <Grid container spacing={2}>
             <Grid item xs={8} lg={8}>
             <div className="homeCard">
-            <Card /> 
-            </div>
-            <div className="homeCard">
-            <Card /> 
+            <PostCard /> 
             </div>
             </Grid>
             <Grid className="homeSug-grid" item xs={4} style={{position:"-webkit-sticky !important"}}>
