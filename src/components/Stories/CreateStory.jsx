@@ -1,8 +1,7 @@
 import React from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
-import { SwipeableDrawer, Button, Avatar, Badge } from "@material-ui/core/";
-import { Image, Transformation } from "cloudinary-react";
+import { Avatar, Badge } from "@material-ui/core/";
 
 const useStyles = makeStyles({
   Avatar: {
@@ -18,8 +17,8 @@ export default function CreateStory() {
       height: 20,
       color: "#fafafa",
       backgroundColor: "#0095f6",
-      borderRadius: "1000rem",
-      border: "solid 0.7px #fafafa",
+      borderRadius: "100%",
+      border: "solid 1px #fafafa",
     },
   }))(AddIcon);
   const classes = useStyles();
@@ -28,20 +27,22 @@ export default function CreateStory() {
       {["bottom"].map((anchor) => (
         <React.Fragment key={anchor}>
           <div>
-            <Badge
-              overlap="circle"
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              badgeContent={<SmallIcon />}
-            >
-              <Avatar
-                alt="Travis Howard"
-                src="/static/images/avatar/2.jpg"
-                className={classes.Avatar}
-              />
-            </Badge>
+            <div>
+              <Badge
+                overlap="circle"
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                badgeContent={<SmallIcon />}
+              >
+                <Avatar
+                  alt="Travis Howard"
+                  src="http://placecorgi.com/260/180"
+                  className={classes.Avatar}
+                />
+              </Badge>
+            </div>
           </div>
         </React.Fragment>
       ))}
