@@ -16,7 +16,6 @@ function DM(props) {
   const [allOnlineUsers, setAllOnlineUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState();
   const [allUsers, setAllUsers] = useState([]);
-  const [displayUsers, setDisplayUsers] = useState([]);
 
   const getAllUsers = async () => {
     try {
@@ -43,11 +42,11 @@ function DM(props) {
     );
 
     socket.on("USER_CONNECTED", async (data) => {
-      helpMeGod(data);
+      setAllOnlineUsers(data);
       console.log("SOMEONE ELSE CONNECTING");
     });
     socket.on("USER_DISCONNECTED", async (data) => {
-      helpMeGod(data);
+      setAllOnlineUsers(data);
       console.log("SOMEONE ELSE DISCONNECTING");
     });
     return () => {
@@ -55,49 +54,19 @@ function DM(props) {
     };
   }, []);
 
-  const helpMeGod = (data) => {
-    try {
-      setAllOnlineUsers(data);
-      const tempUsers = allUsers;
-      console.log(tempUsers);
-      const onlineUsers = [];
-      data.forEach((user) => {
-        let hope = tempUsers.findIndex(
-          (ele) => ele.id.toString() === user.userId
-        );
-        if (hope) {
-          let onlineUser = { ...user, ...tempUsers[hope] };
-          onlineUsers.push(onlineUser);
-        }
-      });
-      console.log("HHHHHHHHHHHHET", onlineUsers);
-      console.log(data);
-      setDisplayUsers(onlineUsers);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Container className="mt-5" id="chat-page">
       <Row>
         <Col xs={5} id="usersCol">
           <ul>
             <li>Global</li>
-            {displayUsers.length > 0
-              ? displayUsers.map((user, i) => (
-                  <li key={i}>
-                    {user.username}
-                    {user.online && ": online"}
-                  </li>
-                ))
-              : allUsers.length > 0 &&
-                allUsers.map((user, i) => (
-                  <li key={i}>
-                    {user.username}
-                    {user.online && ": online"}
-                  </li>
-                ))}
+            {allUsers.length > 0 &&
+              allUsers.map((user, i) => (
+                <li key={i}>
+                  {user.username}
+                  {user.online && ": online"}
+                </li>
+              ))}
           </ul>
         </Col>
         <Col xs={7} id="chatCol">
