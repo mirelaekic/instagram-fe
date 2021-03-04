@@ -1,11 +1,13 @@
 import React from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import SettingsIcon from "@material-ui/icons/Settings";
 import { Container, Row, Col } from "react-bootstrap";
 import { Button } from "@material-ui/core/";
+import SettingsModal from "./SettingsModal";
 
 const useStyles = makeStyles({
-  textStyle: "none",
+  settingButton: {
+    cursor: "pointer",
+  },
 });
 const EditButton = withStyles((theme) => ({
   root: {
@@ -24,17 +26,20 @@ export default function ProfileDescription() {
   const classes = useStyles();
   return (
     <div>
-      {" "}
       <Container>
         <Row>
           <Col className="col-9">
             <Row className="justify-content-center align-items-center ">
               <Col className="col-3">Username</Col>
-              <Col className="col-9">
-                <EditButton>
-                  <b>Edit Profile</b>
-                </EditButton>
-                <SettingsIcon className="ml-3" />
+              <Col className="col-9 d-flex justify-content-start">
+                <span>
+                  <EditButton>
+                    <b>Edit Profile</b>
+                  </EditButton>
+                </span>
+                <span className="ml-3">
+                  <SettingsModal />
+                </span>
               </Col>
             </Row>
             <Row className=" mt-4">

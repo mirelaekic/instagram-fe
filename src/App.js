@@ -11,7 +11,7 @@ import Login from "./pages/Login/Login";
 import "./App.css";
 import ProfilePage from "./pages/Profile/Profile";
 
-const exclusionArray = ["/login", "/register"];
+const exclusionArray = ["/login", "/register", "/stories/:user/:storyId"];
 
 function App(props) {
   return (
@@ -24,6 +24,7 @@ function App(props) {
         <Route path="/profile/:id" render={(props) => <Profile {...props} />} />
         <Route path="/register" exact component={Register} />
         <Route path="/login" exact component={Login} />
+        <Route path="/stories/:user/:storyId" component={ProfilePage} />
       </Switch>
     </>
   );
