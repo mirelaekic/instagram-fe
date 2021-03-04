@@ -79,6 +79,7 @@ console.log(Liked,"liked posts")
         <>
           <CardActions disableSpacing>
             <FormControlLabel
+                className="like"
               control={
                 <Checkbox
                   onClick={handleLike}
@@ -97,7 +98,7 @@ console.log(Liked,"liked posts")
           </CardActions>
           <CardContent>
             {posts.post.likes.length > 0 ? (
-              <Typography paragraph>
+              <Typography paragraph className="likedby">
                 Liked by {posts.post.likes.length}{" "}
               </Typography>
             ) : (
@@ -108,11 +109,13 @@ console.log(Liked,"liked posts")
             ) : (
               <Typography paragraph>{posts.post.description}</Typography>
             )}
+            <div className="viewmore">
             {posts.post.comments.length > 3 ? (
               <PostModal post={posts.post} />
             ) : (
               <Typography></Typography>
             )}
+            </div>
             {posts.post.comments.length > 0 ? (
               <>
                 {posts.post.comments.slice(0, 3).map((c, i) => (

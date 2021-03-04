@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -15,7 +15,9 @@ import BookmarkBorderSharp from "@material-ui/icons/BookmarkBorderSharp";
 import ModeCommentOutlinedIcon from "@material-ui/icons/ModeCommentOutlined";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import Moment from "react-moment";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postComment, getPost,} from "../../redux/actions/postsAction";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -34,15 +36,25 @@ export default function TransitionsModal(post) {
   console.log(post.post, "this is the info of the post");
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-
+  const [text, setText] = useState("");
+  
+  
   const handleOpen = () => {
     setOpen(true);
   };
-
+  
   const handleClose = () => {
     setOpen(false);
   };
 
+const dispatch = useDispatch()
+
+  const handleComment = async () => {
+   /* await dispatch(postComment(text, post.post.id));
+    dispatch(getPost());
+    setText("");*/
+  };
+  console.log(handleComment())
   return (
     <div>
       <button className="ViewComments" type="button" onClick={handleOpen}>
@@ -119,11 +131,12 @@ export default function TransitionsModal(post) {
                     <EmojiEmotionsOutlinedIcon />
                     <input
                       id="text"
+                      onChange={(e) => setText(e.target.value)}
                       className="commentInput"
                       type="text"
                       placeholder="Add a comment..."
                     />
-                    <button>Post</button>
+                    <button onClick={handleComment}>Post</button>
                   </div>
                 </div>
               </div>

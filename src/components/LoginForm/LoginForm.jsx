@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import { Form } from "react-bootstrap";
 import "../RegisterForm/RegisterForm.css";
 import { connect,useDispatch } from "react-redux";
-import { Redirect, withRouter} from "react-router-dom"
+import { Redirect, withRouter,Link} from "react-router-dom"
 
 const mapStateToProps = (state) => state;
 
@@ -48,7 +48,10 @@ const LoginForm = (props) => {
     e.preventDefault();
     props.loginUserWithThunk({username,password});
   };
-const user = localStorage.getItem("user")
+  const user = localStorage.getItem("user")
+    if(user){
+    return  (<Redirect to="/" />)
+    } else {
   return (
     <>
     {user ? (<Redirect to="/" /> ) : (
@@ -57,10 +60,10 @@ const user = localStorage.getItem("user")
         <input required id="username" onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Username or username" />
         <input type="password" required id="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
       </div>
-      <button type="submit" className="reg-button">Log In</button> 
+      <button type="submit" className="reg-button">Log In</button>
     </Form>
     )}
     </>
-  );
+  ) };
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(LoginForm));

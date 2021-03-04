@@ -35,6 +35,9 @@
     overflow: scroll;
     height: 26rem;
 }
+.commentSection{
+    margin-left: 5px;
+}
 .commentList::-webkit-scrollbar{
     width: 0 !important;
 }
@@ -49,4 +52,7 @@
 }
 .commModal{
     width: 25rem;
+}
+.likedLength{
+    margin-bottom: -4px !important;
 }
