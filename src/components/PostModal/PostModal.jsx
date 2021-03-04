@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Col, Row } from 'react-bootstrap';
+import { Col, ListGroup,ListGroupItem, Row } from 'react-bootstrap';
 import "./PostModal.css"
 
 const useStyles = makeStyles((theme) => ({
@@ -20,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal(props) {
+export default function TransitionsModal(post) {
 
-  console.log(props, "this is the id of the pic")
+  console.log(post.post, "this is the info of the post")
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -54,11 +54,18 @@ export default function TransitionsModal(props) {
         <Fade in={open}>
           <div className={classes.paper}>
               <Row>
-                  <Col>
-                  <img src="https://th.bing.com/th/id/OIP.A79oMqjZkGecXPE1tUmnxQHaEK?pid=ImgDet&rs=1" />
+                  <Col >
+                  <img className="modalimg" src={post.post.imgurl} />
                   </Col>
-                  <Col>
-                  
+                  <Col >
+                    <ListGroup>
+                      <ListGroupItem>{post.post.user.username}</ListGroupItem>
+                      {post.post.description === null ? <ListGroupItem>{post.post.description}</ListGroupItem> : <div></div>}
+                      
+                      {post.post.comments.map((c,i) => (
+                        <ListGroupItem key={i}><strong>{c.user.username}</strong> {c.text}</ListGroupItem>
+                      ) )}
+                    </ListGroup>
                   </Col>
               </Row>
           </div>

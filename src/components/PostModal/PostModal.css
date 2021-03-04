@@ -9,3 +9,6 @@
 .ViewComments:hover{
     cursor: pointer;
 }
+.modalimg{
+    width: 35rem !important;
+}

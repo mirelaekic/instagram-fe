@@ -10,6 +10,7 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import TvIcon from "@material-ui/icons/Tv";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import "./Profile.css"
 
 const useStyles = makeStyles({
   Menu: {
@@ -61,6 +62,7 @@ export default function Profile() {
   };
 
   return (
+    <div className="mt-5 profilePage">
     <Container maxWidth="md" className="mt-5">
       <Row className="mb-5">
         <Col className="px-5 col-4 ">
@@ -115,5 +117,6 @@ export default function Profile() {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 }

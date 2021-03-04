@@ -45,9 +45,6 @@ const handleComment = () => {
             <IconButton aria-label="comment">
               <ModeCommentOutlinedIcon />
             </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon />
-            </IconButton>
             <IconButton className={classes.expand}>
               <BookmarkBorderSharp />
             </IconButton>
@@ -66,7 +63,7 @@ const handleComment = () => {
               <Typography paragraph>{posts.post.description}</Typography>
             )}
             {posts.post.comments.length > 3 ? (
-              <PostModal />
+              <PostModal post={posts.post}/>
             ) : (
               <Typography></Typography>
             )}
