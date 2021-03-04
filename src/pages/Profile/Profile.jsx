@@ -10,7 +10,7 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import TvIcon from "@material-ui/icons/Tv";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import "./Profile.css"
+import "./Profile.css";
 
 const useStyles = makeStyles({
   Menu: {
@@ -63,60 +63,60 @@ export default function Profile() {
 
   return (
     <div className="mt-5 profilePage">
-    <Container maxWidth="md" className="mt-5">
-      <Row className="mb-5">
-        <Col className="px-5 col-4 ">
-          <ProfilePic />
-        </Col>
-        <Col className="col-8">
-          <ProfileDescription />
-        </Col>
-      </Row>
+      <Container maxWidth="md" className="mt-5">
+        <Row className="mb-5">
+          <Col className="px-5 col-4 ">
+            <ProfilePic />
+          </Col>
+          <Col className="col-8">
+            <ProfileDescription />
+          </Col>
+        </Row>
 
-      <Row style={{ borderTop: "1px solid #e3e3e3" }}>
-        <Col className="col-3"></Col>
-        <Col className="col-6 d-flex justify-content-between">
-          <span
-            className={classes.Menu}
-            onClick={handlePosts}
-            style={{ borderTop: posts }}
-          >
-            <ViewModuleIcon className="mr-1" />
-            POSTS
-          </span>
-          <span
-            className={classes.Menu}
-            onClick={handleIGTV}
-            style={{ borderTop: igtv }}
-          >
-            <TvIcon className="mr-1" />
-            IGTV
-          </span>
-          <span
-            className={classes.Menu}
-            onClick={handleSaved}
-            style={{ borderTop: saved }}
-          >
-            <BookmarkBorderIcon className="mr-1" />
-            SAVED
-          </span>
-          <span
-            className={classes.Menu}
-            onClick={handleTagged}
-            style={{ borderTop: tagged }}
-          >
-            <PermIdentityIcon className="mr-1" />
-            TAGGED
-          </span>
-        </Col>
-        <Col className="col-3"></Col>
-      </Row>
-      <Row className="justify-content-center">
-        <Col>
-          <NoPosts />
-        </Col>
-      </Row>
-    </Container>
+        <Row style={{ borderTop: "1px solid #e3e3e3" }}>
+          <Col className="col-3"></Col>
+          <Col className="col-6 d-flex justify-content-between">
+            <span
+              className={classes.Menu}
+              onClick={handlePosts}
+              style={{ borderTop: posts }}
+            >
+              <ViewModuleIcon className="mr-1" />
+              POSTS
+            </span>
+            <span
+              className={classes.Menu}
+              onClick={handleIGTV}
+              style={{ borderTop: igtv }}
+            >
+              <TvIcon className="mr-1" />
+              IGTV
+            </span>
+            <span
+              className={classes.Menu}
+              onClick={handleSaved}
+              style={{ borderTop: saved }}
+            >
+              <BookmarkBorderIcon className="mr-1" />
+              SAVED
+            </span>
+            <span
+              className={classes.Menu}
+              onClick={handleTagged}
+              style={{ borderTop: tagged }}
+            >
+              <PermIdentityIcon className="mr-1" />
+              TAGGED
+            </span>
+          </Col>
+          <Col className="col-3"></Col>
+        </Row>
+        <Row className="justify-content-center">
+          <Col>
+            <NoIGTV />
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

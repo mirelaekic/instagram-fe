@@ -21,18 +21,6 @@ const useStyles = makeStyles({
 });
 
 export default function NoPosts() {
-  const EditButton = withStyles((theme) => ({
-    root: {
-      color: "#fafafa",
-      backgroundColor: "#0095f6",
-      textTransform: "none",
-      padding: "0.3rem 2rem",
-
-      "&:hover": {
-        backgroundColor: "#0095f6",
-      },
-    },
-  }))(Button);
   const classes = useStyles();
   return (
     <Container className="mt-3 rounded p-5">
@@ -50,9 +38,6 @@ export default function NoPosts() {
             <span className={classes.caption}>
               Videos must be between 1 and 60 minutes long.
             </span>
-          </Row>
-          <Row className="justify-content-center align-items-center mt-4">
-            <EditButton>Upload</EditButton>
           </Row>
         </Col>
       </Row>
