@@ -43,3 +43,10 @@ width: 100%;
     margin-bottom: 7px;
     border-top: 1px rgb(238, 238, 238) solid;
 }
+.postedAt{
+    font-size: 13px !important;
+}
+.comment{
+    font-size: 13px !important;
+    margin-left: 2px !important;
+}

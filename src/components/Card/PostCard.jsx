@@ -38,8 +38,9 @@ export const PostCard = () => {
   const postsData = useSelector((state) => state.posts.posts);
 
   return (
-    <div className="mb-4">
-      {postsData ? postsData.map((p, i) => (
+    <>
+    {postsData ? postsData.map((p, i) => (
+        <div className="mb-4">
         <Card key={i} className={classes.root}>
           <CardHeader
             avatar={
@@ -55,10 +56,11 @@ export const PostCard = () => {
             title={p.user.username}
           />
           <CardMedia className={classes.media} image={p.imgurl} />
-          <Comments currentId={p.id}/>
+          <Comments post={p}/>
         </Card>
-      )) : <h1>error</h1>}
     </div>
+      )) : <h1>error</h1>}
+      </>
   );
 };
 export default PostCard;

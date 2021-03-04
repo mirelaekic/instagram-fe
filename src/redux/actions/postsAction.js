@@ -45,11 +45,11 @@ export const getPostById = (id) => {
 export const uploadPost = (e) => {
     return async dispatch => {
         let formData = new FormData()
-        formData.append("PostImage",e.target.files[0])
+        formData.append("PostImage",e)
         try {
         const res = await fetch("http://localhost:9001/insta/posts", {
         method: "POST",
-        headers:{"Content-Type":"multipart/form-data"},
+        headers:{"Accept": "application/json", },
         credentials: "include",
         body: formData
         })
@@ -63,6 +63,30 @@ export const uploadPost = (e) => {
         } catch (error) {
             dispatch({
                 type:"GET_POSTS_ERROR",
+                payload:error.message
+            })
+        }
+    }
+}
+export const postComment = (text,postId) => {
+    return async dispatch => {
+        try {
+            const res = await fetch("http://localhost:9001/insta/comments/" + postId, {
+          method: "POST",
+          headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({text:text}),
+          credentials: "include",
+        })
+        if(res.ok){
+            const comment = await res.json()
+            dispatch({
+                type:"POST_COMMENT",
+                payload:comment
+            })
+        }
+        } catch (error) {
+            dispatch({
+                type:"COMMENT_ERROR",
                 payload:error.message
             })
         }

@@ -5,6 +5,7 @@ import loginReducer from "../reducers/loginReducer";
 import postPostReducer from "../reducers/postPostReducer";
 import postByIdReducer from "../reducers/postByIdReducer"
 import getPostsReducer from "../reducers/getPostsReducer";
+import commentReducer from "../reducers/commentReducer"
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
@@ -20,11 +21,13 @@ export const initialState = {
     postedPost:{},
     error: null,
   },
-  singlePost:{}
+  singlePost:{},
+  comment:{},
   
 };
 
 const RootReducer = combineReducers({
+    comment:commentReducer,
     singlePost:postByIdReducer,
     postedPost: postPostReducer,
   posts: getPostsReducer,

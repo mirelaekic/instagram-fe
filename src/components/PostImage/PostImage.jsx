@@ -1,5 +1,5 @@
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
-import React from "react";
+import React,{useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
 export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [image, setImage] = useState()
+  console.log(image,"img")
 const dispatch = useDispatch()
   const handleOpen = () => {
     setOpen(true);
@@ -56,9 +58,10 @@ const dispatch = useDispatch()
         <Fade in={open}>
           <div className={classes.paper}>
             <div className="form-group">
-              <input type="file" id="avatar"
-                  name="avatar"
+              <input type="file" id="image"
+                  name="image"
                   accept="image/png, image/jpeg"
+                  onChange={(e) => setImage(e.target.files[0])}
                   />
             </div>
             <strong>New Post</strong>
@@ -72,7 +75,7 @@ const dispatch = useDispatch()
                 />
               </Col>
               <Col lg={4}>
-                <IconButton onClick={(event) => dispatch(uploadPost(event))}>
+                <IconButton onClick={() => dispatch(uploadPost(image))}>
                   <CheckSharpIcon />
                 </IconButton>{" "}
               </Col>
