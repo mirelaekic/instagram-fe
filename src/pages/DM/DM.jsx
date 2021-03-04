@@ -105,6 +105,8 @@ function DM(props) {
       sender: props.loggedInUser.user.id.toString(),
       message: message,
     });
+    getChatHistory();
+    setMessage("");
   };
 
   return (
