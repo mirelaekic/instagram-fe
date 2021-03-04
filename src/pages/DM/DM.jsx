@@ -17,6 +17,8 @@ function DM(props) {
   const [currentUser, setCurrentUser] = useState();
   const [allUsers, setAllUsers] = useState([]);
   const [displayUsers, setDisplayUsers] = useState([]);
+  const [chatHistory, setChatHistory] = useState([]);
+  const [target, setTarget] = useState({});
 
   const getAllUsers = async () => {
     try {
@@ -30,18 +32,29 @@ function DM(props) {
     }
   };
 
+  const getChatHistory = async () => {
+    try {
+      let history = await fetch(
+        "http://localhost:9001/insta/users/give/me/those/chats",
+        {
+          credentials: "include",
+        }
+      );
+      let parsedResp = await history.json();
+      console.log(parsedResp);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     socket.on("connect", () => console.log("connected to socket"));
     getAllUsers();
-    socket.emit(
-      "VERIFY_USER",
-      props.loggedInUser.user.id.toString(),
-      (data) => {
-        setCurrentUser(data.user);
-        console.log("POPULATING WITH ALL USERS");
-      }
-    );
+    getChatHistory();
 
+    socket.emit("VERIFY_USER", props.loggedInUser.user.id.toString(), (data) =>
+      setCurrentUser(data.user)
+    );
     socket.on("USER_CONNECTED", async (data) => {
       helpMeGod(data);
       console.log("SOMEONE ELSE CONNECTING");
@@ -50,32 +63,48 @@ function DM(props) {
       helpMeGod(data);
       console.log("SOMEONE ELSE DISCONNECTING");
     });
+    socket.on("PRIVATE_MESSAGE", (data) => getChatHistory());
+  }, []);
+
+  useEffect(() => {
     return () => {
       socket.emit("LOGOUT");
     };
   }, []);
 
-  const helpMeGod = (data) => {
+  const helpMeGod = async (data) => {
     try {
       setAllOnlineUsers(data);
-      const tempUsers = allUsers;
-      console.log(tempUsers);
       const onlineUsers = [];
       data.forEach((user) => {
-        let hope = tempUsers.findIndex(
+        let hope = allUsers.findIndex(
           (ele) => ele.id.toString() === user.userId
         );
         if (hope) {
-          let onlineUser = { ...user, ...tempUsers[hope] };
+          let onlineUser = { ...user, ...allUsers[hope] };
           onlineUsers.push(onlineUser);
         }
       });
       console.log("HHHHHHHHHHHHET", onlineUsers);
       console.log(data);
-      setDisplayUsers(onlineUsers);
+      setDisplayUsers(data);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    socket.emit("USER_CONNECTED", currentUser);
+  };
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    socket.emit("PRIVATE_MESSAGE", {
+      reciever: target.userId,
+      sender: props.loggedInUser.user.id.toString(),
+      message: message,
+    });
   };
 
   return (
@@ -84,24 +113,21 @@ function DM(props) {
         <Col xs={5} id="usersCol">
           <ul>
             <li>Global</li>
-            {displayUsers.length > 0
-              ? displayUsers.map((user, i) => (
-                  <li key={i}>
-                    {user.username}
-                    {user.online && ": online"}
-                  </li>
-                ))
-              : allUsers.length > 0 &&
-                allUsers.map((user, i) => (
-                  <li key={i}>
-                    {user.username}
-                    {user.online && ": online"}
-                  </li>
-                ))}
+            {displayUsers.length > 0 &&
+              displayUsers.map((user, i) => (
+                <li key={i} onClick={() => setTarget(user)}>
+                  {user.username ? user.username : user.userId}
+                  {user.online && ": online"}
+                </li>
+              ))}
           </ul>
         </Col>
         <Col xs={7} id="chatCol">
-          <form id="chat">
+          <Button onClick={(e) => handleSubmit(e)}>Send Messages</Button>
+          {target.hasOwnProperty("userId") && (
+            <span>Chatting with {target.userId}</span>
+          )}
+          <form id="chat" onSubmit={(e) => sendMessage(e)}>
             <input
               autoComplete="off"
               value={message}
