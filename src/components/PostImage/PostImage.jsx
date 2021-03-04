@@ -8,6 +8,8 @@ import { IconButton } from "@material-ui/core";
 import { Col, FormControl, Row } from "react-bootstrap";
 import PublishSharpIcon from "@material-ui/icons/PublishSharp";
 import CheckSharpIcon from "@material-ui/icons/CheckSharp";
+import {uploadPost} from "../../redux/actions/postsAction";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-
+const dispatch = useDispatch()
   const handleOpen = () => {
     setOpen(true);
   };
@@ -53,9 +55,12 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <IconButton>
-              <PublishSharpIcon />
-            </IconButton>
+            <div className="form-group">
+              <input type="file" id="avatar"
+                  name="avatar"
+                  accept="image/png, image/jpeg"
+                  />
+            </div>
             <strong>New Post</strong>
             <Row>
               <Col lg={8}>
@@ -67,7 +72,7 @@ export default function TransitionsModal() {
                 />
               </Col>
               <Col lg={4}>
-                <IconButton>
+                <IconButton onClick={(event) => dispatch(uploadPost(event))}>
                   <CheckSharpIcon />
                 </IconButton>{" "}
               </Col>

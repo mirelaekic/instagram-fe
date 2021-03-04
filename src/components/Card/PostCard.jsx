@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -9,43 +9,56 @@ import { red } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Comments from "../Comments/Comments";
 import "./Card.css";
-import {RootState} from "../../redux/store"
-import { connect,useDispatch, useSelector } from "react-redux";
-import {getProducts} from "../../redux/actions/postsAction"
+import { useDispatch, useSelector } from "react-redux";
+import { getPost,getPostById } from "../../redux/actions/postsAction";
 
-export const PostCard = (props) => {
-  
-const dispatch = useDispatch()
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: "auto",
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}));
 
-useEffect(() => {
-  dispatch(getProducts())
-}, [])
+export const PostCard = () => {
+
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPost());
+  }, []);
 
 
-const postsData = useSelector(state => state.posts.posts)
-
-console.log(props,"DATAAA")
+  const postsData = useSelector((state) => state.posts.posts);
 
   return (
-    <>
-    {postsData.map((p,i) => (
-      <Card key={i}>
-      <CardHeader
-        avatar={<Avatar aria-label={p.user.username} />}
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={p.username}
-      />
-      <h1>{p.imgurl}</h1>
-      <CardMedia image={p.imgurl} />
-      <Comments />
-    </Card>
-    ))
-    }
-    </>
-  )
+    <div className="mb-4">
+      {postsData ? postsData.map((p, i) => (
+        <Card key={i} className={classes.root}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label={p.user.username} className={classes.avatar}>
+                U
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={p.user.username}
+          />
+          <CardMedia className={classes.media} image={p.imgurl} />
+          <Comments currentId={p.id}/>
+        </Card>
+      )) : <h1>error</h1>}
+    </div>
+  );
 };
-export default PostCard
+export default PostCard;

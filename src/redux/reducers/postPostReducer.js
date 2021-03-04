@@ -1,14 +1,15 @@
 const initialState = {
     loading: false,
-    posts: [],
-    error: null
+    postedPost:{},
+    error: null,
+    
 }
 
-const PostsReducer = (state = initialState, action) => {
+const getPostsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "GET_POSTS_SUCCESSFUL":
-            return {
-                posts: action.payload,
+        case "POST_POST":
+            return{
+                postedPost: action.payload,
                 loading: false,
                 error: null
             }
@@ -27,4 +28,4 @@ const PostsReducer = (state = initialState, action) => {
             return state
     }
 }
-export default PostsReducer
+export default getPostsReducer

@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap';
+import "./PostModal.css"
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -19,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal() {
+export default function TransitionsModal(props) {
+
+  console.log(props, "this is the id of the pic")
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 

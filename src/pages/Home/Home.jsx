@@ -8,7 +8,7 @@ export default function Home() {
         <Container className="home-container">
         <Grid container spacing={2}>
             <Grid item xs={8} lg={8}>
-            <div className="homeCard">
+            <div className="homeCard mb-5">
             <PostCard /> 
             </div>
             </Grid>
