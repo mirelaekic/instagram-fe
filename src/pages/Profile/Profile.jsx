@@ -5,11 +5,15 @@ import ProfilePic from "../../components/Profile/ProfilePic";
 import ProfileDescription from "../../components/Profile/ProfileDescription";
 import NoPosts from "../../components/Profile/NoPosts";
 import NoIGTV from "../../components/Profile/NoIGTV";
+import NoSaved from "../../components/Profile/NoSaved";
+import NoTagged from "../../components/Profile/NoTagged";
+import ProfileFooter from "../../components/Profile/ProfileFooter";
 import { makeStyles } from "@material-ui/core/styles";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import TvIcon from "@material-ui/icons/Tv";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+
 import "./Profile.css";
 
 const useStyles = makeStyles({
@@ -26,14 +30,14 @@ const useStyles = makeStyles({
 export default function Profile() {
   const classes = useStyles();
 
-  const [target, setTarget] = useState("MENU");
+  const [target, setTarget] = useState("POSTS");
   const [posts, setPosts] = useState("1px solid black");
   const [igtv, setIgtv] = useState(null);
   const [saved, setSaved] = useState(null);
   const [tagged, setTagged] = useState(null);
 
   const handlePosts = () => {
-    setTarget("MENU");
+    setTarget("POSTS");
     setPosts("1.3px solid black");
     setIgtv(null);
     setSaved(null);
@@ -54,13 +58,26 @@ export default function Profile() {
     setTagged(null);
   };
   const handleTagged = () => {
-    setTarget("IGTV");
+    setTarget("TAGGED");
     setPosts(null);
     setIgtv(null);
     setSaved(null);
     setTagged("1.3px solid black");
   };
-
+  const handleDisplay = () => {
+    if (target === "POSTS") {
+      return <NoPosts />;
+    }
+    if (target === "IGTV") {
+      return <NoIGTV />;
+    }
+    if (target === "SAVED") {
+      return <NoSaved />;
+    }
+    if (target === "TAGGED") {
+      return <NoTagged />;
+    }
+  };
   return (
     <div className="mt-5 profilePage">
       <Container maxWidth="md" className="mt-5">
@@ -112,8 +129,11 @@ export default function Profile() {
           <Col className="col-3"></Col>
         </Row>
         <Row className="justify-content-center">
+          <Col>{handleDisplay()}</Col>
+        </Row>
+        <Row>
           <Col>
-            <NoIGTV />
+            <ProfileFooter />
           </Col>
         </Row>
       </Container>

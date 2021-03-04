@@ -37,15 +37,17 @@ export default function ProfileDescription() {
                 <SettingsIcon className="ml-3" />
               </Col>
             </Row>
-            <Row className="justify-content-center align-items-center mt-4">
-              <Col>
-                <b>0</b> posts
-              </Col>
-              <Col>
-                <b>0</b> followers
-              </Col>
-              <Col>
-                <b>0</b> following
+            <Row className=" mt-4">
+              <Col className="col-12 d-flex justify-content-between">
+                <span>
+                  <b>0</b> posts
+                </span>
+                <span>
+                  <b>0</b> followers
+                </span>
+                <span>
+                  <b>0</b> following
+                </span>
               </Col>
             </Row>
             <Row className=" align-items-center mt-4">
@@ -59,7 +61,6 @@ export default function ProfileDescription() {
               </Col>
             </Row>
           </Col>
-          <Col></Col>
         </Row>
       </Container>
     </div>

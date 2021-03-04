@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Container, Row, Col } from "react-bootstrap";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   captions: {},
 });
 
-export default function NoSaved() {
+export default function NoTagged() {
   const classes = useStyles();
   return (
     <Container className="mt-3 rounded p-5">
@@ -28,18 +28,15 @@ export default function NoSaved() {
         <Col>
           <Row className="justify-content-center align-items-center">
             <span className={classes.iconBorder}>
-              <BookmarkBorderIcon className={classes.icon} />
+              <PermIdentityIcon className={classes.icon} />
             </span>
           </Row>
           <Row className="justify-content-center align-items-center">
-            <span className={classes.header}>Save</span>
+            <span className={classes.header}>Photos of you</span>
           </Row>
           <Row className="justify-content-center align-items-center">
             <span className={classes.caption}>
-              Save photos and videos that you want to see again. No{" "}
-            </span>
-            <span className={classes.caption}>
-              one is notified, and only you can see what you've saved.
+              When people tag you in photos, they'll appear here.
             </span>
           </Row>
         </Col>
