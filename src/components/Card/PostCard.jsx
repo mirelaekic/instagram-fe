@@ -14,7 +14,7 @@ import { getPost,getPostById } from "../../redux/actions/postsAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "auto",
+    maxWidth: "40rem",
   },
   media: {
     height: 0,

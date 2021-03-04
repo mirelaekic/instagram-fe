@@ -25,9 +25,11 @@ const mapDispatchToProps = (dispatch) => ({
           }, 
         );
         if (response.ok) {
+          const resp = await response.json()
+          console.log(resp)
           dispatch({
             type:"LOGIN_USER",
-            payload:credentls
+            payload:resp
           })
           console.log(response, "login response")
           localStorage.setItem("user", credentls.username);
@@ -46,8 +48,10 @@ const LoginForm = (props) => {
     e.preventDefault();
     props.loginUserWithThunk({username,password});
   };
-
+const user = localStorage.getItem("user")
   return (
+    <>
+    {user ? (<Redirect to="/" /> ) : (
     <Form onSubmit={handleSubmit}>
       <div className="reg-form mt-4">
         <input required id="username" onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Username or username" />
@@ -55,6 +59,8 @@ const LoginForm = (props) => {
       </div>
       <button type="submit" className="reg-button">Log In</button> 
     </Form>
+    )}
+    </>
   );
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(LoginForm));

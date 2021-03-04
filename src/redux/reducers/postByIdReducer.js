@@ -6,6 +6,10 @@ const getPostById = (state = {},action) => {
                 loading: false,
                 error: null
             }
+        case "POST_LIKED":
+            return{
+                liked:action.payload
+            }
             default:
                 return state
     }

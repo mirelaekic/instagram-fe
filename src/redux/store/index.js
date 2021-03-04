@@ -5,10 +5,12 @@ import loginReducer from "../reducers/loginReducer";
 import postPostReducer from "../reducers/postPostReducer";
 import postByIdReducer from "../reducers/postByIdReducer"
 import getPostsReducer from "../reducers/getPostsReducer";
-import commentReducer from "../reducers/commentReducer"
+import commentReducer from "../reducers/commentReducer";
+import getLikesReducer from "../reducers/getLikesReducer"
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
+   authorizedUser:{},
   registeredUser: {},
   loggedInUser: {},
   posts: {
@@ -21,12 +23,16 @@ export const initialState = {
     postedPost:{},
     error: null,
   },
+  liked:{},
   singlePost:{},
   comment:{},
+  getLikes:[]
   
 };
 
 const RootReducer = combineReducers({
+    getLikes:getLikesReducer,
+    liked:postByIdReducer,
     comment:commentReducer,
     singlePost:postByIdReducer,
     postedPost: postPostReducer,
