@@ -1,7 +1,10 @@
+/** @format */
+
 import React, { useState } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { Button } from "@material-ui/core/";
+import "./EditProfile.css";
 const EditButton = withStyles((theme) => ({
   root: {
     color: "black",
@@ -60,17 +63,31 @@ export default function EditProfile(props) {
   };
 
   return (
-    <>
+    <div>
       <EditButton onClick={(e) => handleToggle(e)}>
         <b>Edit Profile</b>
       </EditButton>
       <Container className={open === true ? "editProf" : "editProf d-none"}>
-        <Row>
-          <Col xs={3}></Col>
+        <Row className="h-100">
+          <Col className="h-100" xs={3}>
+            <div id="rightSideYeet">
+              <ul id="rightSideUl">
+                <li>Change Profile</li>
+                <li>Change Password</li>
+                <li>Apps and Websites</li>
+                <li>E-mail and SMS</li>
+                <li>Push-Notifications</li>
+                <li>Contacts</li>
+                <li>Privacy n shid</li>
+                <li>Login-Activity</li>
+                <li>E-mails from Pornhub</li>
+              </ul>
+            </div>
+          </Col>
           <Col xs={9}>
             <Row>
-              <Col xs={12}>
-                <Form onSubmit={(e) => handleEdit(e)}>
+              <Col xs={12} id="mainContainer">
+                <Form id="mainFormBox" onSubmit={(e) => handleEdit(e)}>
                   <Form.Group className="editInput">
                     <Form.Label className="mr-2">Name</Form.Label>
                     <Form.Control
@@ -82,6 +99,7 @@ export default function EditProfile(props) {
                   </Form.Group>
                   <Form.Group className="editInput">
                     <Form.Label className="mr-2">Username</Form.Label>
+
                     <Form.Control
                       type="text"
                       placeholder="Username"
@@ -108,7 +126,7 @@ export default function EditProfile(props) {
                     />
                   </Form.Group>
                   <Form.Group className="editInput">
-                    <Form.Label className="mr-2">Phone Number</Form.Label>
+                    <Form.Label className="mr-2">Number</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Phone Number"
@@ -125,13 +143,15 @@ export default function EditProfile(props) {
                       onChange={(e) => setGender(e.currentTarget.value)}
                     />
                   </Form.Group>
-                  <Button type="submit">Submit</Button>
+                  <Button className="w-100" type="submit">
+                    Submit
+                  </Button>
                 </Form>
               </Col>
             </Row>
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   );
 }
