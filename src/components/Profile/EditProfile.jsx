@@ -4,7 +4,10 @@ import React, { useState } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { Button } from "@material-ui/core/";
+import {  useSelector } from "react-redux";
 import "./EditProfile.css";
+import { useLocation,Route ,withRouter} from "react-router";
+
 const EditButton = withStyles((theme) => ({
   root: {
     color: "black",
@@ -18,7 +21,7 @@ const EditButton = withStyles((theme) => ({
   },
 }))(Button);
 
-export default function EditProfile(props) {
+function EditProfile(props) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(props.user.name);
   const [username, setUsername] = useState(props.user.username);
@@ -61,12 +64,20 @@ export default function EditProfile(props) {
       props.fetchProfile();
     }
   };
-
+  const users = useSelector((state) => state.allUsers.users)
+  const meData = useSelector((state) => state.loggedInUser.user)
+  
+  const location = useLocation()
+  
+  const filter = location.pathname === "/profile/me"
+  console.log(filter,"the filtered")
+  console.log(location.pathname,"LOCATION INFO")
+  const matches = meData.id === users.id;
   return (
     <div>
-      <EditButton onClick={(e) => handleToggle(e)}>
+      {location === true ? <EditButton onClick={(e) => handleToggle(e)}>
         <b>Edit Profile</b>
-      </EditButton>
+      </EditButton> : <div></div>}
       <Container className={open === true ? "editProf" : "editProf d-none"}>
         <Row className="h-100">
           <Col className="h-100" xs={3}>
@@ -155,3 +166,4 @@ export default function EditProfile(props) {
     </div>
   );
 }
+export default withRouter(EditProfile)
