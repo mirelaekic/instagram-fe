@@ -9,7 +9,25 @@ export default class Responsive extends Component {
   state = {
     display: true,
     width: "100%",
+    stories: [],
   };
+
+  componentDidMount = () => {
+    this.fetchStories();
+  };
+
+  fetchStories = async () => {
+    try {
+      let response = await fetch("http://localhost:9001/insta/story", {
+        credentials: "include",
+      });
+      let resp = await response.json();
+      this.setState({ stories: resp });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     var settings = {
       dots: false,
@@ -58,29 +76,14 @@ export default class Responsive extends Component {
       >
         <Slider {...settings}>
           <div>
-            <CreateStory />
+            <CreateStory fetchStory={this.fetchStories} />
           </div>
-          <div>
-            <Story />
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
-          <div>
-            <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
-          </div>
-          <div>
-            <h3>7</h3>
-          </div>
-          <div>
-            <h3>8</h3>
-          </div>
+          {this.state.stories.length > 0 &&
+            this.state.stories.map((story) => (
+              <div>
+                <Story story={story} />
+              </div>
+            ))}
         </Slider>
       </div>
     );
