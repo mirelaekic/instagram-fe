@@ -14,7 +14,10 @@ import TvIcon from "@material-ui/icons/Tv";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import "./Profile.css";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import backend from "../../client";
+import PostsGrid from "../../components/Profile/PostsGrid";
 const useStyles = makeStyles({
   Menu: {
     color: "1px solid #e3e3e3",
@@ -26,7 +29,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Profile() {
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  loginUser: (credentls) =>
+    dispatch({
+      type: "LOGIN_USER",
+      payload: credentls,
+    }),
+});
+
+function Profile(props) {
   const classes = useStyles();
 
   const [target, setTarget] = useState("POSTS");
@@ -65,8 +78,17 @@ export default function Profile() {
   };
   const authorize = async () => {
     try {
-      const result = await backend.get("/insta/users/me");
-      console.log(result);
+      if (props.match.params.id === "me") {
+        const result = await backend.get("/insta/users/me");
+        console.log("-----------------------", result);
+        props.loginUser(result.data);
+      } else {
+        const result = await backend.get(
+          `/insta/users/${props.match.params.id}`
+        );
+        console.log("-----------------------", result);
+        props.loginUser(result.data);
+      }
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -78,16 +100,28 @@ export default function Profile() {
   }, []);
   const handleDisplay = () => {
     if (target === "POSTS") {
-      return <NoPosts />;
+      if (props.loggedInUser.user.posts.length > 0) {
+        return <PostsGrid posts={props.loggedInUser.user.posts} />;
+      } else {
+        return <NoPosts />;
+      }
     }
     if (target === "IGTV") {
       return <NoIGTV />;
     }
     if (target === "SAVED") {
-      return <NoSaved />;
+      if (props.loggedInUser.user.savedposts.length > 0) {
+        return <PostsGrid posts={props.loggedInUser.user.savedposts} />;
+      } else {
+        return <NoSaved />;
+      }
     }
     if (target === "TAGGED") {
-      return <NoTagged />;
+      if (props.loggedInUser.user.taggeds.length > 0) {
+        return <PostsGrid posts={props.loggedInUser.user.taggeds} />;
+      } else {
+        return <NoTagged />;
+      }
     }
   };
   return (
@@ -99,10 +133,13 @@ export default function Profile() {
           <Container maxWidth="md" className="mt-5">
             <Row className="mb-5">
               <Col className="px-5 col-4 ">
-                <ProfilePic />
+                <ProfilePic url={props.loggedInUser.user.imgurl} />
               </Col>
               <Col className="col-8">
-                <ProfileDescription />
+                <ProfileDescription
+                  user={props.loggedInUser.user}
+                  fetchProfile={authorize}
+                />
               </Col>
             </Row>
 
@@ -158,3 +195,6 @@ export default function Profile() {
     </>
   );
 }
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Profile)
+);

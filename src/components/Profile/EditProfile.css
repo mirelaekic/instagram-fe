@@ -1,0 +1,41 @@
+#mainContainer{
+    margin-top: 2rem!important;
+}
+
+.editProf{
+    width:100%;
+    height:80%;
+}
+label {
+    margin-top: 2rem!important;
+    display: inline-block!important;
+    width: 200px!important;
+    text-align: right!important;
+    
+  }​
+#mainFormBox{
+    margin-top: 2rem!important;
+    position: fixed;
+    margin-top: 2rem;
+    
+}
+#rightSideYeet{
+    
+    border-right: 1px solid rgba(var(--b6a,219,219,219),1);
+    height: 100%;
+}
+#rightSideUl{
+    list-style: none;
+}
+li{
+    padding-top:1rem;
+    padding-right:1rem;
+    margin-left:-2rem;
+    padding-bottom:1rem;
+    color: rgba(var(--i1d,38,38,38),1);
+    font-weight: 500;
+    color: #262626;
+}
+li:hover{
+    color: rgba(var(--i1d,38,38,38),1);
+}
