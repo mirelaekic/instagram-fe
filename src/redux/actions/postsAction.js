@@ -64,7 +64,7 @@ export const getPostById = (id) => {
       }
     };
   };*/
-export const uploadPost = (e) => {
+export const uploadPost = (e, description) => {
   return async (dispatch) => {
     let formData = new FormData();
     formData.append("PostImage", e);
@@ -73,7 +73,7 @@ export const uploadPost = (e) => {
         method: "POST",
         headers: { Accept: "application/json" },
         credentials: "include",
-        body: formData,
+        body: formData,description
       });
       if (res.ok) {
         const posts = await res.json();
