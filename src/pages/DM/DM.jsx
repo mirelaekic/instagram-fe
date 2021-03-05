@@ -42,6 +42,16 @@ function DM(props) {
       );
       let parsedResp = await history.json();
       setChatHistory(parsedResp);
+      if (target.hasOwnProperty("messageHistory")) {
+        const index = chatHistory.findIndex(
+          (history) => history.withUserId === target.userId
+        );
+
+        setTarget({
+          ...target,
+          messageHistory: chatHistory[index].messageHistory,
+        });
+      }
       console.log(parsedResp);
     } catch (error) {
       console.log(error);
