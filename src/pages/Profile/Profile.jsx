@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "@material-ui/core";
 import { Row, Col } from "react-bootstrap";
 import ProfilePic from "../../components/Profile/ProfilePic";
@@ -13,8 +13,8 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import TvIcon from "@material-ui/icons/Tv";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import "./Profile.css"
-import backend from '../../client'
+import "./Profile.css";
+import backend from "../../client";
 const useStyles = makeStyles({
   Menu: {
     color: "1px solid #e3e3e3",
@@ -34,8 +34,8 @@ export default function Profile() {
   const [igtv, setIgtv] = useState(null);
   const [saved, setSaved] = useState(null);
   const [tagged, setTagged] = useState(null);
-const [loading, setLoading] = useState(true)
-  const handlePosts = () => {
+  const [loading, setLoading] = useState(true);
+  const handlePosts = () => { 
     setTarget("POSTS");
     setPosts("1.3px solid black");
     setIgtv(null);
@@ -63,96 +63,99 @@ const [loading, setLoading] = useState(true)
     setSaved(null);
     setTagged("1.3px solid black");
   };
-  const authorize =async() => {
+  const authorize = async () => {
     try {
-      const result = await backend.get('/insta/users/me')
-      console.log(result)
-setLoading(false)
-
-    }catch(e){
-      console.log(e)
+      const result = await backend.get("/insta/users/me");
+      console.log(result);
+      setLoading(false);
+    }catch (e) {
+      console.log(e);
     }
   }
 
-useEffect (()=>{
-  authorize()
-},[])
-  const handleDisplay = () => {
-    if (target === "POSTS") {
-      return <NoPosts />;
-    }
-    if (target === "IGTV") {
-      return <NoIGTV />;
-    }
-    if (target === "SAVED") {
-      return <NoSaved />;
-    }
-    if (target === "TAGGED") {
-      return <NoTagged />;
-    }
-  };
+      useEffect (()=>{
+        authorize()
+      },[])
+        const handleDisplay = () => {
+          if (target === "POSTS") {
+            return <NoPosts />;
+          }
+          if (target === "IGTV") {
+            return <NoIGTV />;
+          }
+          if (target === "SAVED") {
+            return <NoSaved />;
+          }
+          if (target === "TAGGED") {
+            return <NoTagged />;
+          }
+        };    
   return (
     <>
-    {loading ? <div>Loading</div> : 
+      {loading ? (
+        <div>Loading</div>
+      ) : (
+        <div className="mt-5 profilePage">
+          <Container maxWidth="md" className="mt-5">
+            <Row className="mb-5">
+              <Col className="px-5 col-4 ">
+                <ProfilePic />
+              </Col>
+              <Col className="col-8">
+                <ProfileDescription />
+              </Col>
+            </Row>
 
-    <div className="mt-5 profilePage">
-      <Container maxWidth="md" className="mt-5">
-        <Row className="mb-5">
-          <Col className="px-5 col-4 ">
-            <ProfilePic />
-          </Col>
-          <Col className="col-8">
-            <ProfileDescription />
-          </Col>
-        </Row>
-
-        <Row style={{ borderTop: "1px solid #e3e3e3" }}>
-          <Col className="col-3"></Col>
-          <Col className="col-6 d-flex justify-content-between">
-            <span
-              className={classes.Menu}
-              onClick={handlePosts}
-              style={{ borderTop: posts }}
-            >
-              <ViewModuleIcon className="mr-1" />
-              POSTS
-            </span>
-            <span
-              className={classes.Menu}
-              onClick={handleIGTV}
-              style={{ borderTop: igtv }}
-            >
-              <TvIcon className="mr-1" />
-              IGTV
-            </span>
-            <span
-              className={classes.Menu}
-              onClick={handleSaved}
-              style={{ borderTop: saved }}
-            >
-              <BookmarkBorderIcon className="mr-1" />
-              SAVED
-            </span>
-            <span
-              className={classes.Menu}
-              onClick={handleTagged}
-              style={{ borderTop: tagged }}
-            >
-              <PermIdentityIcon className="mr-1" />
-              TAGGED
-            </span>
-          </Col>
-          <Col className="col-3"></Col>
-        </Row>
-        <Row className="justify-content-center">
-          <Col>{handleDisplay()}</Col>
-        </Row>
+            <Row style={{ borderTop: "1px solid #e3e3e3" }}>
+              <Col className="col-3"></Col>
+              <Col className="col-6 d-flex justify-content-between">
+                <span
+                  className={classes.Menu}
+                  onClick={handlePosts}
+                  style={{ borderTop: posts }}
+                >
+                  <ViewModuleIcon className="mr-1" />
+                  POSTS
+                </span>
+                <span
+                  className={classes.Menu}
+                  onClick={handleIGTV}
+                  style={{ borderTop: igtv }}
+                >
+                  <TvIcon className="mr-1" />
+                  IGTV
+                </span>
+                <span
+                  className={classes.Menu}
+                  onClick={handleSaved}
+                  style={{ borderTop: saved }}
+                >
+                  <BookmarkBorderIcon className="mr-1" />
+                  SAVED
+                </span>
+                <span
+                  className={classes.Menu}
+                  onClick={handleTagged}
+                  style={{ borderTop: tagged }}
+                >
+                  <PermIdentityIcon className="mr-1" />
+                  TAGGED
+                </span>
+              </Col>
+              <Col className="col-3"></Col>
+            </Row>
+            <Row className="justify-content-center">
+            <Col>{handleDisplay()}</Col>
+            </Row>
         <Row>
-          <Col>
-            <ProfileFooter />
-          </Col>
-        </Row>
-      </Container>
-    </div>
+              <Col>
+              <ProfileFooter />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      )}
+      
+    </>
   );
 }
