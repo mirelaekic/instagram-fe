@@ -21,7 +21,6 @@ export const getMe = () => {
       }
     };
   };
-  /*
 export const getAllUsers = () => {
     return async (dispatch) => {
         try {
@@ -43,4 +42,4 @@ export const getAllUsers = () => {
             });
           }
     }
-}*/
+}

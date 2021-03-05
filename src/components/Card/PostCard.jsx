@@ -37,12 +37,12 @@ export const PostCard = () => {
   }, []);
 
   const postsData = useSelector((state) => state.posts.posts);
-  const meData = useSelector((state) => state.me.data)
-  console.log(meData,"ME")
+  const loggedUser = useSelector((state) => state.loggedInUser)
+  console.log(loggedUser,"ME")
   return (
     <>
     {postsData ? postsData.sort((a,b) => b.createdAt - a.createdAt).map((p, i) => (
-        <div className="mb-4">
+        <div key={i}className="mb-4">
         <Card key={i} className={classes.root}>
           <CardHeader
             avatar={

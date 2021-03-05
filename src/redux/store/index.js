@@ -10,6 +10,7 @@ import getLikesReducer from "../reducers/getLikesReducer";
 import getUsersReducer from "../reducers/usersReducer";
 import likedReducer from "../reducers/likedReducer";
 import getCommentsReducer from "../reducers/getCommentsReducer"
+import followReducer from "../reducers/followReducer"
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
@@ -52,10 +53,16 @@ export const initialState = {
     loading: false,
     users: [],
     error: null,
-  }
+  },
+  follow:{
+    loading: false,
+    follow: {},
+    error: null,
+}
 };
 
 const RootReducer = combineReducers({
+    follow:followReducer,
     allUsers:getUsersReducer,
 comments:getCommentsReducer,
   me: getUsersReducer,
