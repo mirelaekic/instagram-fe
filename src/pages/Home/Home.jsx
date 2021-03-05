@@ -11,6 +11,7 @@ function Home() {
 
   return (
     <>
+    {!user ? (<Redirect to="/login" />) : (
       <Container className="home-container">
         <Grid container spacing={2}>
           <Grid item xs={8}>
@@ -31,7 +32,7 @@ function Home() {
             </div>
           </Grid>
         </Grid>
-      </Container>
+      </Container>)}
     </>
   );
 }
