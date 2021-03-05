@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import { Avatar, Badge } from "@material-ui/core/";
+import { Form } from "react-bootstrap";
 
 const useStyles = makeStyles({
   Avatar: {
@@ -11,6 +12,50 @@ const useStyles = makeStyles({
 });
 
 export default function CreateStory() {
+  const [video, setVideo] = useState();
+
+  const uploadVid = async () => {
+    console.log("uploading");
+    let formData = new FormData();
+    formData.append("PostImage", video);
+    try {
+      const response = await fetch("http://localhost:9001/insta/story", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        credentials: "include",
+        body: formData,
+      });
+      if (response.ok) {
+        setVideo();
+        console.log("uploaded");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (video) {
+      uploadVid();
+    }
+  }, [video]);
+
+  const checkDuration = (vid) => {
+    let video = document.createElement("video");
+    video.preload = "metadata";
+
+    video.onloadedmetadata = function () {
+      window.URL.revokeObjectURL(video.src);
+      let duration = video.duration;
+      vid.duration = duration;
+      console.log(vid);
+      if (vid.duration <= 10) {
+        setVideo(vid);
+      }
+    };
+    video.src = URL.createObjectURL(vid);
+  };
+
   const SmallIcon = withStyles((theme) => ({
     root: {
       width: 20,
@@ -27,20 +72,30 @@ export default function CreateStory() {
       <React.Fragment>
         <div>
           <div>
-            <Badge
-              overlap="circle"
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              badgeContent={<SmallIcon />}
-            >
-              <Avatar
-                alt="Travis Howard"
-                src="http://placecorgi.com/260/180"
-                className={classes.Avatar}
+            <Form.Group>
+              <Form.Label>
+                <Badge
+                  overlap="circle"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  badgeContent={<SmallIcon />}
+                >
+                  <Avatar
+                    alt="Travis Howard"
+                    src="http://placecorgi.com/260/180"
+                    className={classes.Avatar}
+                  />
+                </Badge>
+              </Form.Label>
+              <Form.Control
+                type="file"
+                className="visually-hidden"
+                accept="video/*"
+                onChange={(e) => checkDuration(e.target.files[0])}
               />
-            </Badge>
+            </Form.Group>
           </div>
         </div>
       </React.Fragment>
