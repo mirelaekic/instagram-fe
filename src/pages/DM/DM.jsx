@@ -41,6 +41,7 @@ function DM(props) {
         }
       );
       let parsedResp = await history.json();
+      setChatHistory(parsedResp);
       console.log(parsedResp);
     } catch (error) {
       console.log(error);
@@ -63,12 +64,15 @@ function DM(props) {
       helpMeGod(data);
       console.log("SOMEONE ELSE DISCONNECTING");
     });
+  }, []);
+
+  useEffect(() => {
     socket.on("PRIVATE_MESSAGE", (data) => getChatHistory());
   }, []);
 
   useEffect(() => {
     return () => {
-      socket.emit("LOGOUT");
+      socket.emit("LOGOUT", { userId: props.loggedInUser.user.id.toString() });
     };
   }, []);
 
@@ -93,20 +97,47 @@ function DM(props) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await getChatHistory();
     socket.emit("USER_CONNECTED", currentUser);
   };
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    socket.emit("PRIVATE_MESSAGE", {
+    await socket.emit("PRIVATE_MESSAGE", {
       reciever: target.userId,
       sender: props.loggedInUser.user.id.toString(),
       message: message,
     });
-    getChatHistory();
+    setTimeout(() => {
+      getChatHistory();
+    }, 1000);
+
     setMessage("");
+  };
+
+  const handleTarget = (user) => {
+    const online = displayUsers.find(
+      (onlineUser) => onlineUser.userId === user.withUserId
+    );
+    const info = allUsers.find(
+      (fullUser) => fullUser.id.toString() === user.withUserId
+    );
+    if (online) {
+      user = { ...user, ...online, ...info };
+    } else {
+      user = { ...user, ...info };
+    }
+    setTarget(user);
+  };
+
+  const handleHarder = (user) => {
+    const info = allUsers.find(
+      (fullUser) => fullUser.id.toString() === user.userId
+    );
+    user = { ...user, ...info };
+    setTarget(user);
   };
 
   return (
@@ -116,19 +147,78 @@ function DM(props) {
           <ul>
             <li>Global</li>
             {displayUsers.length > 0 &&
-              displayUsers.map((user, i) => (
-                <li key={i} onClick={() => setTarget(user)}>
-                  {user.username ? user.username : user.userId}
-                  {user.online && ": online"}
-                </li>
+              displayUsers.map((user, i) =>
+                chatHistory.find(
+                  (history) => history.withUserId === history.userId
+                ) ? (
+                  ""
+                ) : (
+                  <li onClick={() => handleHarder(user)}>{user.userId}</li>
+                )
+              )}
+            {chatHistory.length > 0 &&
+              chatHistory.map((user, i) => (
+                <>
+                  <li key={i}>
+                    <div className="d-flex">
+                      <img
+                        src={
+                          allUsers.find(
+                            (fullUser) =>
+                              fullUser.id.toString() === user.withUserId
+                          )
+                            ? allUsers.find(
+                                (fullUser) =>
+                                  fullUser.id.toString() === user.withUserId
+                              ).imgurl
+                            : ""
+                        }
+                        width="30px"
+                      ></img>
+                      <span onClick={() => handleTarget(user)}>
+                        {allUsers.find(
+                          (fullUser) =>
+                            fullUser.id.toString() === user.withUserId
+                        )
+                          ? allUsers.find(
+                              (fullUser) =>
+                                fullUser.id.toString() === user.withUserId
+                            ).username
+                          : ""}
+                      </span>
+                      <span>
+                        {displayUsers.find(
+                          (onlineUser) => onlineUser.userId === user.withUserId
+                        )
+                          ? ": online"
+                          : ""}
+                      </span>
+                    </div>
+                  </li>
+                </>
               ))}
           </ul>
         </Col>
         <Col xs={7} id="chatCol">
           <Button onClick={(e) => handleSubmit(e)}>Send Messages</Button>
-          {target.hasOwnProperty("userId") && (
-            <span>Chatting with {target.userId}</span>
+          {target.hasOwnProperty("id") && (
+            <span>Chatting with {target.username}</span>
           )}
+          <ul className="w-100">
+            {target.hasOwnProperty("messageHistory") &&
+              target.messageHistory.length > 0 &&
+              target.messageHistory.map((message) => (
+                <li
+                  className={
+                    message.send === props.loggedInUser.user.id.toString()
+                      ? "ml-auto"
+                      : "mr-auto"
+                  }
+                >
+                  {message.text} - {message.createdAt}
+                </li>
+              ))}
+          </ul>
           <form id="chat" onSubmit={(e) => sendMessage(e)}>
             <input
               autoComplete="off"
