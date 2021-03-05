@@ -148,7 +148,7 @@ const useStyles = makeStyles((theme) => ({
                 open={open}
                 onClose={handleClose}
               >
-                <Link to="/profile/:id">
+                <Link to="/profile/me">
                 <MenuItem onClick={handleClose}> <AccountCircleRoundedIcon /> Profile</MenuItem>
                 </Link>
                 <MenuItem onClick={handleClose}> <BookmarkBorderSharpIcon /> Saved</MenuItem>
