@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -10,9 +10,13 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Comments from "../Comments/Comments";
 import "./Card.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost,getPostById,deletePost } from "../../redux/actions/postsAction";
+import {
+  getPost,
+  getPostById,
+  deletePost,
+} from "../../redux/actions/postsAction";
 import { getMe } from "../../redux/actions/usersActions";
-import moment from "moment"
+import moment from "moment";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "40rem",
@@ -27,40 +31,48 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const PostCard = () => {
-
   const classes = useStyles();
   const dispatch = useDispatch();
 
- useEffect(() => {
+  useEffect(() => {
     dispatch(getPost());
-   //dispatch(getMe())
+    //dispatch(getMe())
   }, []);
 
   const postsData = useSelector((state) => state.posts.posts);
-  const loggedUser = useSelector((state) => state.loggedInUser)
-  console.log(loggedUser,"ME")
+  const loggedUser = useSelector((state) => state.loggedInUser);
+  console.log(loggedUser, "ME");
   return (
     <>
-    {postsData ? postsData.sort((a,b) => b.createdAt - a.createdAt).map((p, i) => (
-        <div key={i}className="mb-4">
-        <Card key={i} className={classes.root}>
-          <CardHeader
-            avatar={
-              <Avatar alt={p.user.username} aria-label={p.user.username} />
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={p.user.username}
-          />
-          <CardMedia className={classes.media} image={p.imgurl} />
-           <Comments post={p}/> 
-        </Card>
-    </div>
-      )) : <h1>error</h1>}
-      </>
+      {postsData ? (
+        postsData
+          .sort((a, b) => b.createdAt - a.createdAt)
+          .map((p, i) => (
+            <div key={i} className="mb-4">
+              <Card key={i} className={classes.root}>
+                <CardHeader
+                  avatar={
+                    <Avatar
+                      alt={p.user.username}
+                      aria-label={p.user.username}
+                    />
+                  }
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title={p.user.username}
+                />
+                <CardMedia className={classes.media} image={p.imgurl} />
+                <Comments post={p} />
+              </Card>
+            </div>
+          ))
+      ) : (
+        <h1>error</h1>
+      )}
+    </>
   );
 };
 export default PostCard;
