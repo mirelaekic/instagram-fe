@@ -1,8 +1,10 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { connect } from "react-redux";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-
+import "./DM.css";
 const connOpt = {
   transports: ["websocket"],
 };
@@ -150,95 +152,110 @@ function DM(props) {
   };
 
   return (
-    <Container className="mt-5" id="chat-page">
-      <Row>
-        <Col xs={5} id="usersCol">
-          <ul>
-            <li>Global</li>
-            {displayUsers.length > 0 &&
-              displayUsers.map((user, i) =>
-                chatHistory.find(
-                  (history) => history.withUserId === history.userId
-                ) ? (
-                  ""
-                ) : (
-                  <li onClick={() => handleHarder(user)}>{user.userId}</li>
-                )
-              )}
-            {chatHistory.length > 0 &&
-              chatHistory.map((user, i) => (
-                <>
-                  <li key={i}>
-                    <div className="d-flex">
-                      <img
-                        src={
-                          allUsers.find(
+    <Container className="mt-5">
+      <Row id="chat-page">
+        <Col id="usersCol" className="mr-0 pr-0">
+          <div id="usersColBox">
+            <ul id="stupidC">
+              <div id="profileCardBox">
+                <li id="stupidC2">FETCH PROFILE HERE !</li>
+              </div>
+              {displayUsers.length > 0 &&
+                displayUsers.map((user, i) =>
+                  chatHistory.find(
+                    (history) => history.withUserId === history.userId
+                  ) ? (
+                    ""
+                  ) : (
+                    <li onClick={() => handleHarder(user)}>{user.userId}</li>
+                  )
+                )}
+              {chatHistory.length > 0 &&
+                chatHistory.map((user, i) => (
+                  <>
+                    <li key={i} id="stupidC2">
+                      <div className="d-flex">
+                        <img
+                          src={
+                            allUsers.find(
+                              (fullUser) =>
+                                fullUser.id.toString() === user.withUserId
+                            )
+                              ? allUsers.find(
+                                  (fullUser) =>
+                                    fullUser.id.toString() === user.withUserId
+                                ).imgurl
+                              : ""
+                          }
+                          width="30px"
+                        ></img>
+                        <span onClick={() => handleTarget(user)}>
+                          {allUsers.find(
                             (fullUser) =>
                               fullUser.id.toString() === user.withUserId
                           )
                             ? allUsers.find(
                                 (fullUser) =>
                                   fullUser.id.toString() === user.withUserId
-                              ).imgurl
-                            : ""
-                        }
-                        width="30px"
-                      ></img>
-                      <span onClick={() => handleTarget(user)}>
-                        {allUsers.find(
-                          (fullUser) =>
-                            fullUser.id.toString() === user.withUserId
-                        )
-                          ? allUsers.find(
-                              (fullUser) =>
-                                fullUser.id.toString() === user.withUserId
-                            ).username
-                          : ""}
-                      </span>
-                      <span>
-                        {displayUsers.find(
-                          (onlineUser) => onlineUser.userId === user.withUserId
-                        )
-                          ? ": online"
-                          : ""}
-                      </span>
-                    </div>
-                  </li>
-                </>
-              ))}
-          </ul>
+                              ).username
+                            : ""}
+                        </span>
+                        <span>
+                          {displayUsers.find(
+                            (onlineUser) =>
+                              onlineUser.userId === user.withUserId
+                          )
+                            ? ": online"
+                            : ""}
+                        </span>
+                      </div>
+                    </li>
+                  </>
+                ))}
+            </ul>
+          </div>
         </Col>
-        <Col xs={7} id="chatCol">
-          <Button onClick={(e) => handleSubmit(e)}>Send Messages</Button>
-          {target.hasOwnProperty("id") && (
-            <span>Chatting with {target.username}</span>
-          )}
-          <ul className="w-100">
-            {target.hasOwnProperty("messageHistory") &&
-              target.messageHistory.length > 0 &&
-              target.messageHistory.map((message) => (
-                <li
-                  className={
-                    message.send === props.loggedInUser.user.id.toString()
-                      ? "ml-auto"
-                      : "mr-auto"
-                  }
-                >
-                  {message.text} - {message.createdAt}
-                </li>
-              ))}
-          </ul>
-          <form id="chat" onSubmit={(e) => sendMessage(e)}>
-            <input
-              autoComplete="off"
-              value={message}
-              placeholder="Message"
-              onChange={(e) => setMessage(e.currentTarget.value)}
-            />
-            <Button type="submit" className="rounded-0">
-              Send
-            </Button>
-          </form>
+        <Col className="ml-0 pl-0" id="chatCol">
+          <div id="chatColBox">
+            <div id="centeredMessageButton">
+              <Button for="show" onClick={(e) => handleSubmit(e)}>
+                Send Messages
+              </Button>
+            </div>
+            {target.hasOwnProperty("id") && (
+              <span>Chatting with {target.username}</span>
+            )}
+            <ul className="w-100" id="stupidC">
+              {target.hasOwnProperty("messageHistory") &&
+                target.messageHistory.length > 0 &&
+                target.messageHistory.map((message) => (
+                  <li
+                    id="stupidC2"
+                    className={
+                      message.send === props.loggedInUser.user.id.toString()
+                        ? "ml-auto"
+                        : "mr-auto"
+                    }
+                  >
+                    {message.text} - {message.createdAt}
+                  </li>
+                ))}
+            </ul>
+            <div id="chatForm">
+              <form id="chat" onSubmit={(e) => sendMessage(e)}>
+                <input
+                  id="inputForm"
+                  autoComplete="off"
+                  value={message}
+                  placeholder="Start a conversation"
+                  onChange={(e) => setMessage(e.currentTarget.value)}
+                />
+                <Button type="submit" className="rounded-0">
+                  Send
+                </Button>
+              </form>
+            </div>
+          </div>
         </Col>
       </Row>
     </Container>
