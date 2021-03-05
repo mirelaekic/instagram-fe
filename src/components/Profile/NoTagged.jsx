@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Container, Row, Col } from "react-bootstrap";
-import TvIcon from "@material-ui/icons/Tv";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 
 const useStyles = makeStyles({
   root: {
@@ -20,19 +20,7 @@ const useStyles = makeStyles({
   captions: {},
 });
 
-export default function NoPosts() {
-  const EditButton = withStyles((theme) => ({
-    root: {
-      color: "#fafafa",
-      backgroundColor: "#0095f6",
-      textTransform: "none",
-      padding: "0.3rem 2rem",
-
-      "&:hover": {
-        backgroundColor: "#0095f6",
-      },
-    },
-  }))(Button);
+export default function NoTagged() {
   const classes = useStyles();
   return (
     <Container className="mt-3 rounded p-5">
@@ -40,19 +28,16 @@ export default function NoPosts() {
         <Col>
           <Row className="justify-content-center align-items-center">
             <span className={classes.iconBorder}>
-              <TvIcon className={classes.icon} />
+              <PermIdentityIcon className={classes.icon} />
             </span>
           </Row>
           <Row className="justify-content-center align-items-center">
-            <span className={classes.header}>Upload a Video</span>
+            <span className={classes.header}>Photos of you</span>
           </Row>
           <Row className="justify-content-center align-items-center">
             <span className={classes.caption}>
-              Videos must be between 1 and 60 minutes long.
+              When people tag you in photos, they'll appear here.
             </span>
-          </Row>
-          <Row className="justify-content-center align-items-center mt-4">
-            <EditButton>Upload</EditButton>
           </Row>
         </Col>
       </Row>
