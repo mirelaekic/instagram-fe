@@ -54,6 +54,7 @@ export const PostCard = () => {
                   avatar={
                     <Avatar
                       alt={p.user.username}
+                      src={p.user.imgurl}
                       aria-label={p.user.username}
                     />
                   }
