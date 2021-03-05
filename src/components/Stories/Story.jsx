@@ -34,7 +34,7 @@ function CreateStory(props) {
     <Grid container>
       {console.log(props.story)}
       <React.Fragment>
-        <Link to="/stories/:user/:storyId">
+        <Link to={"/stories/:user/:storyId?url=" + props.story.imgurl}>
           <div
             className={classes.Border}
             style={{ marginLeft: margin }}

@@ -1,7 +1,14 @@
 import React from "react";
 import Stories from "react-insta-stories";
+import { withRouter } from "react-router-dom";
 
 class App extends React.Component {
+  stories2 = [
+    {
+      url: this.props.match.params.url,
+      type: "video",
+    },
+  ];
   render() {
     return (
       <div className="stories">
@@ -11,7 +18,7 @@ class App extends React.Component {
           height={768}
           keyboardNavigation
           defaultInterval={10000}
-          stories={stories2}
+          stories={this.stories2}
           onStoryEnd={(s, st) => console.log("story ended", s, st)}
           onAllStoriesEnd={(s, st) => console.log("all stories ended", s, st)}
           onStoryStart={(s, st) => console.log("story started", s, st)}
@@ -21,15 +28,4 @@ class App extends React.Component {
   }
 }
 
-const stories2 = [
-  {
-    url: "https://picsum.photos/1080/1920",
-  },
-  {
-    url:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    type: "video",
-  },
-];
-
-export default App;
+export default withRouter(App);
