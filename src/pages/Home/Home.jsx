@@ -2,6 +2,7 @@ import { Container, Grid } from "@material-ui/core";
 import React,{useState,useEffect} from "react";
 import {withRouter, Redirect} from "react-router-dom"
 import PostCard from "../../components/Card/PostCard";
+import Carousel from "../../components/Stories/Carousel";
 import "./Home.css";
 import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions";
 

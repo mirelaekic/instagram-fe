@@ -24,7 +24,6 @@ export default function CreateStory() {
   const classes = useStyles();
   return (
     <div>
-      s
       <React.Fragment>
         <div>
           <div>
