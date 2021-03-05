@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ProfilePic() {
+export default function ProfilePic(props) {
   const classes = useStyles();
   return (
     <div>
@@ -19,7 +19,7 @@ export default function ProfilePic() {
           <div>
             <Avatar
               alt="Travis Howard"
-              src="http://placecorgi.com/260/180"
+              src={props.url}
               className={classes.Avatar}
             />
           </div>
