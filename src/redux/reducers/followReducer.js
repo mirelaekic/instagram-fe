@@ -8,7 +8,7 @@ const followUser = (state = initialState, action) => {
     switch (action.type) {
         case "FOLLOW":
             return {
-                posts: action.payload,
+                follow: action.payload,
                 loading: false,
                 error: null
             }

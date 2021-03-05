@@ -1,11 +1,12 @@
-import React from "react";
+import React,{useState} from "react";
 import "./HomeSuggestions.css";
 import { ListGroup } from "react-bootstrap";
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch} from "react-redux";
 import { useHistory } from "react-router-dom";
 import {Link} from "react-router-dom"
+import {followUser} from "../../redux/actions/followAction"
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -24,13 +25,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function HomeSuggestions() {
+  const [imFollowing,setImFollowing] = useState(false)
   const userData = useSelector((state) => state.loggedInUser)
   const allUsers = useSelector((state) => state.allUsers)
-  console.log(allUsers.users,"all users in homeSUgg")
+  const follow = useSelector((state) => state.follow)
+const dispatch = useDispatch()
+// error is coming somewhere here in this func
+const toFollow = (userId) => {
+ // dispatch(followUser(userId))
+  //setImFollowing(true)
+}
+
   const classes = useStyles();
-  const names = ["Ari","Sued","Abdul","Mirela"]
-
-
   return (
     <div>
       <ListGroup className="mt-3 homeSuggestionsList">
@@ -58,9 +64,9 @@ export default function HomeSuggestions() {
             <p className="text-muted">followed by</p>
             </div>
           </div>
-          <a>Follow</a>
+          <button onClick={toFollow(user.id)}>Follow</button>
         </ListGroup.Item> 
-        ))}
+        ))} 
       </ListGroup>
     </div>
   );
