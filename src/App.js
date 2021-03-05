@@ -11,10 +11,18 @@ import Login from "./pages/Login/Login";
 import "./App.css";
 import ProfilePage from "./pages/Profile/Profile";
 import StoryPage from "./pages/Story/StoryPage";
+import { useSelector,useDispatch } from "react-redux";
+import {getAllUsers} from "./redux/actions/usersActions"
 
 const exclusionArray = ["/login", "/register", "/stories/:user/:storyId"];
 
 function App(props) {
+  const allUsers = useSelector((state) => state.allUsers)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllUsers())
+  }, [])
+  console.log(allUsers,"all users")
   return (
     <>
       {exclusionArray.indexOf(props.location.pathname) < 0 && <NavBar />}
