@@ -15,6 +15,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import "./Profile.css";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import backend from "../../client";
 import PostsGrid from "../../components/Profile/PostsGrid";
 const useStyles = makeStyles({
@@ -77,9 +78,17 @@ function Profile(props) {
   };
   const authorize = async () => {
     try {
-      const result = await backend.get("/insta/users/me");
-      console.log("-----------------------", result);
-      props.loginUser(result.data);
+      if (props.match.params.id === "me") {
+        const result = await backend.get("/insta/users/me");
+        console.log("-----------------------", result);
+        props.loginUser(result.data);
+      } else {
+        const result = await backend.get(
+          `/insta/users/${props.match.params.id}`
+        );
+        console.log("-----------------------", result);
+        props.loginUser(result.data);
+      }
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -127,7 +136,10 @@ function Profile(props) {
                 <ProfilePic url={props.loggedInUser.user.imgurl} />
               </Col>
               <Col className="col-8">
-                <ProfileDescription user={props.loggedInUser.user} />
+                <ProfileDescription
+                  user={props.loggedInUser.user}
+                  fetchProfile={authorize}
+                />
               </Col>
             </Row>
 
@@ -183,4 +195,6 @@ function Profile(props) {
     </>
   );
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Profile)
+);
