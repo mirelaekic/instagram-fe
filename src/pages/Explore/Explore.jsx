@@ -6,7 +6,7 @@ export default function Explore() {
     const [loading, setLoading] = useState(true);
     const authorize = async () => {
         try {
-          const result = await backend.get("/insta/users/me");
+          const result = await backend.get("/insta/posts");
           console.log(result);
           setLoading(false);
         } catch (e) {

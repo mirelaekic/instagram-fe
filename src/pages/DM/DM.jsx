@@ -1,10 +1,12 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import { connect } from "react-redux";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "./DM.css";
+import Moment from "react-moment"
 const connOpt = {
   transports: ["websocket"],
 };
@@ -21,6 +23,9 @@ function DM(props) {
   const [displayUsers, setDisplayUsers] = useState([]);
   const [chatHistory, setChatHistory] = useState([]);
   const [target, setTarget] = useState({});
+
+  const meData = useSelector((state) => state.loggedInUser.user)
+  console.log(meData,"ME")
 
   const getAllUsers = async () => {
     try {
@@ -111,6 +116,7 @@ function DM(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await getChatHistory();
+    
     socket.emit("USER_CONNECTED", currentUser);
   };
 
@@ -154,20 +160,20 @@ function DM(props) {
     user = { ...user, ...info };
     setTarget(user);
   };
-
+  
   return (
     <Container className="mt-5">
       <Row id="chat-page">
-        <Col id="usersCol" className="mr-0 pr-0">
+        <Col lg={4} id="usersCol" className="mr-0 pr-0">
           <div id="usersColBox">
             <ul id="stupidC">
               <div id="profileCardBox">
-                <li id="stupidC2">FETCH PROFILE HERE !</li>
+                <li id="stupidC2">{meData.username}</li>
               </div>
               {displayUsers.length > 0 &&
                 displayUsers.map((user, i) =>
                   chatHistory.find(
-                    (history) => history.withUserId === history.userId
+                    (history) => (history.withUserId === history.userId)
                   ) ? (
                     ""
                   ) : (
@@ -177,7 +183,7 @@ function DM(props) {
               {chatHistory.length > 0 &&
                 chatHistory.map((user, i) => (
                   <>
-                    <li key={i} id="stupidC2">
+                    <li key={i} className="users" id="stupidC2">
                       <div className="d-flex">
                         <img
                           src={
@@ -219,7 +225,7 @@ function DM(props) {
             </ul>
           </div>
         </Col>
-        <Col className="ml-0 pl-0" id="chatCol">
+        <Col lg={8} id="chatCol">
           <div id="chatColBox">
             <div id="centeredMessageButton">
               <Button id="stupidButton" onClick={(e) => handleSubmit(e)}>
@@ -240,11 +246,11 @@ function DM(props) {
                       id="stupidC2"
                       className={
                         message.send === props.loggedInUser.user.id.toString()
-                          ? "ml-auto"
-                          : "mr-auto"
+                          ? "ml-auto sender"
+                          : "mr-auto sent"
                       }
                     >
-                      {message.text} - {message.createdAt}
+                      {message.text} - <Moment fromNow>{message.createdAt}</Moment> {/**here is the fucking time */}
                     </li>
                   ))}
               </ul>

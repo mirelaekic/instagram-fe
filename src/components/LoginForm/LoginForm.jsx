@@ -31,7 +31,6 @@ const mapDispatchToProps = (dispatch) => ({
             payload: resp,
           });
           console.log(response, "login response");
-          localStorage.setItem("user", credentls.username);
         }
       } catch (error) {
         console.log(error);
@@ -48,15 +47,8 @@ const LoginForm = (props) => {
     await props.loginUserWithThunk({ username, password });
     props.history.push("/");
   };
-  const user = localStorage.getItem("user");
-  if (user) {
-    return <Redirect to="/" />;
-  } else {
     return (
       <>
-        {user ? (
-          <Redirect to="/" />
-        ) : (
           <Form onSubmit={handleSubmit}>
             <div className="reg-form mt-4">
               <input
@@ -78,10 +70,8 @@ const LoginForm = (props) => {
               Log In
             </button>
           </Form>
-        )}
       </>
     );
-  }
 };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(LoginForm)

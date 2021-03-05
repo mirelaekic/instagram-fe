@@ -28,6 +28,7 @@ export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [image, setImage] = useState()
+  
   console.log(image,"img")
 
 const dispatch = useDispatch()

@@ -39,7 +39,6 @@ const names = ["Ari","Sued","Abdul","Mirela"]
             <Avatar src="/static/images/avatar/1.jpg" className={classes.small}/>
             <strong>{userData.user.username}{" "}</strong>
           </div>
-          
           <a>Switch</a>
         </ListGroup.Item>
         <h3 className="suggestion-header">Suggestions For You</h3>
