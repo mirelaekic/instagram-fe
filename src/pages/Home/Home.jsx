@@ -23,18 +23,19 @@ function Home(props) {
             </div>
           </Grid>
 
-          <Grid
-            className="homeSug-grid"
-            item
-            xs={4}
-            style={{ position: "-webkit-sticky !important" }}
-          >
-            <div className="home-suggestions">
-              <HomeSuggestions />
-            </div>
+            <Grid
+              className="homeSug-grid"
+              item
+              xs={4}
+              style={{ position: "-webkit-sticky !important" }}
+            >
+              <div className="home-suggestions">
+                <HomeSuggestions />
+              </div>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>)}
+        </Container>
+      )}
     </>
   );
 }

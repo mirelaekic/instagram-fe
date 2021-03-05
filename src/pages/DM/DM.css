@@ -1,0 +1,123 @@
+#chat-page{
+    margin-top: 5rem;
+}
+
+#usersColBox{
+    border: 1px solid #ccc;
+    height:80vh;
+    border-radius: 5px;
+    margin-left: 50px!important;
+    padding:0;
+}
+
+#chatColBox{
+    border: 1px solid #ccc;
+    height:80vh;
+    border-radius: 5px;
+    margin-left: 0;
+    margin-right:40px;
+    padding:0;
+    width:100%;
+    
+}
+.users{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: lightblue;
+    padding: 10px;
+    border: solid lightblue 1px;
+    border-radius: 30px;
+    margin-right: 15px;
+}
+.users:hover{
+    cursor: pointer;
+    border: solid rgb(148, 193, 207) 1px;
+
+}
+#profileCardBox{
+    border-bottom: 1px solid #ccc!important;
+    margin-top: 2rem;
+    text-align: center;
+    width:109%;
+    margin-left:-40px!important;
+}
+
+
+#stupidC{
+    list-style-type: none;
+    text-decoration: none !important;
+}
+.sent{
+    margin-top: 10px;
+    width: 40%;
+    border: 5px solid rgba(207, 207, 207, 0.815);
+    padding: 5px;
+    border-radius: 30px;
+    background-color: rgba(173, 173, 173, 0.815);
+}
+.sender{
+        margin-top: 10px;
+        width: 40%;
+        border: 5px solid rgba(228, 195, 195, 0.815);
+        padding: 5px;
+        border-radius: 30px;
+        background-color: rgba(228, 195, 195, 0.815);
+}
+
+#centeredMessageButton{
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50% !important;
+    margin-top: 50%;
+}
+#stupidButton{
+     z-index: 500;
+     position: absolute;
+     top: 11px;
+     left: 100px;
+     margin-left: 10px;
+}
+
+ #chatForm{
+    position: sticky;
+    width: 100% !important;;
+    border-radius: 30px!important;
+    margin-top: 21rem;
+ }
+ #inputForm{
+    width: 90% !important;
+    height: 40px!important;
+    border-radius: 30px!important;
+    border: 1.5px solid #ccc;
+    margin-bottom: -17px !important;
+    
+ }
+ .btn-primary {
+    color: rgb(116, 116, 116) !important;
+    background-color: rgb(235, 235, 235) !important;
+    border-color: #ffffff !important;
+    border-radius: 30% !important;
+    padding: 10px !important;
+}
+ #inputForm:focus{
+    outline: none;
+ }
+
+ #chattingWith{
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    font-weight: 900;
+ }
+
+ #chatBody{
+   height: 83%;
+   overflow-y: scroll;
+   position: absolute;
+   top: 10%;
+   width:145%;
+ }
