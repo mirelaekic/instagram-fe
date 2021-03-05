@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core/";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   cssAvatar: {
@@ -30,19 +31,26 @@ export default function CreateStory() {
   return (
     <Grid container>
       <React.Fragment>
-        <div
-          className={classes.Border}
-          style={{ marginLeft: margin }}
-          onClick={handleClick}
-          onMouseLeave={handleLeave}
-          onMouse
+        <Link
+          to={(location) => ({
+            ...location,
+            pathname: "/stories/:user/:storyId",
+          })}
         >
-          <Avatar
-            className={classes.cssAvatar}
-            alt="Travis Howard"
-            src="http://placecorgi.com/260/180"
-          />
-        </div>
+          <div
+            className={classes.Border}
+            style={{ marginLeft: margin }}
+            onClick={handleClick}
+            onMouseLeave={handleLeave}
+            onMouse
+          >
+            <Avatar
+              className={classes.cssAvatar}
+              alt="Travis Howard"
+              src="http://placecorgi.com/260/180"
+            />
+          </div>
+        </Link>
       </React.Fragment>
     </Grid>
   );
