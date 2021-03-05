@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
-  registerUser: (credentials) => 
-  dispatch({
-    type:"REGISTER_USER",
-    payload:credentials
-  }),
-  registerUserWithThunk: (credentials) => 
+  registerUser: (credentials) =>
+    dispatch({
+      type: "REGISTER_USER",
+      payload: credentials,
+    }),
+  registerUserWithThunk: (credentials) =>
     dispatch(async (dispatch, getState) => {
       try {
         const response = await fetch(
@@ -24,16 +24,16 @@ const mapDispatchToProps = (dispatch) => ({
         );
         if (response.ok) {
           dispatch({
-            type:"REGISTER_USER",
-            payload:credentials
-          })
-          console.log(response, "register response")
+            type: "REGISTER_USER",
+            payload: credentials,
+          });
+          console.log(response, "register response");
           localStorage.setItem("user", credentials);
         }
       } catch (error) {
         console.log(error);
       }
-    })
+    }),
 });
 
 const RegisterForm = (props) => {
@@ -47,7 +47,15 @@ const RegisterForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.registerUserWithThunk({ email, name, username,phonenumber,imgurl,gender,password });
+    props.registerUserWithThunk({
+      email,
+      name,
+      username,
+      phonenumber,
+      imgurl,
+      gender,
+      password,
+    });
   };
   return (
     <Form onSubmit={handleSubmit}>

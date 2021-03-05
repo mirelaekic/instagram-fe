@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "@material-ui/core";
 import { Row, Col } from "react-bootstrap";
 import ProfilePic from "../../components/Profile/ProfilePic";
@@ -13,8 +13,8 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import TvIcon from "@material-ui/icons/Tv";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import "./Profile.css"
-import backend from '../../client'
+import "./Profile.css";
+import backend from "../../client";
 const useStyles = makeStyles({
   Menu: {
     color: "1px solid #e3e3e3",
@@ -34,7 +34,7 @@ export default function Profile() {
   const [igtv, setIgtv] = useState(null);
   const [saved, setSaved] = useState(null);
   const [tagged, setTagged] = useState(null);
-const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const handlePosts = () => {
     setTarget("POSTS");
     setPosts("1.3px solid black");
@@ -63,20 +63,19 @@ const [loading, setLoading] = useState(true)
     setSaved(null);
     setTagged("1.3px solid black");
   };
-  const authorize =async() => {
+  const authorize = async () => {
     try {
-      const result = await backend.get('/insta/users/me')
-      console.log(result)
-setLoading(false)
-
-    }catch(e){
-      console.log(e)
+      const result = await backend.get("/insta/users/me");
+      console.log(result);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
-useEffect (()=>{
-  authorize()
-},[])
+  useEffect(() => {
+    authorize();
+  }, []);
   const handleDisplay = () => {
     if (target === "POSTS") {
       return <NoPosts />;
@@ -92,9 +91,6 @@ useEffect (()=>{
     }
   };
   return (
-    <>
-    {loading ? <div>Loading</div> : 
-
     <div className="mt-5 profilePage">
       <Container maxWidth="md" className="mt-5">
         <Row className="mb-5">

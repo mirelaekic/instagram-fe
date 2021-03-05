@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import instagramLogo from "../../logo/bestlogo.png";
 import StoryPlayer from "../../components/Stories/StoryPlayer";
 import CloseIcon from "@material-ui/icons/Close";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   storyBackground: {
@@ -19,11 +19,13 @@ const useStyles = makeStyles({
   closeIcon: {
     fontSize: "2rem",
     color: "#fafafa",
+    cursor: "pointer",
   },
 });
 
 export default function StoryPage(props) {
-  console.log(props.location);
+  let history = useHistory();
+  console.log(history);
   const classes = useStyles();
   return (
     <div className={classes.storyBackground}>
@@ -39,10 +41,12 @@ export default function StoryPage(props) {
             <StoryPlayer className={classes.storyPlayer} />
           </Col>
           <Col className="py-3 d-flex justify-content-end">
-            <span>
-              <Link>
-                <CloseIcon className={classes.closeIcon} />
-              </Link>
+            <span
+              onClick={() => {
+                history.goBack();
+              }}
+            >
+              <CloseIcon className={classes.closeIcon} />
             </span>
           </Col>
         </Row>

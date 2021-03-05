@@ -23,30 +23,27 @@ export default function Home() {
 
   return (
     <>
-      {loading ? (
-        <h1>Loading..</h1>
-      ) : (
-        <Container className="home-container">
-          <Grid container spacing={2}>
-            <Grid item xs={8}>
-              <div className="homeCard mb-5">
-                <PostCard />
-              </div>
-            </Grid>
-
-            <Grid
-              className="homeSug-grid"
-              item
-              xs={4}
-              style={{ position: "-webkit-sticky !important" }}
-            >
-              <div className="home-suggestions">
-                <HomeSuggestions />
-              </div>
-            </Grid>
+      <Container className="home-container">
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <Carousel />
+            <div className="homeCard mb-5">
+              <PostCard />
+            </div>
           </Grid>
-        </Container>
-      )}
+
+          <Grid
+            className="homeSug-grid"
+            item
+            xs={4}
+            style={{ position: "-webkit-sticky !important" }}
+          >
+            <div className="home-suggestions">
+              <HomeSuggestions />
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 }
