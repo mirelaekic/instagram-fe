@@ -52,6 +52,9 @@ width: 100%;
 }.like{
     margin: 0px !important;
 }
+.likedBtn{
+    color: red;
+}
 .viewmore{
     margin-left: -7px;
     margin-top: -1px;

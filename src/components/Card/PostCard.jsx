@@ -10,8 +10,9 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Comments from "../Comments/Comments";
 import "./Card.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost,getPostById } from "../../redux/actions/postsAction";
-
+import { getPost,getPostById,deletePost } from "../../redux/actions/postsAction";
+import { getMe } from "../../redux/actions/usersActions";
+import moment from "moment"
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "40rem",
@@ -30,23 +31,22 @@ export const PostCard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+ useEffect(() => {
     dispatch(getPost());
+   //dispatch(getMe())
   }, []);
 
-
   const postsData = useSelector((state) => state.posts.posts);
-
+  const meData = useSelector((state) => state.me.data)
+  console.log(meData,"ME")
   return (
     <>
-    {postsData ? postsData.map((p, i) => (
+    {postsData ? postsData.sort((a,b) => b.createdAt - a.createdAt).map((p, i) => (
         <div className="mb-4">
         <Card key={i} className={classes.root}>
           <CardHeader
             avatar={
-              <Avatar aria-label={p.user.username} className={classes.avatar}>
-                U
-              </Avatar>
+              <Avatar alt={p.user.username} aria-label={p.user.username} />
             }
             action={
               <IconButton aria-label="settings">
@@ -56,7 +56,7 @@ export const PostCard = () => {
             title={p.user.username}
           />
           <CardMedia className={classes.media} image={p.imgurl} />
-          <Comments post={p}/>
+           <Comments post={p}/> 
         </Card>
     </div>
       )) : <h1>error</h1>}

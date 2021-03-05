@@ -29,6 +29,7 @@ export default function TransitionsModal() {
   const [open, setOpen] = React.useState(false);
   const [image, setImage] = useState()
   console.log(image,"img")
+
 const dispatch = useDispatch()
   const handleOpen = () => {
     setOpen(true);
@@ -37,7 +38,9 @@ const dispatch = useDispatch()
   const handleClose = () => {
     setOpen(false);
   };
-
+  const postImage = () => {
+    
+  }
   return (
     <div>
       <IconButton onClick={handleOpen}>
@@ -75,7 +78,7 @@ const dispatch = useDispatch()
                 />
               </Col>
               <Col lg={4}>
-                <IconButton onClick={() => dispatch(uploadPost(image))}>
+                <IconButton onClose={handleClose} onClick={() => dispatch(uploadPost(image))}>
                   <CheckSharpIcon />
                 </IconButton>{" "}
               </Col>

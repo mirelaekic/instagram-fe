@@ -6,7 +6,7 @@ export const getPost = () => {
         credentials: "include",
       });
       if (res.ok) {
-        const posts = await res.json();
+          const posts = await res.json();
         dispatch({
           type: "GET_POSTS_SUCCESSFUL",
           payload: posts,
@@ -42,6 +42,28 @@ export const getPostById = (id) => {
     }
   };
 };
+/*export const deletePost = (id) => {
+    return async (dispatch) => {
+      try {
+        const res = await fetch("http://localhost:9001/insta/posts/" + id, {
+          method: "DELETE",
+          credentials: "include",
+        });
+        if (res.ok) {
+          const posts = await res.json();
+          dispatch({
+            type: "DELETE_POST",
+            payload: posts,
+          });
+        }
+      } catch (error) {
+        dispatch({
+          type: "GET_POSTS_ERROR",
+          payload: error.message,
+        });
+      }
+    };
+  };*/
 export const uploadPost = (e) => {
   return async (dispatch) => {
     let formData = new FormData();
@@ -59,6 +81,7 @@ export const uploadPost = (e) => {
           type: "POST_POST",
           payload: posts,
         });
+        dispatch(getPost())
       }
     } catch (error) {
       dispatch({
@@ -109,7 +132,7 @@ export const getLikes = (userId, postId) => {
         }
       } catch (error) {
         dispatch({
-          type: "COMMENT_ERROR",
+          type: "GET_LIKES_ERROR",
           payload: error.message,
         });
       }

@@ -17,6 +17,11 @@ const getPostsReducer = (state = initialState, action) => {
                 ...state,
                 loading: true
             }
+        //case "DELETE_POST":
+        //    return {
+        //        ...state,
+        //        posts: [...state.posts.filter((c) => c !== action.payload)]
+        //    }
         case "GET_POSTS_ERROR":
             return {
                 ...state,

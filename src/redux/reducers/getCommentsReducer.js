@@ -1,20 +1,14 @@
 const initialState = {
     loading: false,
-    users: [],
+    comments: [],
     error: null,
 }
 
-const getUsersReducer = (state = initialState, action) => {
+const getCommentsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "GET_ME":
+        case "GET_COMMENTS":
             return {
-                users: action.payload,
-                loading: false,
-                error: null
-            }
-        case "GET_USERS":
-            return {
-                users: action.payload,
+                comments: action.payload,
                 loading: false,
                 error: null
             }
@@ -23,7 +17,12 @@ const getUsersReducer = (state = initialState, action) => {
                 ...state,
                 loading: true
             }
-        case "ME_ERROR":
+        case "DELETE_COMMENT":
+            return {
+                ...state,
+                comments: [...state.comments.filter((c) => c !== action.payload)]
+            }
+        case "COMMENTS_ERROR":
             return {
                 ...state,
                 loading: false,
@@ -33,4 +32,4 @@ const getUsersReducer = (state = initialState, action) => {
             return state
     }
 }
-export default getUsersReducer
+export default getCommentsReducer

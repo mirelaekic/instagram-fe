@@ -3,6 +3,8 @@ import "./HomeSuggestions.css";
 import { ListGroup } from "react-bootstrap";
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import { useDispatch, useSelector } from "react-redux";
+import {getAllUsers} from "../../redux/actions/usersActions"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,8 +24,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function HomeSuggestions() {
+  const userData = useSelector((state) => state.loggedInUser)
+  const allUsers = useSelector((state) => state.allUsers)
+  console.log(allUsers,"props in home suggestions")
 const classes = useStyles();
 const names = ["Ari","Sued","Abdul","Mirela"]
+
 
   return (
     <div>
@@ -31,7 +37,7 @@ const names = ["Ari","Sued","Abdul","Mirela"]
         <ListGroup.Item className="myProfile-list">
           <div className="profile-name profileAvatar">
             <Avatar src="/static/images/avatar/1.jpg" className={classes.small}/>
-            <strong>Current user{" "}</strong>
+            <strong>{userData.user.username}{" "}</strong>
           </div>
           
           <a>Switch</a>

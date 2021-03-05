@@ -1,28 +1,17 @@
 import { Container, Grid } from "@material-ui/core";
 import React,{useState,useEffect} from "react";
+import {withRouter, Redirect} from "react-router-dom"
 import PostCard from "../../components/Card/PostCard";
 import "./Home.css";
 import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions";
 import backend from "../../client";
 
-export default function Home() {
-    const [loading, setLoading] = useState(true);
-    const authorize = async () => {
-        try {
-          const result = await backend.get("/insta/posts");
-          console.log(result);
-          setLoading(false);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      useEffect(() => {
-        authorize();
-      }, []);
+function Home() {
+    const user = localStorage.getItem("user")
 
   return (
       <>
-      {loading ? (<h1>Loading..</h1>) : (
+      {!user ? (<Redirect to="/login" />) : (
     <Container className="home-container">
       <Grid container spacing={2}>
         <Grid item xs={8}>
@@ -46,3 +35,5 @@ export default function Home() {
     </>
   );
 }
+
+export default withRouter(Home)

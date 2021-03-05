@@ -3,14 +3,17 @@ import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import registerReducer from "../reducers/registerReducer";
 import loginReducer from "../reducers/loginReducer";
 import postPostReducer from "../reducers/postPostReducer";
-import postByIdReducer from "../reducers/postByIdReducer"
+import postByIdReducer from "../reducers/postByIdReducer";
 import getPostsReducer from "../reducers/getPostsReducer";
 import commentReducer from "../reducers/commentReducer";
-import getLikesReducer from "../reducers/getLikesReducer"
+import getLikesReducer from "../reducers/getLikesReducer";
+import getUsersReducer from "../reducers/usersReducer";
+import likedReducer from "../reducers/likedReducer";
+import getCommentsReducer from "../reducers/getCommentsReducer"
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
-   authorizedUser:{},
+  authorizedUser: {},
   registeredUser: {},
   loggedInUser: {},
   posts: {
@@ -18,24 +21,49 @@ export const initialState = {
     posts: [],
     error: null,
   },
-  postedPost:{
+  postedPost: {
     loading: false,
-    postedPost:{},
+    postedPost: {},
     error: null,
   },
-  liked:{},
-  singlePost:{},
-  comment:{},
-  getLikes:[]
-  
+  me: {
+    loading: false,
+    data: {},
+    error: null,
+  },
+  liked: {
+    loading: false,
+    liked: {},
+    error: null,
+  },
+  singlePost: {},
+  comment: {},
+  comments:{
+    loading: false,
+    comments: [],
+    error: null,
+  },
+  getLikes: {
+    loading: false,
+    liked: {},
+    error: null,
+  },
+  allUsers:{
+    loading: false,
+    users: [],
+    error: null,
+  }
 };
 
 const RootReducer = combineReducers({
-    getLikes:getLikesReducer,
-    liked:postByIdReducer,
-    comment:commentReducer,
-    singlePost:postByIdReducer,
-    postedPost: postPostReducer,
+    allUsers:getUsersReducer,
+comments:getCommentsReducer,
+  me: getUsersReducer,
+  getLikes: getLikesReducer,
+  liked: likedReducer,
+  comment: commentReducer,
+  singlePost: postByIdReducer,
+  postedPost: postPostReducer,
   posts: getPostsReducer,
   registeredUser: registerReducer,
   loggedInUser: loginReducer,

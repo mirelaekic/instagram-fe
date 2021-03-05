@@ -16,8 +16,11 @@ import ModeCommentOutlinedIcon from "@material-ui/icons/ModeCommentOutlined";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
+import Favorite from "@material-ui/icons/Favorite";
+import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import {
   postComment, getPost,} from "../../redux/actions/postsAction";
+  import {getComments} from "../../redux/actions/commentActions"
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -33,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModal(post) {
-  console.log(post.post, "this is the info of the post");
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [text, setText] = useState("");
@@ -50,11 +52,10 @@ export default function TransitionsModal(post) {
 const dispatch = useDispatch()
 
   const handleComment = async () => {
-   /* await dispatch(postComment(text, post.post.id));
-    dispatch(getPost());
-    setText("");*/
+    dispatch(postComment(text, post.post.id));
+    dispatch(getComments());
+    setText("");
   };
-  console.log(handleComment())
   return (
     <div>
       <button className="ViewComments" type="button" onClick={handleOpen}>
@@ -88,7 +89,7 @@ const dispatch = useDispatch()
                     <strong> {post.post.user.username}</strong>
                   </ListGroupItem>
                   <div className="commentList">
-                    {post.post.comments.map((c, i) => (
+                    {post.post.comments.reverse().map((c, i) => (
                       <div className="middleDiv">
                         {post.post.description === null ? (
                           <ListGroupItem>{post.post.description}</ListGroupItem>
@@ -110,9 +111,9 @@ const dispatch = useDispatch()
                 </ListGroup>
                 <div className="commentAction">
                   <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                      <FavoriteBorderOutlined />
-                    </IconButton>
+                  <IconButton onClick={post.handleLike}>
+            {post.ifLiked ? <Favorite className="likedBtn"/> : <FavoriteBorder />}
+            </IconButton>
                     <IconButton aria-label="comment">
                       <ModeCommentOutlinedIcon />
                     </IconButton>
@@ -130,7 +131,8 @@ const dispatch = useDispatch()
                   <div className="commentSection">
                     <EmojiEmotionsOutlinedIcon />
                     <input
-                      id="text"
+                      value={text}
+                      minLength="2"
                       onChange={(e) => setText(e.target.value)}
                       className="commentInput"
                       type="text"

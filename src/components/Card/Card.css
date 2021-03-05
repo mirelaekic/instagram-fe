@@ -1,3 +1,7 @@
 .MuiCardHeader-root{
     padding: 7px !important;
 }
+.MuiCardMedia-root{
+    height: 34rem !important;
+    background-size: contain;
+}

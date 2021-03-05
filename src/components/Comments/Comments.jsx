@@ -13,12 +13,15 @@ import PostModal from "../PostModal/PostModal";
 import "./Comments.css";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import { useDispatch, useSelector } from "react-redux";
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
   postComment,
   likePost,
   getPost,
   getLikes
 } from "../../redux/actions/postsAction";
+
+import {getComments, deleteComment} from "../../redux/actions/commentActions"
 import Moment from "react-moment";
 import Checkbox from "@material-ui/core/Checkbox";
 import {Redirect,withRouter} from "react-router-dom"
@@ -31,64 +34,46 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
 }));
- function Comments(posts) {
-  console.log(posts,"STATESSSSSSSS")
+ function Comments({post}) {
   const [text, setText] = useState("");
   const [like, setLike] = useState(false);
-  const dispatch = useDispatch();
+  const [currentComment, setCurrentComment] = useState()
+  const [loading,setLoading] = useState(true)
+  const [commentId, setCommentId] = useState()
   const userData = useSelector((state) => state.loggedInUser)
-  console.log(userData, "USER")
+  const commentsData = useSelector((state) => state.comments)
+  const dispatch = useDispatch()
 
   const handleComment = async () => {
-    await dispatch(postComment(text, posts.post.id));
-    dispatch(getPost());
+    dispatch(postComment(text, post.id));
+    await dispatch(getComments());
     setText("");
   };
-  /*const getLikes = async () => {
-    if(!userData) {
-      return (<Redirect to="/login" />)
-    } else {
-      await dispatch(getLikes(userData.user.id,posts.post.id))
-    }
-  }*/
-/*useEffect(() => {
-  dispatch(getLikes(userData.user.id,posts.post.id))
-}) */
+  /*useEffect(() => {
+    handleComment()
+  }, [setCurrentComment])*/
 
-const Liked = useSelector((state) => state.liked)
-console.log(Liked,"liked posts")
-
+  useEffect(() => {
+    dispatch(getLikes(userData.user.id,post.id))
+  },[setLike])   
   const handleLike = () => {
     setLike(!like);
-    dispatch(likePost(posts.post.id));
+    dispatch(likePost(post.id));    
   };
-  /*useEffect(() => {
-    if (posts.post.likes.length > 0 && posts.post.likes.filter((like) => (like.userId === userData.user.id))){
-      console.log(posts.post.likes[0].userId, "LIKED USER ID")
-      console.log(userData.user.id, "USER ID ")
-      setLike(true)
-    }
-  }, [])*/
 
-  console.log(posts.liked, "THE LIKED");
+/*  const handleDelete = (id) => {
+  console.log(id,"commentID")
+  dispatch(deleteComment(id))
+}*/
   const classes = useStyles();
-
   return (
     <div className="commentContainer">
-      {posts.post ? (
+      {post ? (
         <>
           <CardActions disableSpacing>
-            <FormControlLabel
-                className="like"
-              control={
-                <Checkbox
-                  onClick={handleLike}
-                  icon={<FavoriteBorder />}
-                  checkedIcon={like ? <FavoriteBorder /> : <Favorite />}
-                  name="checkedH"
-                />
-              }
-            />
+            <IconButton onClick={() => handleLike()}>
+            {like ? <Favorite className="likedBtn"/> : <FavoriteBorder />}
+            </IconButton>
             <IconButton aria-label="comment">
               <ModeCommentOutlinedIcon />
             </IconButton>
@@ -97,31 +82,35 @@ console.log(Liked,"liked posts")
             </IconButton>
           </CardActions>
           <CardContent>
-            {posts.post.likes.length > 0 ? (
+            {post.likes.length > 0 ? (
               <Typography paragraph className="likedby">
-                Liked by {posts.post.likes.length}{" "}
-              </Typography>
+                Liked by {post.likes.length}{" "}
+              </Typography> 
             ) : (
               <Typography paragraph></Typography>
             )}
-            {posts.post.description === null ? (
+            {post.description === null ? (
               <Typography></Typography>
             ) : (
-              <Typography paragraph>{posts.post.description}</Typography>
+              <Typography paragraph>{post.description}</Typography>
             )}
             <div className="viewmore">
-            {posts.post.comments.length > 3 ? (
-              <PostModal post={posts.post} />
+            {post.comments.length > 3 ? (
+              <PostModal like={handleLike} ifLiked={like} post={post} />
             ) : (
               <Typography></Typography>
             )}
             </div>
-            {posts.post.comments.length > 0 ? (
+            {post.comments.length > 0 ? (
               <>
-                {posts.post.comments.slice(0, 3).map((c, i) => (
+                {post.comments.sort((a,b) => b.createdAt - a.createdAt).slice(0, 3).map((c, i) => (
                   <>
                     <Typography key={i} paragraph className="comment">
                       <strong>{c.user.username}</strong> {c.text}
+                  { /*c.user.id === userData.user.id ?
+                    //// <IconButton onClick={() => handleDelete(c.id)}>
+                     // <DeleteIcon />
+                  //</IconButton> : <div></div>*/}
                     </Typography>
                   </>
                 ))}
@@ -130,16 +119,16 @@ console.log(Liked,"liked posts")
               <Typography></Typography>
             )}
             <Typography className="text-muted postedAt" paragraph>
-              <Moment fromNow>{posts.post.updatedAt}</Moment>
+              <Moment fromNow>{post.updatedAt}</Moment>
             </Typography>
             <div className="commentSection">
               <EmojiEmotionsOutlinedIcon />
               <input
-                id="text"
+                value={text}
                 onChange={(e) => setText(e.target.value)}
                 className="commentInput"
                 type="text"
-                minChar="2"
+                minLength="2"
                 placeholder="Add a comment..."
               />
               <button onClick={handleComment}>Post</button>
