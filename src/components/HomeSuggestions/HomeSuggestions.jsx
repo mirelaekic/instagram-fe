@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./HomeSuggestions.css";
 import { ListGroup } from "react-bootstrap";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { followUser } from "../../redux/actions/followAction";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -25,12 +26,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function HomeSuggestions() {
-  const [imFollowing, setImFollowing] = useState(false);
+  const [following, setFollowing] = useState(false);
   const userData = useSelector((state) => state.loggedInUser);
   const allUsers = useSelector((state) => state.allUsers);
   const follow = useSelector((state) => state.follow);
   const dispatch = useDispatch();
   // error is coming somewhere here in this func
+
   const toFollow = async (userId) => {
     try {
       const response = await fetch(
@@ -44,7 +46,9 @@ export default function HomeSuggestions() {
       console.log(error);
     }
   };
-
+  useEffect(() => {
+    toFollow(following);
+  }, [following]);
   const classes = useStyles();
   return (
     <div>
@@ -71,7 +75,10 @@ export default function HomeSuggestions() {
                 <p className="text-muted">followed by</p>
               </div>
             </div>
-            <button className="followButton" onClick={() => toFollow(user.id)}>
+            <button
+              className="followButton"
+              onClick={() => setFollowing(user.id)}
+            >
               {userData.user.follows
                 ? userData.user.follows.find(
                     (other) => other.following.id === user.id
