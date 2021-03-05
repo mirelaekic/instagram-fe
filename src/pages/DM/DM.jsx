@@ -46,7 +46,6 @@ function DM(props) {
         const index = chatHistory.findIndex(
           (history) => history.withUserId === target.userId
         );
-
         setTarget({
           ...target,
           messageHistory: chatHistory[index].messageHistory,
