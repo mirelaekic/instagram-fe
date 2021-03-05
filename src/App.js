@@ -1,5 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect } from "react";
 import Home from "./pages/Home/Home";
 import DM from "./pages/DM/DM";
 import Explore from "./pages/Explore/Explore";
