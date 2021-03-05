@@ -143,6 +143,10 @@ function DM(props) {
     setTarget(user);
   };
 
+  const hideButton = () => {
+
+  }
+
   const handleHarder = (user) => {
     const info = allUsers.find(
       (fullUser) => fullUser.id.toString() === user.userId
@@ -218,29 +222,33 @@ function DM(props) {
         <Col className="ml-0 pl-0" id="chatCol">
           <div id="chatColBox">
             <div id="centeredMessageButton">
-              <Button for="show" onClick={(e) => handleSubmit(e)}>
+              <Button id="stupidButton" onClick={(e) => handleSubmit(e)}>
                 Send Messages
               </Button>
             </div>
             {target.hasOwnProperty("id") && (
-              <span>Chatting with {target.username}</span>
+              <div>
+                <span id="chattingWith">Chatting with {target.username}</span>
+              </div>
             )}
-            <ul className="w-100" id="stupidC">
-              {target.hasOwnProperty("messageHistory") &&
-                target.messageHistory.length > 0 &&
-                target.messageHistory.map((message) => (
-                  <li
-                    id="stupidC2"
-                    className={
-                      message.send === props.loggedInUser.user.id.toString()
-                        ? "ml-auto"
-                        : "mr-auto"
-                    }
-                  >
-                    {message.text} - {message.createdAt}
-                  </li>
-                ))}
-            </ul>
+            <div id="chatBody">
+              <ul className="w-100 chatBody" id="stupidC">
+                {target.hasOwnProperty("messageHistory") &&
+                  target.messageHistory.length > 0 &&
+                  target.messageHistory.map((message) => (
+                    <li
+                      id="stupidC2"
+                      className={
+                        message.send === props.loggedInUser.user.id.toString()
+                          ? "ml-auto"
+                          : "mr-auto"
+                      }
+                    >
+                      {message.text} - {message.createdAt}
+                    </li>
+                  ))}
+              </ul>
+            </div>
             <div id="chatForm">
               <form id="chat" onSubmit={(e) => sendMessage(e)}>
                 <input

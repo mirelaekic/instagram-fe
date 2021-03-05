@@ -38,23 +38,22 @@
 }
 
 #centeredMessageButton{
+   
     display: flex;
     align-items: center;
     justify-content: center;
     top: 50% !important;
     margin-top: 50%;
-    -webkit-appearance: push-button;
-    -moz-appearance: button;
 }
-input[type=checkbox]:checked ~ div {
-    visibility: hidden;
- }
-
- #show{display:none!important;}
+#stupidButton{
+     z-index: 500;
+}
 
  #chatForm{
-    margin-top: 65%;
-    height: 50px!important;
+    position: absolute;
+    top: 95%;
+    left: 2%;
+    width: 146% !important;;
     border-radius: 30px!important;
     
  }
@@ -66,4 +65,19 @@ input[type=checkbox]:checked ~ div {
  }
  #inputForm:focus{
     outline: none;
+ }
+
+ #chattingWith{
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    font-weight: 900;
+ }
+
+ #chatBody{
+   height: 83%;
+   overflow-y: scroll;
+   position: absolute;
+   top: 10%;
+   width:145%;
  }
