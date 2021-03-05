@@ -4,7 +4,7 @@ import {withRouter, Redirect} from "react-router-dom"
 import PostCard from "../../components/Card/PostCard";
 import "./Home.css";
 import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions";
-import backend from "../../client";
+
 
 function Home() {
     const user = localStorage.getItem("user")
