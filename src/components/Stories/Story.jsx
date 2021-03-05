@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core/";
-import { Link } from "react-router-dom";
+import { Link, withRouter, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   cssAvatar: {
@@ -19,7 +19,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CreateStory() {
+function CreateStory(props) {
+  const location = useLocation();
   const classes = useStyles();
   const [margin, setMargin] = useState(0);
   const handleClick = () => {
@@ -28,15 +29,11 @@ export default function CreateStory() {
   const handleLeave = () => {
     setMargin(null);
   };
+  console.log("this are the fucking", location.pathname);
   return (
     <Grid container>
       <React.Fragment>
-        <Link
-          to={(location) => ({
-            ...location,
-            pathname: "/stories/:user/:storyId",
-          })}
-        >
+        <Link to="/stories/:user/:storyId">
           <div
             className={classes.Border}
             style={{ marginLeft: margin }}
@@ -55,3 +52,4 @@ export default function CreateStory() {
     </Grid>
   );
 }
+export default withRouter(CreateStory);

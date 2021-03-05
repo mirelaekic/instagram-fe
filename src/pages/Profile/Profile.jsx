@@ -35,7 +35,7 @@ export default function Profile() {
   const [saved, setSaved] = useState(null);
   const [tagged, setTagged] = useState(null);
   const [loading, setLoading] = useState(true);
-  const handlePosts = () => { 
+  const handlePosts = () => {
     setTarget("POSTS");
     setPosts("1.3px solid black");
     setIgtv(null);
@@ -68,28 +68,28 @@ export default function Profile() {
       const result = await backend.get("/insta/users/me");
       console.log(result);
       setLoading(false);
-    }catch (e) {
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
-      useEffect (()=>{
-        authorize()
-      },[])
-        const handleDisplay = () => {
-          if (target === "POSTS") {
-            return <NoPosts />;
-          }
-          if (target === "IGTV") {
-            return <NoIGTV />;
-          }
-          if (target === "SAVED") {
-            return <NoSaved />;
-          }
-          if (target === "TAGGED") {
-            return <NoTagged />;
-          }
-        };    
+  useEffect(() => {
+    authorize();
+  }, []);
+  const handleDisplay = () => {
+    if (target === "POSTS") {
+      return <NoPosts />;
+    }
+    if (target === "IGTV") {
+      return <NoIGTV />;
+    }
+    if (target === "SAVED") {
+      return <NoSaved />;
+    }
+    if (target === "TAGGED") {
+      return <NoTagged />;
+    }
+  };
   return (
     <>
       {loading ? (
@@ -145,17 +145,16 @@ export default function Profile() {
               <Col className="col-3"></Col>
             </Row>
             <Row className="justify-content-center">
-            <Col>{handleDisplay()}</Col>
+              <Col>{handleDisplay()}</Col>
             </Row>
-        <Row>
+            <Row>
               <Col>
-              <ProfileFooter />
+                <ProfileFooter />
               </Col>
             </Row>
           </Container>
         </div>
       )}
-      
     </>
   );
 }
