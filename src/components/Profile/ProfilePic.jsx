@@ -21,25 +21,26 @@ const useStyles = makeStyles({
 function ProfilePic(props) {
   console.log("this are props", props);
   const [image, setImage] = useState();
-  const postProfileImage = (e, userId) => {
-    return async () => {
-      let formData = new FormData();
-      formData.append("ProfilePic", e);
-      try {
-        const res = await fetch(`/insta/users/${userId}/upload`, {
+  const postProfileImage = async (e, userId) => {
+    let formData = new FormData();
+    formData.append("ProfilePic", e);
+    try {
+      const res = await fetch(
+        `http://localhost:9001/insta/users/${props.loggedInUser.user.id}/upload`,
+        {
           method: "PUT",
           headers: { Accept: "application/json" },
           credentials: "include",
           body: formData,
-        });
-        if (res.ok) {
-          const posted = await res.json();
-          console.log(posted, "posted");
         }
-      } catch (error) {
-        console.log(error);
+      );
+      if (res.ok) {
+        const posted = await res.json();
+        console.log(posted, "posted");
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     postProfileImage(image);

@@ -32,6 +32,7 @@ function CreateStory(props) {
   console.log("this are the fucking", location.pathname);
   return (
     <Grid container>
+      {console.log(props.story)}
       <React.Fragment>
         <Link to="/stories/:user/:storyId">
           <div
@@ -44,7 +45,7 @@ function CreateStory(props) {
             <Avatar
               className={classes.cssAvatar}
               alt="Travis Howard"
-              src="http://placecorgi.com/260/180"
+              src={props.story.user.imgurl}
             />
           </div>
         </Link>

@@ -1,0 +1,14 @@
+.visually-hidden {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+label.booba.form-label {
+  margin: 0 !important;
+  width: 50px !important;
+  margin-top: 2vh;
+}

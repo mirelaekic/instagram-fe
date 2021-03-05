@@ -3,6 +3,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import { Avatar, Badge } from "@material-ui/core/";
 import { Form } from "react-bootstrap";
+import "./CreateStory.css";
 
 const useStyles = makeStyles({
   Avatar: {
@@ -11,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CreateStory() {
+export default function CreateStory(props) {
   const [video, setVideo] = useState();
 
   const uploadVid = async () => {
@@ -28,6 +29,7 @@ export default function CreateStory() {
       if (response.ok) {
         setVideo();
         console.log("uploaded");
+        props.fetchStory();
       }
     } catch (error) {
       console.log(error);
@@ -72,8 +74,8 @@ export default function CreateStory() {
       <React.Fragment>
         <div>
           <div>
-            <Form.Group>
-              <Form.Label>
+            <Form.Group className="position-relative">
+              <Form.Label className="booba" htmlFor="uploadStory">
                 <Badge
                   overlap="circle"
                   anchorOrigin={{
@@ -91,6 +93,7 @@ export default function CreateStory() {
               </Form.Label>
               <Form.Control
                 type="file"
+                id="uploadStory"
                 className="visually-hidden"
                 accept="video/*"
                 onChange={(e) => checkDuration(e.target.files[0])}
