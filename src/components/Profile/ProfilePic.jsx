@@ -62,7 +62,7 @@ function ProfilePic(props) {
               <Avatar
                 component="span"
                 alt="Travis Howard"
-                src="http://placecorgi.com/260/180"
+                src={props.loggedInUser.user.imgurl}
                 className={classes.Avatar}
               />
             </label>

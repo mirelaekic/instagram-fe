@@ -37,7 +37,7 @@ export default function StoryPage(props) {
               <img className="instLogo" src={instagramLogo} alt="logo" />
             </Link>
           </Col>
-          <Col>
+          <Col style={{ marginTop: "7rem" }}>
             <StoryPlayer className={classes.storyPlayer} />
           </Col>
           <Col className="py-3 d-flex justify-content-end">
