@@ -6,7 +6,7 @@ export const getPost = () => {
         credentials: "include",
       });
       if (res.ok) {
-          const posts = await res.json();
+        const posts = await res.json();
         dispatch({
           type: "GET_POSTS_SUCCESSFUL",
           payload: posts,
@@ -73,7 +73,8 @@ export const uploadPost = (e, description) => {
         method: "POST",
         headers: { Accept: "application/json" },
         credentials: "include",
-        body: formData,description
+        body: formData,
+        description,
       });
       if (res.ok) {
         const posts = await res.json();
@@ -81,7 +82,7 @@ export const uploadPost = (e, description) => {
           type: "POST_POST",
           payload: posts,
         });
-        dispatch(getPost())
+        dispatch(getPost());
       }
     } catch (error) {
       dispatch({
@@ -94,50 +95,48 @@ export const uploadPost = (e, description) => {
 export const likePost = (postId) => {
   return async (dispatch) => {
     try {
-      const res = await fetch(
-        `http://localhost:9001/insta/like/${postId}`,
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      ); if(res.ok) {
-          const liked = await res.json()
-          console.log(liked,"LIKED")
+      const res = await fetch(`http://localhost:9001/insta/like/${postId}`, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (res.ok) {
+        const liked = await res.json();
+        console.log(liked, "LIKED");
         dispatch({
-            type:"POST_LIKED",
-            payload:liked,
-        })  
+          type: "POST_LIKED",
+          payload: liked,
+        });
       }
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   };
 };
 export const getLikes = (userId, postId) => {
-    return async (dispatch) => {
-      try {
-        const res = await fetch(
-            `http://localhost:9001/insta/like/${userId}/${postId}/posts/`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        if (res.ok) {
-          const likes = await res.json();
-          dispatch({
-            type: "GET_LIKES",
-            payload: likes,
-          });
+  return async (dispatch) => {
+    try {
+      const res = await fetch(
+        `http://localhost:9001/insta/like/${userId}/${postId}/posts/`,
+        {
+          method: "GET",
+          credentials: "include",
         }
-      } catch (error) {
+      );
+      if (res.ok) {
+        const likes = await res.json();
         dispatch({
-          type: "GET_LIKES_ERROR",
-          payload: error.message,
+          type: "GET_LIKES",
+          payload: likes,
         });
       }
-    };
+    } catch (error) {
+      dispatch({
+        type: "GET_LIKES_ERROR",
+        payload: error.message,
+      });
+    }
   };
+};
 
 export const postComment = (text, postId) => {
   return async (dispatch) => {
