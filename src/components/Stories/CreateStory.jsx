@@ -14,13 +14,13 @@ const useStyles = makeStyles({
 
 export default function CreateStory(props) {
   const [video, setVideo] = useState();
-
+  const INST_API = process.env.REACT_APP_INST_API
   const uploadVid = async () => {
     console.log("uploading");
     let formData = new FormData();
     formData.append("PostImage", video);
     try {
-      const response = await fetch("http://localhost:9001/insta/story", {
+      const response = await fetch(INST_API+"/insta/story", {
         method: "POST",
         headers: { Accept: "application/json" },
         credentials: "include",

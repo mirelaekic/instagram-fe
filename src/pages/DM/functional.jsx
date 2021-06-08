@@ -6,8 +6,9 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 const connOpt = {
   transports: ["websocket"],
 };
+const INST_API = process.env.REACT_APP_INST_API
 
-let socket = io("http://localhost:9001", connOpt);
+let socket = io(INST_API, connOpt);
 
 const mapStateToProps = (state) => state;
 
@@ -19,7 +20,7 @@ function DM(props) {
 
   const getAllUsers = async () => {
     try {
-      const response = await fetch("http://localhost:9001/insta/users", {
+      const response = await fetch(INST_API+"/insta/users", {
         credentials: "include",
       });
       const allUsersArray = await response.json();

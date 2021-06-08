@@ -31,7 +31,7 @@ export default function HomeSuggestions() {
   const follow = useSelector((state) => state.follow);
   const dispatch = useDispatch();
   // error is coming somewhere here in this func
-  const {INST_API} = process.env.REACT_APP_INST_API
+  const INST_API = process.env.REACT_APP_INST_API
   const toFollow = async (userId) => {
     try {
       const response = await fetch(

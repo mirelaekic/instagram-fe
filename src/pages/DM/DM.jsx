@@ -10,8 +10,9 @@ import Moment from "react-moment"
 const connOpt = {
   transports: ["websocket"],
 };
+const INST_API = process.env.REACT_APP_INST_API
 
-let socket = io("http://localhost:9001", connOpt);
+let socket = io(INST_API, connOpt);
 
 const mapStateToProps = (state) => state;
 
@@ -26,10 +27,10 @@ function DM(props) {
 
   const meData = useSelector((state) => state.loggedInUser.user)
   console.log(meData,"ME")
-
+  const INST_API = process.env.REACT_APP_INST_API
   const getAllUsers = async () => {
     try {
-      const response = await fetch("http://localhost:9001/insta/users", {
+      const response = await fetch(INST_API+"/insta/users", {
         credentials: "include",
       });
       const allUsersArray = await response.json();
@@ -42,7 +43,7 @@ function DM(props) {
   const getChatHistory = async () => {
     try {
       let history = await fetch(
-        "http://localhost:9001/insta/users/give/me/those/chats",
+        INST_API+"/insta/users/give/me/those/chats",
         {
           credentials: "include",
         }

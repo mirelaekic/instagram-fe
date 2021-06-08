@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import "../RegisterForm/RegisterForm.css";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Redirect, withRouter, Link } from "react-router-dom";
-
+const INST_API = process.env.REACT_APP_INST_API
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(async (dispatch, getState) => {
       try {
         const response = await fetch(
-          "http://localhost:9001/insta/users/login",
+          INST_API+"/insta/users/login",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -57,7 +57,7 @@ const LoginForm = (props) => {
               id="username"
               onChange={(e) => setUsername(e.target.value)}
               type="text"
-              placeholder="Username or username"
+              placeholder="Username"
             />
             <input
               type="password"

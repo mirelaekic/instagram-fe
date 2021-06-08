@@ -1,4 +1,4 @@
-const {INST_API} = process.env.REACT_APP_INST_API
+const INST_API = process.env.REACT_APP_INST_API
 export const getPost = () => {
   return async (dispatch) => {
     try {

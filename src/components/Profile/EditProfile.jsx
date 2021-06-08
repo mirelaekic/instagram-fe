@@ -48,8 +48,9 @@ function EditProfile(props) {
       number: number,
       gender: gender,
     };
+    const INST_API = process.env.REACT_APP_INST_API
     const response = await fetch(
-      "http://localhost:9001/insta/users/" + props.user.id,
+      INST_API + "/insta/users/" + props.user.id,
       {
         method: "PUT",
         body: JSON.stringify(bodyEdit),

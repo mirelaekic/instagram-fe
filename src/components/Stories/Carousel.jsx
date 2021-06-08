@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import CreateStory from "./CreateStory";
 import Story from "./Story";
 
+const INST_API = process.env.REACT_APP_INST_API
 export default class Responsive extends Component {
   state = {
     display: true,
@@ -13,12 +14,11 @@ export default class Responsive extends Component {
   };
 
   componentDidMount = () => {
-    this.fetchStories();
+    this.Stories();
   };
-
   Stories = async () => {
     try {
-      let response = await fetch("http://localhost:9001/insta/story", {
+      let response = await fetch(INST_API+"/insta/story", {
         credentials: "include",
       });
       let resp = await response.json();

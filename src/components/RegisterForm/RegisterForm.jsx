@@ -3,7 +3,8 @@ import { Form, Button } from "react-bootstrap";
 import "./RegisterForm.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+const INST_API = process.env.REACT_APP_INST_API
+console.log(INST_API,"the API ______________________")
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
@@ -16,7 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(async (dispatch, getState) => {
       try {
         const response = await fetch(
-          "http://localhost:9001/insta/users/register",
+          INST_API+"/insta/users/register",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

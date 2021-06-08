@@ -1,5 +1,5 @@
 import axios from "axios";
-const {INST_API} = process.env.REACT_APP_INST_API
+const INST_API = process.env.REACT_APP_INST_API
 const backend = axios.create({
   baseURL:INST_API,
   withCredentials: true,

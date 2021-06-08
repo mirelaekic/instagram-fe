@@ -21,12 +21,13 @@ const useStyles = makeStyles({
 function ProfilePic(props) {
   console.log("this are props", props);
   const [image, setImage] = useState();
+  const INST_API = process.env.REACT_APP_INST_API
   const postProfileImage = async (e, userId) => {
     let formData = new FormData();
     formData.append("ProfilePic", e);
     try {
       const res = await fetch(
-        `http://localhost:9001/insta/users/${props.loggedInUser.user.id}/upload`,
+        `${INST_API}/insta/users/${props.loggedInUser.user.id}/upload`,
         {
           method: "PUT",
           headers: { Accept: "application/json" },
