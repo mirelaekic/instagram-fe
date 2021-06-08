@@ -1,7 +1,8 @@
+const {INST_API} = process.env.REACT_APP_INST_API
 export const getComments = () => {
     return async (dispatch) => {
       try {
-        const res = await fetch("http://localhost:9001/insta/comments", {
+        const res = await fetch(INST_API + "/insta/comments", {
           method: "GET",
           credentials: "include",
         });
@@ -23,7 +24,7 @@ export const getComments = () => {
   export const deleteComment = (id) => {
     return async (dispatch) => {
       try {
-        const res = await fetch("http://localhost:9001/insta/comments/" + id, {
+        const res = await fetch(INST_API+"/insta/comments/" + id, {
           method: "DELETE",
           credentials: "include",
         }); 

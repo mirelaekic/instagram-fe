@@ -1,8 +1,9 @@
+const {INST_API} = process.env.REACT_APP_INST_API
 export const followUser = (userId) => {
     return async (dispatch) => {
       try {
         const res = await fetch(
-          "http://localhost:9001/insta/follow/" + userId,
+          INST_API + "/insta/follow/" + userId,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

@@ -16,7 +16,7 @@ export default class Responsive extends Component {
     this.fetchStories();
   };
 
-  fetchStories = async () => {
+  Stories = async () => {
     try {
       let response = await fetch("http://localhost:9001/insta/story", {
         credentials: "include",

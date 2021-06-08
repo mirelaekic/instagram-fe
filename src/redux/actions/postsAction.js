@@ -1,7 +1,8 @@
+const {INST_API} = process.env.REACT_APP_INST_API
 export const getPost = () => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:9001/insta/posts", {
+      const res = await fetch(INST_API+"/insta/posts", {
         method: "GET",
         credentials: "include",
       });
@@ -23,7 +24,7 @@ export const getPost = () => {
 export const getPostById = (id) => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:9001/insta/posts/" + id, {
+      const res = await fetch(INST_API+"/insta/posts/" + id, {
         method: "GET",
         credentials: "include",
       });
@@ -69,7 +70,7 @@ export const uploadPost = (e, description) => {
     let formData = new FormData();
     formData.append("PostImage", e);
     try {
-      const res = await fetch("http://localhost:9001/insta/posts", {
+      const res = await fetch(INST_API+"/insta/posts", {
         method: "POST",
         headers: { Accept: "application/json" },
         credentials: "include",
@@ -95,7 +96,7 @@ export const uploadPost = (e, description) => {
 export const likePost = (postId) => {
   return async (dispatch) => {
     try {
-      const res = await fetch(`http://localhost:9001/insta/like/${postId}`, {
+      const res = await fetch(INST_API+`/insta/like/${postId}`, {
         method: "POST",
         credentials: "include",
       });
@@ -116,7 +117,7 @@ export const getLikes = (userId, postId) => {
   return async (dispatch) => {
     try {
       const res = await fetch(
-        `http://localhost:9001/insta/like/${userId}/${postId}/posts/`,
+        `${INST_API}/insta/like/${userId}/${postId}/posts/`,
         {
           method: "GET",
           credentials: "include",
@@ -142,7 +143,7 @@ export const postComment = (text, postId) => {
   return async (dispatch) => {
     try {
       const res = await fetch(
-        "http://localhost:9001/insta/comments/" + postId,
+        INST_API + "/insta/comments/" + postId,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

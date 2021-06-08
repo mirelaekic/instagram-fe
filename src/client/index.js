@@ -1,7 +1,7 @@
 import axios from "axios";
-
+const {INST_API} = process.env.REACT_APP_INST_API
 const backend = axios.create({
-  baseURL:"http://localhost:9001",
+  baseURL:INST_API,
   withCredentials: true,
 });
 

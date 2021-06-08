@@ -1,7 +1,8 @@
+const {INST_API} = process.env.REACT_APP_INST_API
 export const getMe = () => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:9001/insta/users/me", {
+      const res = await fetch(INST_API+"/insta/users/me", {
         method: "GET",
         credentials: "include",
       });
@@ -23,7 +24,7 @@ export const getMe = () => {
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:9001/insta/users", {
+      const res = await fetch(INST_API+"/insta/users", {
         method: "GET",
         credentials: "include",
       });
