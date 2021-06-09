@@ -34,14 +34,9 @@ export const PostCard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getPost());
-    //dispatch(getMe())
-  }, []);
 
   const postsData = useSelector((state) => state.posts.posts);
   const loggedUser = useSelector((state) => state.loggedInUser);
-  console.log(loggedUser, "ME");
   return (
     <>
       {postsData ? (

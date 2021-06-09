@@ -49,7 +49,7 @@ export default function HomeSuggestions() {
   const classes = useStyles();
   return (
     <div>
-      <ListGroup className="mt-3 homeSuggestionsList">
+      {/* <ListGroup className="mt-3 homeSuggestionsList">
         <ListGroup.Item className="myProfile-list">
           <div className="profile-name profileAvatar">
             <Avatar src={userData.user.imgurl} className={classes.small} />
@@ -83,7 +83,7 @@ export default function HomeSuggestions() {
             </button>
           </ListGroup.Item>
         ))}
-      </ListGroup>
+      </ListGroup> */}
     </div>
   );
 }

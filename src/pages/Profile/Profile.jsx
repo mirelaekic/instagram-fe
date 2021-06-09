@@ -29,16 +29,6 @@ const useStyles = makeStyles({
   },
 });
 
-const mapStateToProps = (state) => state;
-
-const mapDispatchToProps = (dispatch) => ({
-  loginUser: (credentls) =>
-    dispatch({
-      type: "LOGIN_USER",
-      payload: credentls,
-    }),
-});
-
 function Profile(props) {
   const classes = useStyles();
 
@@ -76,28 +66,7 @@ function Profile(props) {
     setSaved(null);
     setTagged("1.3px solid black");
   };
-  const authorize = async () => {
-    try {
-      if (props.match.params.id === "me") {
-        const result = await backend.get("/insta/users/me");
-        console.log("-----------------------", result);
-        props.loginUser(result.data);
-      } else {
-        const result = await backend.get(
-          `/insta/users/${props.match.params.id}`
-        );
-        console.log("-----------------------", result);
-        props.loginUser(result.data);
-      }
-      setLoading(false);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
-  useEffect(() => {
-    authorize();
-  }, []);
   const handleDisplay = () => {
     if (target === "POSTS") {
       if (props.loggedInUser.user.posts.length > 0) {
@@ -138,7 +107,7 @@ function Profile(props) {
               <Col className="col-8">
                 <ProfileDescription
                   user={props.loggedInUser.user}
-                  fetchProfile={authorize}
+                  // fetchProfile={authorize}
                 />
               </Col>
             </Row>
@@ -195,6 +164,4 @@ function Profile(props) {
     </>
   );
 }
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Profile)
-);
+export default withRouter(Profile);

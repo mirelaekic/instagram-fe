@@ -2,13 +2,14 @@ const initialState = {
     loading: false,
     users: [],
     error: null,
+    currentUser:{}
 }
 
 const getUsersReducer = (state = initialState, action) => {
     switch (action.type) {
         case "GET_ME":
             return {
-                users: action.payload,
+                currentUser: action.payload,
                 loading: false,
                 error: null
             }

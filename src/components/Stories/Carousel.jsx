@@ -76,7 +76,7 @@ export default class Responsive extends Component {
       >
         <Slider {...settings}>
           <div>
-            <CreateStory fetchStory={this.fetchStories} />
+            <CreateStory fetchStory={this.Stories} />
           </div>
           {this.state.stories.length > 0 &&
             this.state.stories.map((story) => (

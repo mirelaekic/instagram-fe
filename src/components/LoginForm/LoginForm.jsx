@@ -3,49 +3,18 @@ import { Form } from "react-bootstrap";
 import "../RegisterForm/RegisterForm.css";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Redirect, withRouter, Link } from "react-router-dom";
+import { getMe, login } from "../../redux/actions/usersActions";
 const INST_API = process.env.REACT_APP_INST_API
-const mapStateToProps = (state) => state;
-
-const mapDispatchToProps = (dispatch) => ({
-  loginUser: (credentls) =>
-    dispatch({
-      type: "LOGIN_USER",
-      payload: credentls,
-    }),
-  loginUserWithThunk: (credentls) =>
-    dispatch(async (dispatch, getState) => {
-      try {
-        const response = await fetch(
-          INST_API+"/insta/users/login",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify(credentls),
-          }
-        );
-        if (response.ok) {
-          const resp = await response.json();
-          dispatch({
-            type: "LOGIN_USER",
-            payload: resp,
-          });
-          console.log(response, "login response");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }),
-});
 
 const LoginForm = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await props.loginUserWithThunk({ username, password });
-    props.history.push("/");
+    dispatch(login({username,password}))
+
   };
   const user = useSelector((state) => state.loggedInUser);
     return (
@@ -75,5 +44,5 @@ const LoginForm = (props) => {
     );
   } 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+ LoginForm
 );

@@ -5,17 +5,11 @@ import PostCard from "../../components/Card/PostCard";
 import Carousel from "../../components/Stories/Carousel";
 import "./Home.css";
 import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getMe } from "../../redux/actions/usersActions";
 function Home(props) {
-  const loggedUser = useSelector((state) => state.loggedInUser);
-  console.log(loggedUser, "ME");
-  const user = localStorage.getItem("user");
-
   return (
     <>
-      {loggedUser.user === undefined ? (
-        <Redirect to="/login" />
-      ) : (
         <Container className="home-container">
           <Grid container spacing={2}>
             <Grid item xs={8} className="storyCarousel">
@@ -37,7 +31,6 @@ function Home(props) {
             </Grid>
           </Grid>
         </Container>
-      )}
     </>
   );
 }

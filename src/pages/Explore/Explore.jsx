@@ -3,19 +3,8 @@ import ExploreGrid from "../../components/ExploreGrid/ExploreGrid"
 import { Container } from 'react-bootstrap';
 import backend from "../../client";
 export default function Explore() {
-    const [loading, setLoading] = useState(true);
-    const authorize = async () => {
-        try {
-          const result = await backend.get("/insta/posts");
-          console.log(result);
-          setLoading(false);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      useEffect(() => {
-        authorize();
-      }, []);
+    const [loading, setLoading] = useState(false);
+
     return (
         <>
         {loading ? (<h1>Loading..</h1>) : (
