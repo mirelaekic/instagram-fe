@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
@@ -20,6 +20,8 @@ import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import SwapHorizRoundedIcon from '@material-ui/icons/SwapHorizRounded';
 import PostImage from "../PostImage/PostImage"
+import { useDispatch, useSelector } from "react-redux";
+import { getMe, logout } from "../../redux/actions/usersActions";
 
 const useStyles = makeStyles((theme) => ({
   root1: {
@@ -87,15 +89,23 @@ const useStyles = makeStyles((theme) => ({
   const handleClose = () => {
     setAnchorEl(null);
   };
-  	
+
+  const currentUser = useSelector(state => state.user.currentUser)
+  	const dispatch = useDispatch()
+    useEffect(() => {
+      console.log("calling me in the NAVBAR")
+      dispatch(getMe())
+    },[])
+    console.log(currentUser,"current user in the navbar")
   function logOut() {
-   localStorage.removeItem("user")
-      return (
-        <Redirect to="/login" /> 
-      )
+    dispatch(logout())
+  //  localStorage.removeItem("user")
+  //     return (
+  //       <Redirect to="/login" /> 
+  //     )
   }
 
-  return (
+  return currentUser ? (
     <div className={classes.root1} position="fixed">
       <AppBar position="fixed">
         <Container>
@@ -164,6 +174,6 @@ const useStyles = makeStyles((theme) => ({
         </Container>
       </AppBar>
     </div>
-  );
+  ) : <Redirect to="/login"/> ;
 }
 export default withRouter(NavBar) 

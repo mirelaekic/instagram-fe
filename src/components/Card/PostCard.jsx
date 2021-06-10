@@ -35,8 +35,8 @@ export const PostCard = () => {
   const dispatch = useDispatch();
 
 
-  const postsData = useSelector((state) => state.posts.posts);
-  const loggedUser = useSelector((state) => state.loggedInUser);
+  const postsData = useSelector((state) => state.post.posts);
+
   return (
     <>
       {postsData ? (

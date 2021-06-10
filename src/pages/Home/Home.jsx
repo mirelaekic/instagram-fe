@@ -8,6 +8,12 @@ import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../../redux/actions/usersActions";
 function Home(props) {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getMe())
+  },[])
+  const user = useSelector((state) => state.user.currentUser);
+  console.log(user," USER IN HOME")
   return (
     <>
         <Container className="home-container">

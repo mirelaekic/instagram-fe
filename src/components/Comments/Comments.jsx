@@ -14,17 +14,11 @@ import "./Comments.css";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from '@material-ui/icons/Delete';
-import {
-  postComment,
-  likePost,
-  getPost,
-  getLikes
-} from "../../redux/actions/postsAction";
-
-import {getComments, deleteComment} from "../../redux/actions/commentActions"
+import {getComments,postComment, deleteComment} from "../../redux/actions/commentActions"
 import Moment from "react-moment";
 import Checkbox from "@material-ui/core/Checkbox";
 import {Redirect,withRouter} from "react-router-dom"
+import { getLikes, likePost } from "../../redux/actions/postsAction";
 
 const useStyles = makeStyles((theme) => ({
   expand: {

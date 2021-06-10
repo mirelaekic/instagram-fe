@@ -4,7 +4,7 @@ const initialState = {
     error: null,
 }
 
-const followUser = (state = initialState, action) => {
+const followReducer = (state = initialState, action) => {
     switch (action.type) {
         case "FOLLOW":
             return {
@@ -27,4 +27,4 @@ const followUser = (state = initialState, action) => {
             return state
     }
 }
-export default followUser
+export default followReducer

@@ -80,7 +80,7 @@ export const uploadPost = (e, description) => {
       if (res.ok) {
         const posts = await res.json();
         dispatch({
-          type: "POST_POST",
+          type: "UPLOAD_POST",
           payload: posts,
         });
         dispatch(getPost());
@@ -104,12 +104,15 @@ export const likePost = (postId) => {
         const liked = await res.json();
         console.log(liked, "LIKED");
         dispatch({
-          type: "POST_LIKED",
+          type: "SINGLE_POST_LIKED",
           payload: liked,
         });
       }
     } catch (error) {
-      console.log(error);
+      dispatch({
+        type:"GET_POSTS_ERROR",
+        payload:error,
+      })
     }
   };
 };
@@ -126,43 +129,16 @@ export const getLikes = (userId, postId) => {
       if (res.ok) {
         const likes = await res.json();
         dispatch({
-          type: "GET_LIKES",
+          type: "ALL_POSTS_LIKED",
           payload: likes,
         });
       }
     } catch (error) {
       dispatch({
-        type: "GET_LIKES_ERROR",
+        type: "GET_POSTS_ERROR",
         payload: error.message,
       });
     }
   };
 };
 
-export const postComment = (text, postId) => {
-  return async (dispatch) => {
-    try {
-      const res = await fetch(
-        INST_API + "/insta/comments/" + postId,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: text }),
-          credentials: "include",
-        }
-      );
-      if (res.ok) {
-        const comment = await res.json();
-        dispatch({
-          type: "POST_COMMENT",
-          payload: comment,
-        });
-      }
-    } catch (error) {
-      dispatch({
-        type: "COMMENT_ERROR",
-        payload: error.message,
-      });
-    }
-  };
-};

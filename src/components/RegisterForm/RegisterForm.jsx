@@ -4,7 +4,6 @@ import "./RegisterForm.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 const INST_API = process.env.REACT_APP_INST_API
-console.log(INST_API,"the API ______________________")
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
@@ -44,8 +43,8 @@ const RegisterForm = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [phonenumber, setPhonenumber] = useState(12312314);
-  const [imgurl, SetImgurl] = useState("whateevw");
-  const [gender, setGender] = useState("whateevw");
+  const [imgurl, SetImgurl] = useState("");
+  const [gender, setGender] = useState("/");
 
   const handleSubmit = (e) => {
     e.preventDefault();

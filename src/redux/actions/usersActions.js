@@ -2,41 +2,85 @@
 import axios from "axios";
 import backend from "../../client"
 const INST_API = process.env.REACT_APP_INST_API
-export const login = (credentials) => {
+export const register = (credentials) => {
   return async (dispatch) =>  {
     try {
-      const res = await axios.post(INST_API+"/insta/users/login",credentials,{withCredentials:true});
+      dispatch({
+        type:"SET_LOADING"
+      })
+      const res = await axios.post(INST_API+"/insta/users/register",credentials);
       const user = await res.data;
-      console.log(res.data,"LOGGING IN")
       if (user) {
         dispatch({
-          type: "GET_ME",
+          type: "REGISTER_USER",
           payload: user,
         });
       }
     } catch (error) {
       dispatch({
-        type: "ME_ERROR",
+        type: "ERROR",
         payload: error.message,
       });
     }
   };
 }
-export const getMe = () => {
-  return async (dispatch) => {
+export const login = (credentials) => {
+  return async (dispatch) =>  {
     try {
-      const res = await backend.get(INST_API+"/insta/users/me", {withCredentials:true});
+      dispatch({
+        type:"SET_LOADING"
+      })
+      const res = await backend.post(INST_API+"/insta/users/login",credentials);
       const user = await res.data;
-      console.log(res.data,"THE CURRENT USER DATA")
       if (user) {
         dispatch({
-          type: "GET_ME",
+          type: "CURRENT_USER",
           payload: user,
         });
       }
     } catch (error) {
       dispatch({
-        type: "ME_ERROR",
+        type: "ERROR",
+        payload: error.message,
+      });
+    }
+  };
+}
+ 
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type:"SET_LOADING"
+      })
+      const res = await axios.post(INST_API+"/insta/users/logout",{withCredentials:true})
+      if(res.data){
+        dispatch({
+          type:"LOG_OUT",
+        })
+      }
+    } catch (error) {
+      dispatch({
+        type: "ERROR",
+        payload: error.message,
+      });
+    }
+  }
+}
+export const getMe = () => {
+  return async (dispatch) => {
+    try {
+      const res = await backend.get(INST_API+"/insta/users/me");
+      const user = await res.data;
+      if (user) {
+        dispatch({
+          type: "CURRENT_USER",
+          payload: user,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: "ERROR",
         payload: error.message,
       });
     }
@@ -45,20 +89,17 @@ export const getMe = () => {
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const res = await fetch(INST_API+"/insta/users", {
-        method: "GET",
-        credentials: "include",
-      });
-      if (res.ok) {
-        const users = await res.json();
+      const res = await backend.get(INST_API+"/insta/users");
+      const user = await res.data;
+      if (user) {
         dispatch({
-          type: "GET_ME",
-          payload: users,
+          type: "GET_USERS",
+          payload: user,
         });
       }
     } catch (error) {
       dispatch({
-        type: "ME_ERROR",
+        type: "ERROR",
         payload: error.message,
       });
     }

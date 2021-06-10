@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -18,9 +18,8 @@ import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import {
-  postComment, getPost,} from "../../redux/actions/postsAction";
-  import {getComments} from "../../redux/actions/commentActions"
+
+import { getComments, postComment } from "../../redux/actions/commentActions";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -39,17 +38,16 @@ export default function TransitionsModal(post) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [text, setText] = useState("");
-  
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
-  
+
   const handleClose = () => {
     setOpen(false);
   };
 
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleComment = async () => {
     dispatch(postComment(text, post.post.id));
@@ -93,7 +91,8 @@ const dispatch = useDispatch()
                       <div className="middleDiv">
                         {post.post.description === null ? (
                           <ListGroupItem>{post.post.description}</ListGroupItem>
-                        ) : (<> </>
+                        ) : (
+                          <> </>
                         )}
                         <ListGroupItem key={i}>
                           <Avatar
@@ -104,16 +103,22 @@ const dispatch = useDispatch()
                           <strong>{c.user.username}</strong>{" "}
                           <p className="commentText ml-2">{c.text}</p>
                         </ListGroupItem>
-                        <p className="dateOfComment text-muted"><Moment fromNow>{c.updatedAt}</Moment></p>
+                        <p className="dateOfComment text-muted">
+                          <Moment fromNow>{c.updatedAt}</Moment>
+                        </p>
                       </div>
                     ))}
                   </div>
                 </ListGroup>
                 <div className="commentAction">
                   <CardActions disableSpacing>
-                  <IconButton onClick={post.handleLike}>
-            {post.ifLiked ? <Favorite className="likedBtn"/> : <FavoriteBorder />}
-            </IconButton>
+                    <IconButton onClick={post.handleLike}>
+                      {post.ifLiked ? (
+                        <Favorite className="likedBtn" />
+                      ) : (
+                        <FavoriteBorder />
+                      )}
+                    </IconButton>
                     <IconButton aria-label="comment">
                       <ModeCommentOutlinedIcon />
                     </IconButton>
@@ -121,12 +126,12 @@ const dispatch = useDispatch()
                       <BookmarkBorderSharp />
                     </IconButton>
                     {post.post.likes.length > 0 ? (
-              <Typography paragraph className="likedLength text-muted">
-                Liked by {post.post.likes.length}{" "}
-              </Typography>
-            ) : (
-              <Typography paragraph></Typography>
-            )}
+                      <Typography paragraph className="likedLength text-muted">
+                        Liked by {post.post.likes.length}{" "}
+                      </Typography>
+                    ) : (
+                      <Typography paragraph></Typography>
+                    )}
                   </CardActions>
                   <div className="commentSection">
                     <EmojiEmotionsOutlinedIcon />

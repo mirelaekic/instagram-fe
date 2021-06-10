@@ -1,4 +1,31 @@
 const INST_API = process.env.REACT_APP_INST_API
+export const postComment = (text, postId) => {
+  return async (dispatch) => {
+    try {
+      const res = await fetch(
+        INST_API + "/insta/comments/" + postId,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: text }),
+          credentials: "include",
+        }
+      );
+      if (res.ok) {
+        const comment = await res.json();
+        dispatch({
+          type: "POST_COMMENT",
+          payload: comment,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: "COMMENTS_ERROR",
+        payload: error.message,
+      });
+    }
+  };
+};
 export const getComments = () => {
     return async (dispatch) => {
       try {
