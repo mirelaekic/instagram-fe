@@ -1,18 +1,19 @@
+import backend from "../../client"
 const INST_API = process.env.REACT_APP_INST_API
+
 export const postComment = (text, postId) => {
   return async (dispatch) => {
     try {
-      const res = await fetch(
-        INST_API + "/insta/comments/" + postId,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: text }),
-          credentials: "include",
-        }
-      );
-      if (res.ok) {
-        const comment = await res.json();
+      dispatch({
+        type:"COMMENTS_LOADING"
+      })
+      const res = await backend.post(
+        INST_API+"/insta/comments/"+postId,{text:text});
+        console.log(res,"THE RESPONSE AFTER POSTING")
+      if (res) {
+
+        const comment = res.data;
+        console.log(comment,"THE COMMENT")
         dispatch({
           type: "POST_COMMENT",
           payload: comment,
@@ -55,13 +56,10 @@ export const getComments = () => {
           method: "DELETE",
           credentials: "include",
         }); 
-        if (res.ok ) {
-            const comments = await res.json();
+        if (res.ok) {
           dispatch({
             type: "DELETE_COMMENT",
-            payload: comments,
           });
-          //dispatch(getComments())
         }
       } catch (error) {
         dispatch({

@@ -1,43 +1,64 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { postProfileImage } from "../../redux/actions/usersActions";
-import { Avatar, IconButton } from "@material-ui/core/";
-import { useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import { Avatar } from "@material-ui/core/";
+import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import PublishIcon from '@material-ui/icons/Publish';
+import { getMe } from "../../redux/actions/usersActions";
 const mapStateToProps = (state) => state;
 const useStyles = makeStyles({
   Avatar: {
     width: 175,
     height: 175,
+    "&:hover": {
+      cursor:"pointer",
+      backgroundColor:"rgb(0 0 0 / 6%)"
+    }
   },
   input: {
     display: "none",
   },
+  icon:{
+    position:"absolute",
+    left:"33%",
+    top:"26%",
+    zIndex:"999",
+    width:"5em",
+    height:"5em",
+    display:"none",
+    "&:hover":{
+       cursor:"pointer",
+       display:"block"
+     }
+  }
+
 });
 
 function ProfilePic(props) {
-  console.log("this are props", props);
+
   const [image, setImage] = useState();
   const INST_API = process.env.REACT_APP_INST_API
+  const user = useSelector(state => state.user.currentUser)
+  const dispatch = useDispatch()
   const postProfileImage = async (e, userId) => {
     let formData = new FormData();
     formData.append("ProfilePic", e);
     try {
       const res = await fetch(
-        `${INST_API}/insta/users/${props.loggedInUser.user.id}/upload`,
+        `${INST_API}/insta/users/${user.id}/upload`,
         {
           method: "PUT",
           headers: { Accept: "application/json" },
           credentials: "include",
           body: formData,
         }
-      );
+        );
       if (res.ok) {
-        const posted = await res.json();
-        console.log(posted, "posted");
+        await res.json();
+        dispatch(getMe())
       }
     } catch (error) {
       console.log(error);
@@ -47,13 +68,12 @@ function ProfilePic(props) {
     postProfileImage(image);
   }, [image]);
   const classes = useStyles();
-  console.log(image, "img");
   return (
     <div>
       <React.Fragment>
         <div>
           <div>
-            <input
+              <input
               accept="image/*"
               className={classes.input}
               id="icon-button-file"
@@ -61,12 +81,13 @@ function ProfilePic(props) {
               onChange={(e) => setImage(e.target.files[0])}
             />
             <label htmlFor="icon-button-file">
+              <PublishIcon className={classes.icon} />
               <Avatar
                 component="span"
-                alt="Travis Howard"
-                src={props.loggedInUser.user.imgurl}
+                alt={user.name}
+                src={user.imgurl}
                 className={classes.Avatar}
-              />
+                />
             </label>
           </div>
         </div>

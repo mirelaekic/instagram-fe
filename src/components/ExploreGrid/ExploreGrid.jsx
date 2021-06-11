@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
@@ -11,6 +11,8 @@ import expl5 from "../../logo/exampleImg/expl5.jpg";
 import expl6 from "../../logo/exampleImg/expl6.jpg";
 import { Container, Row, Col } from "react-bootstrap";
 import "./ExploreGrid.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getPost } from "../../redux/actions/postsAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,28 +123,33 @@ const tileData = [
 
 export default function ImageGridList() {
   const classes = useStyles();
-
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getPost())
+  },[])
+  const posts = useSelector(state => state.post.posts)
+  console.log(posts,"the posts")
   return (
     <Container>
       <Row className="exploreGrid">
         <Row className="mt-5">
           {/**In the columns below specify which exact media index to use(otherwise grid not working!) */}
           <Col lg={5}>
-            <Col className="p-3">
-              <img className="img-grid" src={tileData[5].img} />
+            <Col>
+              <img className="img-grid" src={posts[0].imgurl} />
             </Col>
-            <Col className="p-3">
-              <img className="img-grid" src={tileData[3].img} />
+            <Col>
+              <img className="img-grid" src={posts[1].imgurl} />
             </Col>
           </Col>
-          <Col lg={7} className="p-3">
-            <img className="img-grid" src={tileData[6].img} />
+          <Col lg={7}>
+            <img className="img-grid" src={posts[0].imgurl} />
           </Col>
         </Row>
         <Row>
-        {tileData.map((i) => (
-          <Col lg={4} className="p-3">
-            <img className="img-grid" src={i.img} />
+        {posts.map((i,k) => (
+          <Col key={k} lg={4}>
+            <img className="img-grid" src={i.imgurl} />
           </Col>
         ))}
         </Row>

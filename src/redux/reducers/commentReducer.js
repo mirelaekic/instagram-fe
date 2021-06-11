@@ -13,7 +13,7 @@ const commentReducer = (state = initialState,action) => {
                 loading: false,
                 error: null
             }
-        case "SET_LOADING":
+        case "COMMENTS_LOADING":
             return {
                 ...state,
                 loading: true
@@ -21,7 +21,7 @@ const commentReducer = (state = initialState,action) => {
         case "DELETE_COMMENT":
             return {
                 ...state,
-                comments: [...state.comments.filter((c) => c !== action.payload)]
+                loading:false
             }
         case "COMMENTS_ERROR":
             return {

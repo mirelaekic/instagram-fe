@@ -1,12 +1,13 @@
 /** @format */
 
 import React, { useState } from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { Button } from "@material-ui/core/";
-import {  useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import "./EditProfile.css";
-import { useLocation,Route ,withRouter} from "react-router";
+import { withRouter} from "react-router";
+import { editProfile, getMe } from "../../redux/actions/usersActions";
 
 const EditButton = withStyles((theme) => ({
   root: {
@@ -21,14 +22,16 @@ const EditButton = withStyles((theme) => ({
   },
 }))(Button);
 
-function EditProfile(props) {
+
+function EditProfile() {
+  const u = useSelector((state) => state.user.user)
+  const user = useSelector((state) => state.user.currentUser)
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState(props.user.name);
-  const [username, setUsername] = useState(props.user.username);
-  const [bio, setBio] = useState();
-  const [email, setEmail] = useState(props.user.email);
-  const [number, setNumber] = useState(props.user.number);
-  const [gender, setGender] = useState(props.user.gender);
+  const [name, setName] = useState(user.name);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+  const [number, setNumber] = useState(user.number);
+  const [gender, setGender] = useState(user.gender);
 
   const handleToggle = (e) => {
     e.preventDefault();
@@ -39,6 +42,7 @@ function EditProfile(props) {
     }
   };
 
+  const dispatch = useDispatch()
   const handleEdit = async (e) => {
     e.preventDefault(e);
     const bodyEdit = {
@@ -48,35 +52,14 @@ function EditProfile(props) {
       number: number,
       gender: gender,
     };
-    const INST_API = process.env.REACT_APP_INST_API
-    const response = await fetch(
-      INST_API + "/insta/users/" + props.user.id,
-      {
-        method: "PUT",
-        body: JSON.stringify(bodyEdit),
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.ok) {
-      setOpen(false);
-      props.fetchProfile();
-    }
+    await dispatch(editProfile(bodyEdit,user.id))
+    await dispatch(getMe())
+    setOpen(false)
   };
-  const users = useSelector((state) => state.allUsers.users)
-  const meData = useSelector((state) => state.loggedInUser.user)
-  
-  const location = useLocation()
-  
-  const filter = location.pathname === "/profile/me"
-  console.log(filter,"the filtered")
-  console.log(location.pathname,"LOCATION INFO")
-  const matches = meData.id === users.id;
+
   return (
     <div>
-      {location === true ? <EditButton onClick={(e) => handleToggle(e)}>
+      {user.id === u.id ? <EditButton onClick={(e) => handleToggle(e)}>
         <b>Edit Profile</b>
       </EditButton> : <div></div>}
       <Container className={open === true ? "editProf" : "editProf d-none"}>
@@ -90,9 +73,8 @@ function EditProfile(props) {
                 <li>E-mail and SMS</li>
                 <li>Push-Notifications</li>
                 <li>Contacts</li>
-                <li>Privacy n shid</li>
+                <li>Privacy</li>
                 <li>Login-Activity</li>
-                <li>E-mails from Pornhub</li>
               </ul>
             </div>
           </Col>
@@ -120,15 +102,6 @@ function EditProfile(props) {
                     />
                   </Form.Group>
                   <Form.Group className="editInput">
-                    <Form.Label className="mr-2">Bio</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Bio"
-                      value={bio}
-                      onChange={(e) => setBio(e.currentTarget.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group className="editInput">
                     <Form.Label className="mr-2">Email</Form.Label>
                     <Form.Control
                       type="text"
@@ -147,10 +120,10 @@ function EditProfile(props) {
                     />
                   </Form.Group>
                   <Form.Group className="editInput">
-                    <Form.Label className="mr-2">Gender</Form.Label>
+                    <Form.Label className="mr-2">Bio</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Gender"
+                      placeholder="Bio"
                       value={gender}
                       onChange={(e) => setGender(e.currentTarget.value)}
                     />

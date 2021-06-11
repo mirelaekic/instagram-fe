@@ -17,6 +17,7 @@ import {
 } from "../../redux/actions/postsAction";
 import { getMe } from "../../redux/actions/usersActions";
 import moment from "moment";
+import NoPosts from "../Profile/NoPosts";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "40rem",
@@ -33,10 +34,12 @@ const useStyles = makeStyles((theme) => ({
 export const PostCard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+useEffect(() => {
+  dispatch(getPost())
+},[])
 
   const postsData = useSelector((state) => state.post.posts);
-
+console.log(postsData,"all the posts")
   return (
     <>
       {postsData ? (
@@ -65,10 +68,8 @@ export const PostCard = () => {
               </Card>
             </div>
           ))
-      ) : (
-        <h1>error</h1>
-      )}
+      ) : (<NoPosts />)}
     </>
-  );
+  ) ;
 };
 export default PostCard;

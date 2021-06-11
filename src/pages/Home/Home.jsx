@@ -1,19 +1,11 @@
 import { Container, Grid } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
-import { withRouter, Redirect } from "react-router-dom";
+import React from "react";
+import { withRouter } from "react-router-dom";
 import PostCard from "../../components/Card/PostCard";
 import Carousel from "../../components/Stories/Carousel";
 import "./Home.css";
 import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions";
-import { useDispatch, useSelector } from "react-redux";
-import { getMe } from "../../redux/actions/usersActions";
-function Home(props) {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getMe())
-  },[])
-  const user = useSelector((state) => state.user.currentUser);
-  console.log(user," USER IN HOME")
+function Home() {
   return (
     <>
         <Container className="home-container">
@@ -24,7 +16,6 @@ function Home(props) {
                 <PostCard />
               </div>
             </Grid>
-
             <Grid
               className="homeSug-grid"
               item

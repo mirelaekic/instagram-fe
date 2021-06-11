@@ -3,6 +3,7 @@ import { Button } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Container, Row, Col } from "react-bootstrap";
 import TvIcon from "@material-ui/icons/Tv";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   root: {
@@ -16,11 +17,14 @@ const useStyles = makeStyles({
     borderRadius: "10000px",
     padding: "7px",
   },
-  header: { fontSize: "3rem" },
+  header: { 
+    fontSize: "3rem",
+    marginTop:"1rem"
+ },
   captions: {},
 });
 
-export default function NoPosts() {
+export default function NoPosts({params}) {
   const EditButton = withStyles((theme) => ({
     root: {
       color: "#fafafa",
@@ -34,6 +38,8 @@ export default function NoPosts() {
     },
   }))(Button);
   const classes = useStyles();
+  const user = useSelector(state => state.user.currentUser)
+  console.log(params, "the params i n the no post ")
   return (
     <Container className="mt-3 rounded p-5">
       <Row>
@@ -43,6 +49,8 @@ export default function NoPosts() {
               <TvIcon className={classes.icon} />
             </span>
           </Row>
+          {params === user.id ?
+          (<div>
           <Row className="justify-content-center align-items-center">
             <span className={classes.header}>Upload a Video</span>
           </Row>
@@ -54,6 +62,15 @@ export default function NoPosts() {
           <Row className="justify-content-center align-items-center mt-4">
             <EditButton>Upload</EditButton>
           </Row>
+          </div>)
+          : (
+            <Row className="justify-content-center align-items-center">
+            <span className={classes.header}>
+              No IGTV
+            </span>
+          </Row>
+          )
+          }
         </Col>
       </Row>
     </Container>

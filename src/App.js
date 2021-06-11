@@ -26,12 +26,12 @@ function App(props) {
       {exclusionArray.indexOf(props.location.pathname) < 0 && <NavBar />}
       <Switch>
         <Route path="/" exact component={Home} />
-        {/* <Route path="/dm" component={DM} />
+        <Route path="/dm" component={DM} />
         <Route path="/explore" component={Explore} />
-        <Route path="/profile/:id" render={(props) => <Profile {...props} />} /> */}
+        <Route path="/profile/:id" render={(props) => <Profile {...props} />} /> 
         <Route path="/register" exact component={Register} />
         <Route path="/login" exact component={Login} />
-        {/* <Route path="/stories/:user/:storyId" component={StoryPage} /> */}
+        <Route path="/stories/:user/:storyId" component={StoryPage} /> 
       </Switch>
     </>
   );

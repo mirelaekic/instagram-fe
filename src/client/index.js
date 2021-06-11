@@ -23,7 +23,7 @@
             }
           })
           .catch(() => {
-            window.location.replace("/login");
+              window.location.replace("/login");
             return Promise.reject(error);
           });
       }

@@ -14,7 +14,6 @@ const LoginForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(login({username,password}))
-
   };
   const user = useSelector((state) => state.loggedInUser);
     return (

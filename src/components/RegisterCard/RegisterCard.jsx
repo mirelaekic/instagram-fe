@@ -14,7 +14,6 @@ function RegisterCard() {
     <>
       <Card style={{ width: "21rem" }} className="register-form">
         <Card.Body>
-          z
           <div className="reg-form-header">
             <img src={logo2} />
             <p className="sign-text">

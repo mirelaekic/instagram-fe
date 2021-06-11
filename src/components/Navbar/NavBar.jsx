@@ -8,20 +8,20 @@ import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutline
 import InputBase from "@material-ui/core/InputBase";
 import Avatar from "@material-ui/core/Avatar";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import { Container, IconButton } from "@material-ui/core";
 import "./NavBar.css";
 import instagramLogo from "../../logo/instagramLogo.jpg";
-import { withRouter,Link,Redirect } from "react-router-dom";
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
-import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
-import SwapHorizRoundedIcon from '@material-ui/icons/SwapHorizRounded';
-import PostImage from "../PostImage/PostImage"
+import { withRouter, Link, Redirect } from "react-router-dom";
+import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
+import BookmarkBorderSharpIcon from "@material-ui/icons/BookmarkBorderSharp";
+import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
+import SwapHorizRoundedIcon from "@material-ui/icons/SwapHorizRounded";
+import PostImage from "../PostImage/PostImage";
 import { useDispatch, useSelector } from "react-redux";
-import { getMe, logout } from "../../redux/actions/usersActions";
+import { getMe, getUserById, logout } from "../../redux/actions/usersActions";
 
 const useStyles = makeStyles((theme) => ({
   root1: {
@@ -77,7 +77,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function NavBar() {
+function NavBar() {
+  useEffect(() => {
+      dispatch(getMe());
+    }, []);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -90,22 +93,14 @@ const useStyles = makeStyles((theme) => ({
     setAnchorEl(null);
   };
 
-  const currentUser = useSelector(state => state.user.currentUser)
-  	const dispatch = useDispatch()
-    useEffect(() => {
-      console.log("calling me in the NAVBAR")
-      dispatch(getMe())
-    },[])
-    console.log(currentUser,"current user in the navbar")
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+  
   function logOut() {
-    dispatch(logout())
-  //  localStorage.removeItem("user")
-  //     return (
-  //       <Redirect to="/login" /> 
-  //     )
+    dispatch(logout());
   }
 
-  return currentUser ? (
+  return (
     <div className={classes.root1} position="fixed">
       <AppBar position="fixed">
         <Container>
@@ -125,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
               />
             </div>
             <div className="iconsNavbar">
-            <PostImage />
+              <PostImage />
               <Link to="/">
                 <HomeOutlinedIcon />
               </Link>
@@ -138,35 +133,50 @@ const useStyles = makeStyles((theme) => ({
               <div>
                 <FavoriteBorderOutlinedIcon />
               </div>
-              <IconButton onClick={handleMenu} aria-label="account of current user"
+              <IconButton
+                onClick={handleMenu}
+                aria-label="account of current user"
                 aria-controls="menu-appbar"
-                aria-haspopup="true">
+                aria-haspopup="true"
+              >
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-            </IconButton>
-            <Menu
+              </IconButton>
+              <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 open={open}
                 onClose={handleClose}
               >
-                <Link to="/profile/me">
-                <MenuItem onClick={handleClose}> <AccountCircleRoundedIcon /> Profile</MenuItem>
+                <Link to={"/profile/" + currentUser.id}>
+                  <MenuItem onClick={handleClose}>
+                    {" "}
+                    <AccountCircleRoundedIcon /> Profile
+                  </MenuItem>
                 </Link>
-                <MenuItem onClick={handleClose}> <BookmarkBorderSharpIcon /> Saved</MenuItem>
-                <MenuItem onClick={handleClose}> <SettingsRoundedIcon /> Settings</MenuItem>
-                <MenuItem onClick={handleClose}> <SwapHorizRoundedIcon /> Switch Accounts</MenuItem>
-                <hr/>
-                <Link to="/login" >
-                <MenuItem onClick={logOut}>Log Out</MenuItem>
+                <MenuItem onClick={handleClose}>
+                  {" "}
+                  <BookmarkBorderSharpIcon /> Saved
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  {" "}
+                  <SettingsRoundedIcon /> Settings
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  {" "}
+                  <SwapHorizRoundedIcon /> Switch Accounts
+                </MenuItem>
+                <hr />
+                <Link to="/login">
+                  <MenuItem onClick={logOut}>Log Out</MenuItem>
                 </Link>
               </Menu>
             </div>
@@ -174,6 +184,6 @@ const useStyles = makeStyles((theme) => ({
         </Container>
       </AppBar>
     </div>
-  ) : <Redirect to="/login"/> ;
+  ) 
 }
-export default withRouter(NavBar) 
+export default withRouter(NavBar);

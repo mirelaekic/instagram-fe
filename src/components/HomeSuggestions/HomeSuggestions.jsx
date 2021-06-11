@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./HomeSuggestions.css";
 import { ListGroup } from "react-bootstrap";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { followUser } from "../../redux/actions/followAction";
+import { getAllUsers } from "../../redux/actions/usersActions";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -26,12 +27,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HomeSuggestions() {
   const [imFollowing, setImFollowing] = useState(false);
-  const userData = useSelector((state) => state.loggedInUser);
-  const allUsers = useSelector((state) => state.allUsers);
+  const user = useSelector((state) => state.user.currentUser);
+  const users = useSelector((state) => state.user.users);
   const follow = useSelector((state) => state.follow);
   const dispatch = useDispatch();
   // error is coming somewhere here in this func
   const INST_API = process.env.REACT_APP_INST_API
+  useEffect(() => {
+    dispatch(getAllUsers())
+  },[])
   const toFollow = async (userId) => {
     try {
       const response = await fetch(
@@ -49,18 +53,18 @@ export default function HomeSuggestions() {
   const classes = useStyles();
   return (
     <div>
-      {/* <ListGroup className="mt-3 homeSuggestionsList">
+       <ListGroup className="mt-3 homeSuggestionsList">
         <ListGroup.Item className="myProfile-list">
           <div className="profile-name profileAvatar">
-            <Avatar src={userData.user.imgurl} className={classes.small} />
-            <Link to="profile/me" className="link-me">
-              <strong>{userData.user.username} </strong>
+            <Avatar src={user.imgurl} className={classes.small} />
+            <Link to={"profile/" + user.id} className="link-me">
+              <strong>{user.username} </strong>
             </Link>
           </div>
-          <Link to="profile/me">Switch</Link>
+          <Link to={"profile/" + user.id}>Switch</Link>
         </ListGroup.Item>
         <h3 className="suggestion-header">Suggestions For You</h3>
-        {allUsers.users.slice(1, 5).map((user, i) => (
+        {users.slice(1, 5).map((user, i) => (
           <ListGroup.Item key={i}>
             <div className="profile-name">
               <Avatar src={user.imgurl} className={classes.small} />
@@ -73,8 +77,8 @@ export default function HomeSuggestions() {
               </div>
             </div>
             <button className="followButton" onClick={() => toFollow(user.id)}>
-              {userData.user.follows
-                ? userData.user.follows.find(
+              {user.follows
+                ? user.follows.find(
                     (other) => other.following.id === user.id
                   )
                   ? "Unfollow"
@@ -83,7 +87,7 @@ export default function HomeSuggestions() {
             </button>
           </ListGroup.Item>
         ))}
-      </ListGroup> */}
+      </ListGroup> 
     </div>
   );
 }
