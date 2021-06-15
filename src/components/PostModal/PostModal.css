@@ -18,13 +18,17 @@
     margin-left: 70px;
     margin-top: -30px;
 }
-
+.commentInModal{
+    padding-left: 13px;
+}
 .commentInModal .list-group-item{
     background-color: inherit;
     border: 0px solid #fafafa !important;
     border-color: none !important;
     display:flex !important; 
     font-size: 13px;
+    margin: 0px;
+    padding: 3px;
 }
 .commentInModal .commentList .list-group-item{
     margin-top: -10px;
@@ -35,8 +39,25 @@
     overflow: scroll;
     height: 26rem;
 }
+.post-owner{
+    margin-left: -13px !important;
+    padding: 11px !important;
+}
+.post-owner-avatar{
+    margin-right: 10px !important; 
+    width: 50px !important;
+    height: 50px !important;
+}
+/* .post-owner-username{
+    margin-top: 8px;
+    font-size: 15px;
+    color: black !important;
+} */
 .commentSection{
     margin-left: 5px;
+}
+.commentSection button {
+    margin-right: 10px !important;
 }
 .commentList::-webkit-scrollbar{
     width: 0 !important;

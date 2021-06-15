@@ -13,6 +13,12 @@ const useStyles = makeStyles({
   username:{
     fontWeight: "300",
     fontSize: "27px"
+  },
+  span:{
+    display:"flex",
+    marginRight:"20px",
+    fontWeight:"500",
+    fontSize:"16px"
   }
 });
 export default function ProfileDescription({sorted}) {
@@ -20,7 +26,7 @@ export default function ProfileDescription({sorted}) {
   const user = useSelector(state => state.user.user)
   const currentUser = useSelector(state => state.user.currentUser)
   const loading = useSelector(state => state.user.loading)
-  console.log(sorted, "THE SORTED USER !!!!!")
+  
   return loading ? (<div>. . .</div>) :
   user.posts ? (
     <div>
@@ -45,15 +51,15 @@ export default function ProfileDescription({sorted}) {
               </Col>
             </Row>
                <Row className=" mt-4">
-              <Col className="col-12 d-flex justify-content-between">
-                 <span>
-                  <p>{sorted.posts.length}</p> posts
+              <Col className="col-12 d-flex">
+                 <span className={classes.span}>
+                  <p><strong>{sorted.posts.length}</strong> posts</p>
                 </span>
-                <span>
-                  <p>{sorted.followers.length}</p> followers
+                <span className={classes.span}>
+                  <p><strong>{sorted.followers.length}</strong> followers</p>
                 </span>
-                <span>
-                  <p>{sorted.follows.length}</p> following
+                <span className={classes.span}>
+                  <p><strong>{sorted.follows.length}</strong> following</p>
                 </span>  
               </Col>
             </Row>   

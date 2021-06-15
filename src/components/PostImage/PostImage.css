@@ -1,0 +1,26 @@
+input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    left: 46%;
+    bottom: 48.5%;
+}
+.custom-file-upload {
+    border: 3px dotted #95a5f1;
+    display: inline-block;
+    padding: 20px 12px;
+    cursor: pointer;
+    text-align: center !important;
+    text-transform: uppercase;
+    background-color: white;
+    border-radius: 0px;
+    font-weight: 600;
+}
+.custom-file-upload:hover{
+    cursor: pointer;
+}
+.upload-section button{
+    width: -webkit-fill-available !important;
+    background-color: #E1306C !important;
+    color: white !important;
+    font-weight: 600 !important;
+}

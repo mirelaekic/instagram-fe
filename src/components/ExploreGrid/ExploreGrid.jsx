@@ -1,18 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-//import tileData from './tileData';
-import expl1 from "../../logo/exampleImg/expl1.jpg";
-import expl2 from "../../logo/exampleImg/expl2.jpg";
-import expl3 from "../../logo/exampleImg/expl3.jpg";
-import expl4 from "../../logo/exampleImg/expl4.jpg";
-import expl5 from "../../logo/exampleImg/expl5.jpg";
-import expl6 from "../../logo/exampleImg/expl6.jpg";
 import { Container, Row, Col } from "react-bootstrap";
 import "./ExploreGrid.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost } from "../../redux/actions/postsAction";
+import { likePost } from "../../redux/actions/postsAction";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import { GridListTileBar, IconButton } from "@material-ui/core";
+import PostModal from "../PostModal/PostModal";
+import OpenModal from "../PostModal/OpenModal";
+import Image from "./Image";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,139 +19,51 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
-    marginTop: "5rem",
   },
   gridList: {
-    width: 800,
+    width: "-webkit-fill-available",
+    height: "auto",
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: "translateZ(0)",
+  },
+  titleBar: {
+    background:
+      "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
+      "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+  },
+  icon: {
+    color: "white",
   },
 }));
 
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- * */
-const tileData = [
-  {
-    img: expl2,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl2,
-    title: "Image",
-    author: "author",
-    cols: 2,
-  },
-  {
-    img: expl3,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl4,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl5,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl6,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl3,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl4,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl5,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl2,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl3,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl4,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl5,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-  {
-    img: expl5,
-    title: "Image",
-    author: "author",
-    cols: 1,
-  },
-];
-
-export default function ImageGridList() {
+export default function ExploreGrid({changePost,selectedPost}) {
   const classes = useStyles();
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getPost())
-  },[])
-  const posts = useSelector(state => state.post.posts)
-  console.log(posts,"the posts")
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [like, setLike] = useState(false);
+
+  const posts = useSelector((state) => state.post.posts);
+  const handleLike = (id) => {
+    setLike(!like);
+    dispatch(likePost(id));
+  };
+  const handleOpen = (id) => {
+    setOpen(true)
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <Container>
-      <Row className="exploreGrid">
-        <Row className="mt-5">
-          {/**In the columns below specify which exact media index to use(otherwise grid not working!) */}
-          <Col lg={5}>
-            <Col>
-              <img className="img-grid" src={posts[0].imgurl} />
-            </Col>
-            <Col>
-              <img className="img-grid" src={posts[1].imgurl} />
-            </Col>
-          </Col>
-          <Col lg={7}>
-            <img className="img-grid" src={posts[0].imgurl} />
-          </Col>
-        </Row>
-        <Row>
-        {posts.map((i,k) => (
-          <Col key={k} lg={4}>
-            <img className="img-grid" src={i.imgurl} />
-          </Col>
-        ))}
-        </Row>
-      </Row>
-    </Container>
+    <div className="container columns">
+      {posts.map((post, index) =>(
+       <Image
+       {...post}
+       key={index}
+       changePost={changePost}
+       selectedPost={selectedPost}
+              />
+      ))}
+    </div>
   );
 }

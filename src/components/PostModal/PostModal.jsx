@@ -4,22 +4,22 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Typography from "@material-ui/core/Typography";
-import { Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import {  ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import "./PostModal.css";
-import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
-import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 import BookmarkBorderSharp from "@material-ui/icons/BookmarkBorderSharp";
 import ModeCommentOutlinedIcon from "@material-ui/icons/ModeCommentOutlined";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
-import Moment from "react-moment";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-
-import { getComments, postComment } from "../../redux/actions/commentActions";
+import { postComment } from "../../redux/actions/commentActions";
+import SingleComment from "../Comments/SingleComment";
+import { getPost } from "../../redux/actions/postsAction";
+import { Link } from "react-router-dom";
+import { ListItemAvatar, ListItemText } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -32,125 +32,123 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: "0px",
   },
+  links: {
+    color: "black",
+    "&:hover": {
+      color: "black",
+    },
+  },
 }));
 
-export default function TransitionsModal(post) {
+export default function PostModal(post) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const [text, setText] = useState("");
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const dispatch = useDispatch();
 
-  const handleComment = async () => {
-    dispatch(postComment(text, post.post.id));
-    dispatch(getComments());
+  const handleComment = async (e, txt, id) => {
+    e.preventDefault();
+    await dispatch(postComment(txt, id));
+    await dispatch(getPost());
     setText("");
   };
   return (
-    <div>
-      <button className="ViewComments" type="button" onClick={handleOpen}>
-        View all number comments
-      </button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <Row>
-              <div className="imageModal">
-                <img className="modalimg" src={post.post.imgurl} />
-              </div>
-              <div className="commModal">
-                <ListGroup className="commentInModal">
-                  <ListGroupItem>
+    <Modal
+      aria-labelledby={post.post.id}
+      className={classes.modal}
+      open={post.open}
+      onClose={post.handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={post.open}>
+        <div className={classes.paper}>
+          <Row id={post.post.id}>
+            <div className="imageModal">
+              <img className="modalimg" src={post.post.imgurl} />
+            </div>
+            <div className="commModal">
+              <ListGroup className="commentInModal">
+                <ListGroupItem className="post-owner">
+                  <ListItemAvatar>
                     <Avatar
+                      className="post-owner-avatar"
                       alt={post.post.user.username}
                       src={post.post.user.imgurl}
                     />
-                    <strong> {post.post.user.username}</strong>
-                  </ListGroupItem>
-                  <div className="commentList">
-                    {post.post.comments.reverse().map((c, i) => (
-                      <div className="middleDiv">
-                        {post.post.description === null ? (
-                          <ListGroupItem>{post.post.description}</ListGroupItem>
-                        ) : (
-                          <> </>
-                        )}
-                        <ListGroupItem key={i}>
-                          <Avatar
-                            alt={c.user.username}
-                            src={c.user.username}
-                            className="mr-2"
-                          />
-                          <strong>{c.user.username}</strong>{" "}
-                          <p className="commentText ml-2">{c.text}</p>
-                        </ListGroupItem>
-                        <p className="dateOfComment text-muted">
-                          <Moment fromNow>{c.updatedAt}</Moment>
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </ListGroup>
-                <div className="commentAction">
-                  <CardActions disableSpacing>
-                    <IconButton onClick={post.handleLike}>
-                      {post.ifLiked ? (
-                        <Favorite className="likedBtn" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
+                      <>
+                        <Link
+                          className={classes.links}
+                          to={"/profile/" + post.post.user.id}
+                          variant="body2"
+                        >
+                          <strong> {post.post.user.username}</strong>
+                        </Link>
+                      </>
+                    }
+                  />
+                </ListGroupItem>
+                <div className="commentList">
+                  {post.post.comments.reverse().map((c, i) => (
+                    <div className="middleDiv">
+                      {post.post.description === null ? (
+                        <ListGroupItem>{post.post.description}</ListGroupItem>
                       ) : (
-                        <FavoriteBorder />
+                        <> </>
                       )}
-                    </IconButton>
-                    <IconButton aria-label="comment">
-                      <ModeCommentOutlinedIcon />
-                    </IconButton>
-                    <IconButton>
-                      <BookmarkBorderSharp />
-                    </IconButton>
-                    {post.post.likes.length > 0 ? (
-                      <Typography paragraph className="likedLength text-muted">
-                        Liked by {post.post.likes.length}{" "}
-                      </Typography>
+                      <SingleComment comment={c} key={i} />
+                    </div>
+                  ))}
+                </div>
+              </ListGroup>
+              <div className="commentAction">
+                <CardActions disableSpacing>
+                  <IconButton onClick={post.handleLike}>
+                    {post.ifLiked ? (
+                      <Favorite className="likedBtn" />
                     ) : (
-                      <Typography paragraph></Typography>
+                      <FavoriteBorder />
                     )}
-                  </CardActions>
-                  <div className="commentSection">
-                    <EmojiEmotionsOutlinedIcon />
-                    <input
-                      value={text}
-                      minLength="2"
-                      onChange={(e) => setText(e.target.value)}
-                      className="commentInput"
-                      type="text"
-                      placeholder="Add a comment..."
-                    />
-                    <button onClick={handleComment}>Post</button>
-                  </div>
+                  </IconButton>
+                  <IconButton aria-label="comment">
+                    <ModeCommentOutlinedIcon />
+                  </IconButton>
+                  <IconButton>
+                    <BookmarkBorderSharp />
+                  </IconButton>
+                  {post.post.likes.length > 0 ? (
+                    <Typography paragraph className="likedLength text-muted">
+                      Liked by {post.post.likes.length}{" "}
+                    </Typography>
+                  ) : (
+                    <Typography paragraph></Typography>
+                  )}
+                </CardActions>
+                <div className="commentSection">
+                  <EmojiEmotionsOutlinedIcon />
+                  <input
+                    value={text}
+                    minLength="2"
+                    onChange={(e) => setText(e.target.value)}
+                    className="commentInput"
+                    type="text"
+                    placeholder="Add a comment..."
+                  />
+                  <button onClick={(e) => handleComment(e, text, post.post.id)}>
+                    Post
+                  </button>
                 </div>
               </div>
-            </Row>
-          </div>
-        </Fade>
-      </Modal>
-    </div>
+            </div>
+          </Row>
+        </div>
+      </Fade>
+    </Modal>
   );
 }

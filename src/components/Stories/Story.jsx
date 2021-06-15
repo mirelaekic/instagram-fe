@@ -29,7 +29,6 @@ function CreateStory(props) {
   const handleLeave = () => {
     setMargin(null);
   };
-  console.log("this are the fucking", location.pathname);
   return (
     <Grid container>
       {console.log(props.story)}

@@ -41,7 +41,7 @@ const postReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
-    case "SET_LOADING":
+    case "SET_POSTS_LOADING":
       return {
         ...state,
         loading: true,

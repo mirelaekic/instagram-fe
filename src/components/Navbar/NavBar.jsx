@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
@@ -21,8 +21,13 @@ import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 import SwapHorizRoundedIcon from "@material-ui/icons/SwapHorizRounded";
 import PostImage from "../PostImage/PostImage";
 import { useDispatch, useSelector } from "react-redux";
-import { getMe, getUserById, logout } from "../../redux/actions/usersActions";
-
+import {
+  getMe,
+  getUserById,
+  logout,
+  getAllUsers,
+} from "../../redux/actions/usersActions";
+import {browserHistory} from 'react-router'
 const useStyles = makeStyles((theme) => ({
   root1: {
     flexGrow: 1,
@@ -79,10 +84,15 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar() {
   useEffect(() => {
-      dispatch(getMe());
-    }, []);
+    dispatch(getMe());
+    dispatch(getAllUsers());
+  }, []);
   const classes = useStyles();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const users = useSelector((state) => state.user.users);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [search, setSearch] = useState("");
+  const [result, setResult] = useState(users);
   const open = Boolean(anchorEl);
 
   const handleMenu = (event) => {
@@ -93,9 +103,15 @@ function NavBar() {
     setAnchorEl(null);
   };
 
-  const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  
+  useEffect(() => {
+    setResult(
+      users.filter((user) =>
+        user.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, users]);
+
   function logOut() {
     dispatch(logout());
   }
@@ -116,8 +132,17 @@ function NavBar() {
                   root1: classes.input,
                   input: classes.inputInput,
                 }}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 inputProps={{ "aria-label": "search" }}
               />
+              <div className={search.length > 0 ? "suggestions" : "d-none"}>
+                <ul className="suggestion-list">
+                  {result.map((u, i) => (
+                    <Link to={"/profile/"+ u.id} key={i}><li><Avatar src={u.imgurl} className="mr-3" alt={u.name}/>{u.name}</li></Link>
+                  ))}
+                </ul>
+              </div>
             </div>
             <div className="iconsNavbar">
               <PostImage />
@@ -139,7 +164,7 @@ function NavBar() {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
               >
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt={currentUser.name} src={currentUser.imgurl} />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -184,6 +209,6 @@ function NavBar() {
         </Container>
       </AppBar>
     </div>
-  ) 
+  );
 }
 export default withRouter(NavBar);

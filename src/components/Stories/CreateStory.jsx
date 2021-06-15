@@ -19,6 +19,7 @@ export default function CreateStory(props) {
     console.log("uploading");
     let formData = new FormData();
     formData.append("PostImage", video);
+    console.log(video,"The video to post")
     try {
       const response = await fetch(INST_API+"/insta/story", {
         method: "POST",

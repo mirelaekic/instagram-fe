@@ -12,7 +12,7 @@ const followReducer = (state = initialState, action) => {
                 loading: false,
                 error: null
             }
-        case "SET_LOADING":
+        case "SET_FOLLOW_LOADING":
             return {
                 ...state,
                 loading: true

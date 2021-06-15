@@ -4,23 +4,19 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Comments from "../Comments/Comments";
 import "./Card.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getPost,
-  getPostById,
-  deletePost,
-} from "../../redux/actions/postsAction";
-import { getMe } from "../../redux/actions/usersActions";
-import moment from "moment";
+import { removePost } from "../../redux/actions/postsAction";
 import NoPosts from "../Profile/NoPosts";
+import { Link } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "40rem",
+    backgroundSize: "cover",
   },
   media: {
     height: 0,
@@ -29,47 +25,70 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  link: {
+    color: "black",
+    fontSize: "16px",
+    "&:hover": {
+      color: "black",
+    },
+  },
 }));
 
 export const PostCard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-useEffect(() => {
-  dispatch(getPost())
-},[])
-
   const postsData = useSelector((state) => state.post.posts);
-console.log(postsData,"all the posts")
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const deletePost = (id) => {
+    dispatch(removePost(id));
+  };
   return (
-    <>
+    <div className="mt-3">
       {postsData ? (
-        postsData
-          .sort((a, b) => b.createdAt - a.createdAt)
-          .map((p, i) => (
-            <div key={i} className="mb-4">
-              <Card key={i} className={classes.root}>
-                <CardHeader
-                  avatar={
-                    <Avatar
-                      alt={p.user.username}
-                      src={p.user.imgurl}
-                      aria-label={p.user.username}
-                    />
-                  }
-                  action={
-                    <IconButton aria-label="settings">
+        postsData.map((p, i) => (
+          <div key={i} className="mb-4">
+            <Card key={i} className={classes.root}>
+              <CardHeader
+                avatar={
+                  <Avatar
+                    alt={p.user.username}
+                    src={p.user.imgurl}
+                    aria-label={p.user.username}
+                  />
+                }
+                action={
+                  p.userId === currentUser.id ? 
+                  <Dropdown className="delete-dropdown">
+                    <Dropdown.Toggle id="dropdown-basic">
                       <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title={p.user.username}
-                />
-                <CardMedia className={classes.media} image={p.imgurl} />
-                <Comments post={p} />
-              </Card>
-            </div>
-          ))
-      ) : (<NoPosts />)}
-    </>
-  ) ;
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => deletePost(p.id)}>
+                        Delete post
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown> : ""
+                }
+                title={
+                  <Link
+                    variant="body2"
+                    className={classes.link}
+                    to={"/profile/" + p.user.id}
+                  >
+                    <strong>{p.user.username}</strong>
+                  </Link>
+                }
+              />
+              <CardMedia className={classes.media} image={p.imgurl} />
+              <Comments post={p} />
+            </Card>
+          </div>
+        ))
+      ) : (
+        <NoPosts />
+      )}
+    </div>
+  );
 };
 export default PostCard;

@@ -2,6 +2,34 @@
     color: black !important;
     background-color: #FFFFFF !important;
 }
+.suggestions{
+    margin-top: 10px;
+    position: absolute;
+    left: 0%;
+    background-color: white;
+    border: solid 1px rgb(194, 194, 194);
+    height: max-content;
+    width: -webkit-fill-available;
+    padding-inline: 0px;
+    padding-block: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+    0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+}
+.suggestion-list{
+    list-style: none;
+    padding-inline-start: 32px !important;
+}
+.suggestion-list li{
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.suggestion-list li:hover{
+    cursor: pointer;
+    background-color: #f7f7f7;
+}
 .navbarContent{
    justify-content: space-between !important;
 }

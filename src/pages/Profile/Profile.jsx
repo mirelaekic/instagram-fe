@@ -19,6 +19,7 @@ import { withRouter } from "react-router-dom";
 import PostsGrid from "../../components/Profile/PostsGrid";
 import { getAllUsers, getMe, getUserById } from "../../redux/actions/usersActions";
 import { CodeOutlined } from "@material-ui/icons";
+import Loader from "../../components/Loader/Loader"
 const useStyles = makeStyles({
   Menu: {
     color: "1px solid #e3e3e3",
@@ -57,6 +58,7 @@ function Profile(props) {
   let toInt = parseInt(params)
   useEffect(() => {
     dispatch(getUserById(params))
+    dispatch(getMe())
   },[])
 
   const handlePosts = () => {
@@ -101,10 +103,11 @@ function Profile(props) {
     }
 
   }
+  console.log(user.posts,"THE POSTS FROM THE LOGGED IN uSER")
   //DISPLAY WHEN CHECKING THE LOGGED IN USERS PROFILE
   const handleDisplayForLoggedInUser = () => {
-     if (target === "POSTS") {
-       if (user.posts && user.posts.length > 0) {
+    if (target === "POSTS") {
+      if (user.posts && user.posts.length > 0) {
          return <PostsGrid posts={user.posts} />;
        } else {
          return <NoPosts params={toInt} />;
@@ -134,10 +137,10 @@ function Profile(props) {
   };
   console.log(filterUser, user,"THE CURRENT USERS AND THE LOGGEED IN USER PROFILE IN PROFILE.JSX")
   return loading ? (
-    <CircularProgress className={classes.loader} />
+    <Loader />
   ) : (
         <div className="mt-5 profilePage">
-          <Container maxWidth="md" className="mt-5">
+          <Container>
              <Row className="mb-5">
                <Col className="px-5 col-4 ">
                 {toInt === user.id ? <ProfilePic url={user.imgurl} /> : 
@@ -153,7 +156,7 @@ function Profile(props) {
                 /> 
               </Col>
             </Row>
-
+            </Container>
             <Row style={{ borderTop: "1px solid #e3e3e3" }}>
               <Col className="col-3"></Col>
               <Col className="col-6 d-flex justify-content-between">
@@ -198,7 +201,7 @@ function Profile(props) {
              <Row className="justify-content-center">
                 {
             toInt === user.id ?
-            <Col>{handleDisplayForLoggedInUser()}</Col> : <Col>{handleDisplay()}</Col>
+            <Col className="profile-col">{handleDisplayForLoggedInUser()}</Col> : <Col>{handleDisplay()}</Col>
                } 
                </Row>  
             <Row> 
@@ -206,7 +209,6 @@ function Profile(props) {
                 <ProfileFooter />
               </Col>
             </Row>
-          </Container>
         </div>
   )
 }

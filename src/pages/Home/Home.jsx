@@ -1,12 +1,24 @@
 import { Container, Grid } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import PostCard from "../../components/Card/PostCard";
 import Carousel from "../../components/Stories/Carousel";
 import "./Home.css";
 import HomeSuggestions from "../../components/HomeSuggestions/HomeSuggestions";
+import { useDispatch,useSelector } from "react-redux";
+import { getPost } from "../../redux/actions/postsAction";
+import Loader from "../../components/Loader/Loader"
 function Home() {
-  return (
+  const dispatch = useDispatch()
+  const loading = useSelector(state => state.post.loading)
+  const posts = useSelector(state => state.post.posts)
+  console.log(posts,"is this loading")
+
+  useEffect(() => {
+      dispatch(getPost())
+  },[])
+
+  return loading ? <Loader /> : (
     <>
         <Container className="home-container">
           <Grid container spacing={2}>

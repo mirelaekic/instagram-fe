@@ -27,6 +27,7 @@ export default function StoryPage(props) {
   let history = useHistory();
   console.log(history);
   const classes = useStyles();
+  console.log(props,"THE PROPS IN THE STORY PLAYER PAGE")
   return (
     <div className={classes.storyBackground}>
       <Container fluid>

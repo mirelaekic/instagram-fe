@@ -73,7 +73,7 @@ export default function HomeSuggestions() {
                   <strong>{user.username} </strong>
                 </Link>
                 <br />
-                <p className="text-muted">followed by</p>
+                <p className="text-muted">other users you might know</p>
               </div>
             </div>
             <button className="followButton" onClick={() => toFollow(user.id)}>

@@ -1,16 +1,22 @@
+import backend from "../../client";
+
 const INST_API = process.env.REACT_APP_INST_API
 export const getPost = () => {
   return async (dispatch) => {
     try {
-      const res = await fetch(INST_API+"/insta/posts", {
-        method: "GET",
-        credentials: "include",
-      });
-      if (res.ok) {
-        const posts = await res.json();
+      dispatch({
+        type:"SET_POSTS_LOADING"
+      })
+      const res = await backend.get(INST_API+"/insta/posts");
+      console.log(res,"THE RESPONSE FROM GETTING THE POST")
+      if (res) {
+        const posts = await res.data;
+        const byDate = posts.sort((a,b) => {
+          return b.id - a.id
+        })
         dispatch({
           type: "GET_POSTS_SUCCESSFUL",
-          payload: posts,
+          payload: byDate,
         });
       }
     } catch (error) {
@@ -43,19 +49,19 @@ export const getPostById = (id) => {
     }
   };
 };
-/*export const deletePost = (id) => {
+export const removePost = (id) => {
     return async (dispatch) => {
+      console.log("TRYING TO DELETE POST ",id)
       try {
-        const res = await fetch("http://localhost:9001/insta/posts/" + id, {
-          method: "DELETE",
-          credentials: "include",
-        });
-        if (res.ok) {
-          const posts = await res.json();
+        const res = await backend.delete(INST_API+"/insta/posts/" + id);
+        console.log(res,"the response after delete")
+        if (res) {
+          const posts = await res.data;
+          console.log(posts,"DELETE POST")
           dispatch({
-            type: "DELETE_POST",
-            payload: posts,
+            type: "DELETE_POST"
           });
+          dispatch(getPost())
         }
       } catch (error) {
         dispatch({
@@ -64,7 +70,7 @@ export const getPostById = (id) => {
         });
       }
     };
-  };*/
+  };
 export const uploadPost = (e, description) => {
   return async (dispatch) => {
     let formData = new FormData();

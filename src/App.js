@@ -2,7 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect } from "react";
 import Home from "./pages/Home/Home";
-import DM from "./pages/DM/DM";
+import Dm from "./pages/DM/DM";
 import Explore from "./pages/Explore/Explore";
 import Profile from "./pages/Profile/Profile";
 import { withRouter, Route, Switch } from "react-router-dom";
@@ -14,6 +14,7 @@ import ProfilePage from "./pages/Profile/Profile";
 import StoryPage from "./pages/Story/StoryPage";
 import { useSelector,useDispatch } from "react-redux";
 import {getAllUsers, getMe} from "./redux/actions/usersActions"
+import functional from "./pages/DM/functional";
 
 const exclusionArray = ["/login", "/register", "/stories/:user/:storyId"];
 
@@ -26,7 +27,7 @@ function App(props) {
       {exclusionArray.indexOf(props.location.pathname) < 0 && <NavBar />}
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/dm" component={DM} />
+        <Route path="/dm" component={Dm} />
         <Route path="/explore" component={Explore} />
         <Route path="/profile/:id" render={(props) => <Profile {...props} />} /> 
         <Route path="/register" exact component={Register} />
